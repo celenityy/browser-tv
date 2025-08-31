@@ -24,13 +24,13 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "org.mozilla.tv.firefox"
+        applicationId "dev.celenity.tv.browser"
         minSdkVersion 22
         targetSdkVersion 28
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
         // override this with a generated versionCode at build time.
         versionName "4.8"
-        testInstrumentationRunner "org.mozilla.tv.firefox.FirefoxOnDeviceTestRunner"
+        testInstrumentationRunner "dev.celenity.tv.browser.FirefoxOnDeviceTestRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
 
         multiDexEnabled true
