@@ -66,9 +66,6 @@ open class FirefoxApplication : LocaleAwareApplication() {
 
             enableStrictMode()
 
-            // For now, ignore the violations (a-c#4166)
-            StrictMode.allowThreadDiskReads().resetAfter {}
-
             visibilityLifeCycleCallback = VisibilityLifeCycleCallback(this).also {
                 registerActivityLifecycleCallbacks(it)
             }
