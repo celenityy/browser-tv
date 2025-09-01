@@ -31,7 +31,6 @@ import mozilla.components.feature.session.SessionFeature
 import mozilla.components.support.ktx.android.util.dpToPx
 import mozilla.components.support.ktx.android.view.use
 import dev.celenity.tv.browser.MainActivity
-import dev.celenity.tv.browser.MediaSessionHolder
 import dev.celenity.tv.browser.R
 import dev.celenity.tv.browser.ScreenControllerStateMachine.ActiveScreen
 import dev.celenity.tv.browser.architecture.BrowserViewModelProviders
@@ -71,8 +70,6 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
     }
 
     lateinit var session: Session
-
-    private val mediaSessionHolder get() = activity as MediaSessionHolder? // null when not attached.
 
     private val startStopCompositeDisposable = CompositeDisposable()
 
@@ -167,11 +164,6 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
 
         layout.progressBar.initialize(this)
 
-        // We break encapsulation here: we should use the super.engineView reference but it's not init until
-        // onViewCreated. However, overriding both onCreateView and onViewCreated in a single class
-        // is confusing so I'd rather break encapsulation than confuse devs.
-        mediaSessionHolder?.videoVoiceCommandMediaSession?.onCreateEngineView(layout.engineView, session)
-
         return layout
     }
 
@@ -253,8 +245,6 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
     }
 
     override fun onDestroyView() {
-        mediaSessionHolder?.videoVoiceCommandMediaSession?.onDestroyEngineView(engineView!!, session)
-
         context!!.serviceLocator.cursorModel.webViewCouldScrollInDirectionProvider = null
 
         rootView = null

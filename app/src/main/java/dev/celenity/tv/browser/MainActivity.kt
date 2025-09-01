@@ -39,20 +39,11 @@ import dev.celenity.tv.browser.utils.Settings
 import dev.celenity.tv.browser.utils.URLs
 import dev.celenity.tv.browser.utils.ViewUtils
 import dev.celenity.tv.browser.utils.publicsuffix.PublicSuffix
-import dev.celenity.tv.browser.webrender.VideoVoiceCommandMediaSession
 import dev.celenity.tv.browser.widget.InlineAutocompleteEditText
 
-interface MediaSessionHolder {
-    val videoVoiceCommandMediaSession: VideoVoiceCommandMediaSession
-}
-
-class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, MediaSessionHolder {
+class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener {
     private val LOG_TAG = "MainActivity"
     private val startStopCompositeDisposable = CompositeDisposable()
-
-    // There should be at most one MediaSession per process, hence it's in MainActivity.
-    // We crash if we init MediaSession at init time, hence lateinit.
-    override lateinit var videoVoiceCommandMediaSession: VideoVoiceCommandMediaSession
 
     enum class Command {
         BEGIN_LOGIN
@@ -64,7 +55,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
         super.onCreate(savedInstanceState)
 
         PublicSuffix.init(this) // Used by Pocket Video feed & custom home tiles.
-        initMediaSession()
 
         // The launch intent is needed to create the engines in the engine cache.
         val safeIntent = intent.toSafeIntent()
@@ -251,11 +241,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
         super.onBackPressed()
     }
 
-    private fun initMediaSession() {
-        videoVoiceCommandMediaSession = VideoVoiceCommandMediaSession(this)
-        lifecycle.addObserver(videoVoiceCommandMediaSession)
-    }
-
     override fun onNonTextInputUrlEntered(urlStr: String) {
         ViewUtils.hideKeyboard(container_navigation_overlay)
         serviceLocator.screenController.onUrlEnteredInner(this, supportFragmentManager, urlStr, false,
@@ -283,8 +268,7 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
 
         val fragmentManager = supportFragmentManager
 
-        return videoVoiceCommandMediaSession.dispatchKeyEvent(event) ||
-                serviceLocator.screenController.dispatchKeyEvent(event, fragmentManager) ||
+        return serviceLocator.screenController.dispatchKeyEvent(event, fragmentManager) ||
                 super.dispatchKeyEvent(event)
     }
 
