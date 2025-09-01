@@ -290,4 +290,7 @@
     <!-- Text for the banner. -->
     <string name="banner_text">Firefox has ended support for Amazon Fire TV. This app may continue to work, but it won’t receive security or other updates effective April 30, 2021.</string>
     <string name="banner_more_info_button">Learn more</string>
+
+    <!-- Open source licenses page title -->
+    <string name="open_source_licenses_title">Browser | OSS Libraries</string>
 </resources>
