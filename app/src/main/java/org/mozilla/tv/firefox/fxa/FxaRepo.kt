@@ -52,8 +52,7 @@ private val APPLICATION_SCOPES = setOf(
  */
 class FxaRepo(
     val context: Context,
-    val accountManager: FxaAccountManager = newInstanceDefaultAccountManager(context),
-    val admIntegration: ADMIntegration // Consider moving to an FxaReceiveTabsUseCase or rm this comment.
+    val accountManager: FxaAccountManager = newInstanceDefaultAccountManager(context)
 ) {
 
     /**
@@ -83,19 +82,11 @@ class FxaRepo(
     private val _accountState: BehaviorSubject<AccountState> = BehaviorSubject.createDefault(AccountState.Initial)
     val accountState: Observable<AccountState> = _accountState.hide()
 
-    val receivedTabs: Observable<Consumable<FxaReceivedTab>> = admIntegration.receivedTabsRaw
-        .filterMapToDomainObject()
-        .map { Consumable.from(it) }
-        .replay(1)
-        .autoConnect(0)
-
     init {
         accountManager.register(accountObserver)
 
         @Suppress("DeferredResultUnused") // No value is returned & we don't need to wait for this to complete.
         accountManager.initAsync() // If user is already logged in, the appropriate observers will be triggered.
-
-        admIntegration.createSendTabFeature(accountManager)
     }
 
     fun logout() {
@@ -155,9 +146,6 @@ class FxaRepo(
     inner class FirefoxAccountObserver : AccountObserver {
         override fun onAuthenticated(account: OAuthAccount, authType: AuthType) {
             _accountState.onNext(AuthenticatedNoProfile)
-
-            // Push service is only needed when logged in (this saves resources)
-            admIntegration.initPushFeature()
         }
 
         override fun onAuthenticationProblems() {
@@ -166,9 +154,6 @@ class FxaRepo(
 
         override fun onLoggedOut() {
             _accountState.onNext(NotAuthenticated)
-
-            // Push service is not needed after logging out (this saves resources)
-            admIntegration.shutdownPushFeature()
         }
 
         /**

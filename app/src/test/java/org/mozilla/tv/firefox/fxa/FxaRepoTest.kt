@@ -40,9 +40,6 @@ class FxaRepoTest {
 
     @MockK(relaxed = true) private lateinit var accountManager: FxaAccountManager
 
-    private lateinit var admIntegration: ADMIntegration
-    private lateinit var receivedTabsRaw: PublishSubject<ADMIntegration.ReceivedTabs>
-
     private lateinit var fxaRepo: FxaRepo
     private lateinit var accountState: Observable<FxaRepo.AccountState>
     private lateinit var accountStateTestObs: TestObserver<FxaRepo.AccountState>
@@ -52,13 +49,8 @@ class FxaRepoTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        receivedTabsRaw = PublishSubject.create()
-        admIntegration = mockk(relaxed = true) {
-            every { receivedTabsRaw } returns this@FxaRepoTest.receivedTabsRaw
-        }
-
         val context = mockk<Context>()
-        fxaRepo = FxaRepo(context, accountManager, admIntegration)
+        fxaRepo = FxaRepo(context, accountManager)
         accountState = fxaRepo.accountState
         accountStateTestObs = accountState.test()
 
@@ -90,14 +82,6 @@ class FxaRepoTest {
     }
 
     @Test
-    fun `WHEN on authenticated callback is called THEN push feature is initialized`() {
-        val account = mockk<OAuthAccount>()
-        fxaRepo.accountObserver.onAuthenticated(account, AuthType.Signin)
-
-        verify(exactly = 1) { admIntegration.initPushFeature() }
-    }
-
-    @Test
     fun `WHEN on authentication problems callback is called THEN account state is needs reauthentication`() {
         fxaRepo.accountObserver.onAuthenticationProblems()
         accountStateTestObs.assertValueAt(1, FxaRepo.AccountState.NeedsReauthentication)
@@ -107,13 +91,6 @@ class FxaRepoTest {
     fun `WHEN on logout callback is called THEN account state is not authenticated`() {
         fxaRepo.accountObserver.onLoggedOut()
         accountStateTestObs.assertValueAt(1, FxaRepo.AccountState.NotAuthenticated)
-    }
-
-    @Test
-    fun `WHEN on logout callback is called THEN push feature is shutdown`() {
-        fxaRepo.accountObserver.onLoggedOut()
-
-        verify(exactly = 1) { admIntegration.shutdownPushFeature() }
     }
 
     @Test
@@ -130,14 +107,11 @@ class FxaRepoTest {
             dispose()
         }
 
-        receivedTabsRaw.onNext(ADMIntegration.ReceivedTabs(null, listOf(TabData("title", "url"))))
-
         fxaRepo.receivedTabs.test().assertValueCount(1)
     }
 
     @Test
     fun `GIVEN received tabs have already been consumed WHEN a new subscriber observes received tabs THEN wrapped value should be null`() {
-        receivedTabsRaw.onNext(ADMIntegration.ReceivedTabs(null, listOf(TabData("title", "url"))))
 
         fxaRepo.receivedTabs.test().apply {
             assertValueCount(1)

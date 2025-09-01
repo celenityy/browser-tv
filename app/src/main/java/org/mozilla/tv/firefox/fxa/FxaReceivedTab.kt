@@ -34,37 +34,5 @@ data class FxaReceivedTab(
     )
 }
 
-fun Observable<ADMIntegration.ReceivedTabs>.filterMapToDomainObject(): Observable<FxaReceivedTab> = this
-    .flatMap { admTabs ->
-        val urls = admTabs.tabData
-            .map(TabData::url)
-            // Note that we are intentionally discarding all but the first tab here.
-            // TODO fix this in #2777
-            .filter(String::isNotBlank)
-        val url = urls.firstOrNull()
-
-        if (url == null) {
-            ReceiveTabException("Received tab event with only blank URLs")
-            return@flatMap Observable.empty<FxaReceivedTab>()
-        }
-
-        val tabReceivedNotificationText = when (admTabs.device) {
-            null -> UnresolvedString(R.string.fxa_tab_sent_toast_no_device)
-            else -> UnresolvedString(R.string.fxa_tab_sent_toast, listOf(admTabs.device.displayName))
-        }
-
-        val metadata = FxaReceivedTab.Metadata(
-            deviceType = admTabs.device?.deviceType ?: DeviceType.UNKNOWN
-        )
-
-        val domainObject = FxaReceivedTab(
-            url = url,
-            tabReceivedNotificationText = tabReceivedNotificationText,
-            metadata = metadata
-        )
-
-        Observable.just(domainObject)
-    }
-
 /** An Exception thrown when during the receive tab process. */
 private class ReceiveTabException(msg: String) : Exception(msg)

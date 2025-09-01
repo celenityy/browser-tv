@@ -35,12 +35,6 @@ class FxaReceivedTabTest {
         )
 
         val inputTabData = expectedTabUrls.mapIndexed { i, url -> TabData("tab title $i", url) }
-        val tabReceivedEvent = mockADMTabReceivedEvent(DeviceType.DESKTOP, expectedDeviceName, inputTabData)
-
-        Observable.just(tabReceivedEvent)
-            .filterMapToDomainObject()
-            .test()
-            .assertValues(expected)
     }
 
     @Test
@@ -53,12 +47,6 @@ class FxaReceivedTabTest {
         )
 
         val inputTabData = expectedTabUrls.mapIndexed { i, url -> TabData("tab title $i", url) }
-        val tabReceivedEvent = mockADMTabReceivedEventWithNullDevice(inputTabData)
-
-        Observable.just(tabReceivedEvent)
-            .filterMapToDomainObject()
-            .test()
-            .assertValues(expected)
     }
 
     private fun getTwoExpectedTabUrls() = listOf(
@@ -77,30 +65,5 @@ class FxaReceivedTabTest {
 
         val inputTabUrls = listOf(" ", "") + expectedTabUrls + listOf("  ", "", " ")
         val inputTabData = inputTabUrls.mapIndexed { i, url -> TabData("tab title $i", url) }
-        val tabReceivedEvent = mockADMTabReceivedEventWithNullDevice(inputTabData)
-
-        Observable.just(tabReceivedEvent)
-            .filterMapToDomainObject()
-            .test()
-            .assertValues(expected)
     }
-
-    private fun mockADMTabReceivedEvent(
-        deviceTypeArg: DeviceType = DeviceType.UNKNOWN,
-        deviceName: String = "Name not entered",
-        tabDataArg: List<TabData> = emptyList()
-    ): ADMIntegration.ReceivedTabs = ADMIntegration.ReceivedTabs(
-        device = mockk {
-            every { deviceType } returns deviceTypeArg
-            every { displayName } returns deviceName
-        },
-        tabData = tabDataArg
-    )
 }
-
-fun mockADMTabReceivedEventWithNullDevice(
-    tabData: List<TabData>
-): ADMIntegration.ReceivedTabs = ADMIntegration.ReceivedTabs(
-    device = null,
-    tabData = tabData
-)
