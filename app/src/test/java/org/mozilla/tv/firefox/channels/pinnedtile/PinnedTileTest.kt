@@ -12,7 +12,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.reactivex.Observable
-import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.observers.TestObserver
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
@@ -48,7 +47,6 @@ class PinnedTileTest {
         @JvmStatic
         fun beforeClass() {
             RxJavaPlugins.setComputationSchedulerHandler { Schedulers.trampoline() }
-            RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
         }
     }
 
