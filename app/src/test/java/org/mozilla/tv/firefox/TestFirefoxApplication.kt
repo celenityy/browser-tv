@@ -4,7 +4,6 @@
 
 package org.mozilla.tv.firefox
 
-import mozilla.components.service.glean.Glean
 import androidx.work.testing.WorkManagerTestInitHelper
 import mozilla.components.concept.engine.utils.EngineVersion
 import org.mozilla.tv.firefox.helpers.EngineVariantFunctionality
@@ -43,12 +42,4 @@ class TestFirefoxApplication : FirefoxApplication() {
      * an UnsupportedOperationException during Robolectric tests. We can't mock static methods so we stub the method.
      */
     override fun getEngineViewVersion() = EngineVersion(1, 1, 1, "dummyVersion")
-
-    /**
-     * This is used to disable ping upload when running tests.
-     */
-    override fun setGleanUpload() {
-        WorkManagerTestInitHelper.initializeTestWorkManager(applicationContext)
-        Glean.setUploadEnabled(false)
-    }
 }

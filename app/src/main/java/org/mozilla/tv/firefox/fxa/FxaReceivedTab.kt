@@ -29,13 +29,8 @@ data class FxaReceivedTab(
     val tabReceivedNotificationText: UnresolvedString,
     val metadata: Metadata
 ) {
-    /**
-     * @param [receivedUrlCount] the number of URLs included in the original push. At this time,
-     * this is only used for telemetry
-     */
     data class Metadata(
         val deviceType: DeviceType, // We expose the FxA DeviceType to avoid excessive boilerplate.
-        val receivedUrlCount: Int
     )
 }
 
@@ -59,8 +54,7 @@ fun Observable<ADMIntegration.ReceivedTabs>.filterMapToDomainObject(): Observabl
         }
 
         val metadata = FxaReceivedTab.Metadata(
-            deviceType = admTabs.device?.deviceType ?: DeviceType.UNKNOWN,
-            receivedUrlCount = urls.size
+            deviceType = admTabs.device?.deviceType ?: DeviceType.UNKNOWN
         )
 
         val domainObject = FxaReceivedTab(

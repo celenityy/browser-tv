@@ -4,9 +4,6 @@
 
 import org.mozilla.gradle.tasks.ValidateAndroidAppReleaseConfiguration
 
-plugins {
-    id "com.jetbrains.python.envs" version "0.0.26"
-}
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'kotlin-android'
@@ -128,11 +125,6 @@ configurations {
     geckoImplementation {}
 }
 
-// Generate markdown docs for the collected metrics.
-ext.gleanGenerateMarkdownDocs = true
-ext.gleanDocsDirectory = "$rootDir/docs/glean"
-apply from: 'https://github.com/mozilla-mobile/android-components/raw/v' + rootProject.ext.moz_components_version + '/components/service/glean/scripts/sdk_generator.gradle'
-
 dependencies {
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.legacy:legacy-support-v4:$androidx_version"
@@ -161,7 +153,6 @@ dependencies {
     implementation "org.mozilla.components:browser-search:$moz_components_version"
     implementation "org.mozilla.components:browser-domains:$moz_components_version"
     implementation "org.mozilla.components:concept-engine:$moz_components_version"
-    implementation "org.mozilla.components:service-telemetry:$moz_components_version"
     implementation "org.mozilla.components:ui-colors:$moz_components_version"
     implementation "org.mozilla.components:ui-fonts:$moz_components_version"
     implementation "org.mozilla.components:feature-session:$moz_components_version"
@@ -173,7 +164,6 @@ dependencies {
     implementation "org.mozilla.components:support-ktx:$moz_components_version"
     implementation "org.mozilla.components:support-utils:$moz_components_version"
     implementation "org.mozilla.components:support-rusthttp:$moz_components_version"
-    implementation "org.mozilla.components:service-glean:$moz_components_version"
 
     systemImplementation "org.mozilla.components:browser-engine-system:$moz_components_version"
     // Required to override android.support lib in GeckoView dependency (uses palette-v7:26.1.0)
@@ -201,7 +191,6 @@ dependencies {
     testImplementation "io.mockk:mockk:1.9.1"
 
     testImplementation "androidx.test:core:$test_core"
-    testImplementation "androidx.work:work-testing:2.0.1" // Required by Glean testing
     androidTestImplementation "androidx.test:core:$test_core"
 
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$uiautomator_version"
@@ -221,10 +210,6 @@ dependencies {
 
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
-
-    // For the initial release of Glean 19, we require consumer applications to
-    // depend on a separate library for unit tests. This will be removed in future releases.
-    testImplementation "org.mozilla.telemetry:glean-forUnitTests:21.3.0"
 
     androidTestImplementation "tools.fastlane:screengrab:1.2.0", {
         // This Fastlane dependency causes our builds to fail due to having two different
@@ -246,8 +231,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-oss-licenses:$oss_licenses_version"
 }
 
-// Removed due to glean upgrade - https://github.com/mozilla-mobile/firefox-tv/issues/2989
-// task validateReleaseConfiguration(type: ValidateAndroidAppReleaseConfiguration)
+task validateReleaseConfiguration(type: ValidateAndroidAppReleaseConfiguration)
 
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle

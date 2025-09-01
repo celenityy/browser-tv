@@ -16,7 +16,6 @@ import mozilla.components.browser.session.SessionManager
 import mozilla.components.feature.session.SessionUseCases
 import org.mozilla.tv.firefox.ext.isYoutubeTV
 import org.mozilla.tv.firefox.ext.toUri
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.TurboMode
 import org.mozilla.tv.firefox.webrender.EngineViewCache
 
@@ -118,7 +117,6 @@ class SessionRepo(
         if (session.canGoBack) {
             exitFullScreenIfPossible()
             sessionUseCases.goBack.invoke()
-            TelemetryIntegration.INSTANCE.browserBackControllerEvent()
             return true
         }
 

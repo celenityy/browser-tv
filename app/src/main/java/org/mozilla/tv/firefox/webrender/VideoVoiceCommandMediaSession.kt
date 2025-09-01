@@ -48,8 +48,6 @@ import org.mozilla.tv.firefox.ext.pauseTargetVideo
 import org.mozilla.tv.firefox.ext.playTargetVideo
 import org.mozilla.tv.firefox.ext.removeJavascriptInterface
 import org.mozilla.tv.firefox.ext.seekTargetVideoToPosition
-import org.mozilla.tv.firefox.telemetry.MediaSessionEventType
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToLong
 
@@ -289,13 +287,6 @@ class VideoVoiceCommandMediaSession @UiThread constructor(
         override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
             val key = mediaButtonEvent.getParcelableExtra<KeyEvent?>(Intent.EXTRA_KEY_EVENT)
 
-            if (KEY_CODES_MEDIA_PLAY_PAUSE.contains(key?.keyCode)) {
-                // Our overall goal is to see how often voice commands are used. play/pause are the
-                // only keys on a standard Alexa remote that also have voice commands so it's the
-                // only one we need to record in order to disambiguate voice commands from buttons.
-                TelemetryIntegration.INSTANCE.mediaSessionEvent(MediaSessionEventType.PLAY_PAUSE_BUTTON)
-            }
-
             // Forward media next/prev events to the WebView: the WebView already receives key up
             // events and we prevent MediaSession from handling the down events by not calling super.
             // If MediaSession handled the key down events, it'd call onSkipToNext which dispatches
@@ -320,7 +311,6 @@ class VideoVoiceCommandMediaSession @UiThread constructor(
          */
         override fun onPlay() {
             engineView?.playTargetVideo()
-            TelemetryIntegration.INSTANCE.mediaSessionEvent(MediaSessionEventType.PLAY)
         }
 
         // See onPlay for details.
@@ -328,17 +318,14 @@ class VideoVoiceCommandMediaSession @UiThread constructor(
             // If we receive a MediaSession callback while the app is paused, it's coming from a
             // voice command (which pauses the app to handle them).
             engineView?.pauseTargetVideo(!isLifecycleResumed)
-            TelemetryIntegration.INSTANCE.mediaSessionEvent(MediaSessionEventType.PAUSE)
         }
 
         override fun onSkipToNext() {
             dispatchKeyEventDownUp(KeyEvent.KEYCODE_MEDIA_NEXT)
-            TelemetryIntegration.INSTANCE.mediaSessionEvent(MediaSessionEventType.NEXT)
         }
 
         override fun onSkipToPrevious() {
             dispatchKeyEventDownUp(KeyEvent.KEYCODE_MEDIA_PREVIOUS)
-            TelemetryIntegration.INSTANCE.mediaSessionEvent(MediaSessionEventType.PREV)
         }
 
         private fun dispatchKeyEventDownUp(keyCode: Int) {
@@ -348,7 +335,6 @@ class VideoVoiceCommandMediaSession @UiThread constructor(
         override fun onSeekTo(absolutePositionMillis: Long) {
             val absolutePositionSeconds = TimeUnit.MILLISECONDS.toSeconds(absolutePositionMillis)
             engineView?.seekTargetVideoToPosition(absolutePositionSeconds)
-            TelemetryIntegration.INSTANCE.mediaSessionEvent(MediaSessionEventType.SEEK)
         }
     }
 }

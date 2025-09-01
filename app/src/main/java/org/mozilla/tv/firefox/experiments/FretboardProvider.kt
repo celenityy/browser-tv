@@ -13,7 +13,6 @@ import mozilla.components.service.fretboard.Fretboard
 import mozilla.components.service.fretboard.ValuesProvider
 import mozilla.components.service.fretboard.source.kinto.KintoExperimentSource
 import mozilla.components.service.fretboard.storage.flatfile.FlatFileExperimentStorage
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.HttpUrlConnectionWrapper
 import java.io.File
 import kotlin.coroutines.CoroutineContext
@@ -34,15 +33,10 @@ class FretboardProvider(private val applicationContext: Context) : CoroutineScop
             HttpUrlConnectionWrapper.client
     )
 
-    // We use the telemetry clientId because the data team wants to be able to reproduce
-    // buckets server-side in order to verify that clients are being bucketed correctly.
-    // This is low risk because:
-    // a) ID only gets sent to Mozilla servers
-    // b) ID + bucket doesn't leak personally identifiable information
     val fretboard: Fretboard = Fretboard(experimentSource, FlatFileExperimentStorage(experimentsFile),
             object : ValuesProvider() {
                 override fun getClientId(context: Context): String {
-                    return TelemetryIntegration.INSTANCE.clientId
+                    return ""
                 }
             })
 
@@ -64,6 +58,5 @@ class FretboardProvider(private val applicationContext: Context) : CoroutineScop
      */
     fun loadExperiments() {
         fretboard.loadExperiments()
-        TelemetryIntegration.INSTANCE.recordActiveExperiments(activeExperimentNames)
     }
 }

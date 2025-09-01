@@ -73,7 +73,6 @@ class DefaultChannelAdapter(
 
             itemView.setOnClickListener {
                 loadUrl(tile.url)
-                channelConfig.onClickTelemetry?.invoke(tile)
             }
 
             if (channelConfig.itemsMayBeRemoved) {
@@ -96,14 +95,12 @@ class DefaultChannelAdapter(
                 itemView.channel_cardview.stateListAnimator = animation
                 itemView.channel_cardview.foreground = focusRingDrawable
                 _focusChangeObservable.onNext(position to hasFocus)
-                channelConfig.onFocusTelemetry?.invoke(tile, hasFocus)
             }
         }
     }
 
     private fun setRemoveOnLongClickListener(itemView: View, tile: ChannelTile) {
         itemView.setOnLongClickListener {
-            channelConfig.onLongClickTelemetry?.invoke(tile)
             val dialog = Dialog(context, R.style.DialogStyle)
             dialog.setContentView(R.layout.dialog_channel_tiles)
             dialog.window?.setDimAmount(0.85f)

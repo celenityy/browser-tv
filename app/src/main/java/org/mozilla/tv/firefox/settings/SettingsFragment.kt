@@ -31,7 +31,6 @@ import org.mozilla.tv.firefox.channels.SettingsScreen
 import org.mozilla.tv.firefox.channels.SettingsTile
 import org.mozilla.tv.firefox.ext.serviceLocator
 import org.mozilla.tv.firefox.fxa.FxaRepo
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.PicassoWrapper
 import org.mozilla.tv.firefox.utils.RoundCornerTransformation
 import org.mozilla.tv.firefox.utils.ServiceLocator
@@ -53,7 +52,6 @@ class SettingsFragment : Fragment() {
         val settingsVM = FirefoxViewModelProviders.of(this@SettingsFragment).get(SettingsViewModel::class.java)
         val type: SettingsTile = SettingsScreen.valueOf(arguments!!.getString(KEY_SETTINGS_TYPE)!!)
         val view = when (type) {
-            SettingsScreen.DATA_COLLECTION -> setupDataCollectionScreen(inflater, container, settingsVM)
             SettingsScreen.CLEAR_COOKIES -> setupClearCookiesScreen(inflater, container, settingsVM)
             SettingsScreen.FXA_PROFILE -> setupFxaProfileScreen(inflater, container)
             else -> {
@@ -64,23 +62,6 @@ class SettingsFragment : Fragment() {
             serviceLocator.screenController.handleBack(fragmentManager!!)
         }
 
-        return view
-    }
-
-    private fun setupDataCollectionScreen(
-        inflater: LayoutInflater,
-        parentView: ViewGroup?,
-        settingsViewModel: SettingsViewModel
-    ): View {
-        val view = inflater.inflate(R.layout.settings_screen_switch, parentView, false)
-        settingsViewModel.dataCollectionEnabled.observe(viewLifecycleOwner, Observer<Boolean> { state ->
-            view.toggle.isChecked = state ?: return@Observer
-        })
-        view.toggle.setOnClickListener {
-            settingsViewModel.setDataCollectionEnabled(toggle.isChecked)
-        }
-        view.description.text = resources.getString(R.string.settings_telemetry_description,
-                resources.getString(R.string.firefox_tv_brand_name))
         return view
     }
 
@@ -141,16 +122,10 @@ class SettingsFragment : Fragment() {
     private fun setupFxaProfileClickListeners(view: View) {
         val screenController = serviceLocator.screenController
         val fxaRepo = serviceLocator.fxaRepo
-        val telemetryIntegration = TelemetryIntegration.INSTANCE
 
-        view.buttonFirefoxTabs.setOnClickListener {
-            // TODO show send tab tutorial
-            telemetryIntegration.fxaProfileShowOnboardingButtonClickEvent()
-        }
         view.buttonSignOut.setOnClickListener {
             fxaRepo.logout()
             screenController.handleBack(fragmentManager!!)
-            telemetryIntegration.fxaProfileSignOutButtonClickEvent()
         }
         view.backButton.setOnClickListener {
             screenController.handleBack(fragmentManager!!)

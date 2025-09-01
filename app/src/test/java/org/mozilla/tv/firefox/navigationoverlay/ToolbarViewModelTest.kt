@@ -20,7 +20,6 @@ import org.mozilla.tv.firefox.ext.map
 import org.mozilla.tv.firefox.helpers.FirefoxRobolectricTestRunner
 import org.mozilla.tv.firefox.helpers.ext.assertValues
 import org.mozilla.tv.firefox.session.SessionRepo
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.PreventLiveDataMainLooperCrashRule
 
 private const val mozilla = "https://www.mozilla.org/en-US/"
@@ -36,7 +35,6 @@ class ToolbarViewModelTest {
     private lateinit var toolbarVm: ToolbarViewModel
     private lateinit var sessionRepo: SessionRepo
     private lateinit var pinnedTileRepo: PinnedTileRepo
-    private lateinit var telemetryIntegration: TelemetryIntegration
 
     private lateinit var sessionState: Subject<SessionRepo.State>
     private lateinit var pinnedTiles: Subject<LinkedHashMap<String, PinnedTile>>
@@ -50,8 +48,7 @@ class ToolbarViewModelTest {
         pinnedTileRepo = mock(PinnedTileRepo::class.java)
         pinnedTiles = BehaviorSubject.create()
         `when`(pinnedTileRepo.pinnedTiles).thenReturn(pinnedTiles)
-        telemetryIntegration = mock(TelemetryIntegration::class.java)
-        toolbarVm = ToolbarViewModel(sessionRepo, pinnedTileRepo, telemetryIntegration)
+        toolbarVm = ToolbarViewModel(sessionRepo, pinnedTileRepo)
         toolbarEventsTestObs = toolbarVm.events.test()
     }
 
@@ -172,74 +169,6 @@ class ToolbarViewModelTest {
             loading = false
         ))
         toolbarEventsTestObs.assertValueCount(0)
-    }
-
-    @Test
-    fun `WHEN back in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.backButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(eq(NavigationEvent.BACK), anyBoolean(), anyBoolean(), anyBoolean())
-    }
-
-    @Test
-    fun `WHEN forward in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.forwardButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(
-            eq(NavigationEvent.FORWARD), anyBoolean(), anyBoolean(), anyBoolean()
-        )
-    }
-
-    @Test
-    fun `WHEN reload in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.reloadButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(
-            eq(NavigationEvent.RELOAD), anyBoolean(), anyBoolean(), anyBoolean()
-        )
-    }
-
-    @Test
-    fun `WHEN pin button in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.pinButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(
-            eq(NavigationEvent.PIN_ACTION), anyBoolean(), anyBoolean(), anyBoolean()
-        )
-    }
-
-    @Test
-    fun `WHEN turbo mode in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.turboButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(
-            eq(NavigationEvent.TURBO), anyBoolean(), anyBoolean(), anyBoolean()
-        )
-    }
-
-    @Test
-    fun `WHEN desktop mode in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.desktopModeButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(
-            eq(NavigationEvent.DESKTOP_MODE), anyBoolean(), anyBoolean(), anyBoolean()
-        )
-    }
-
-    @Test
-    fun `WHEN exit in toolbar is clicked THEN associated telemetry method is called`() {
-        setToolbarVmState()
-        toolbarVm.exitFirefoxButtonClicked()
-
-        verify(telemetryIntegration, times(1)).overlayClickEvent(
-            eq(NavigationEvent.EXIT_FIREFOX), anyBoolean(), anyBoolean(), anyBoolean()
-        )
     }
 
     /**

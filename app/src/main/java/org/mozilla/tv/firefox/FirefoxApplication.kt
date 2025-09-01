@@ -13,18 +13,14 @@ import io.reactivex.subjects.Subject
 import mozilla.appservices.Megazord
 import mozilla.components.concept.engine.utils.EngineVersion
 import mozilla.components.lib.fetch.okhttp.OkHttpClient
-import mozilla.components.service.glean.Glean
-import mozilla.components.service.glean.config.Configuration
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.runOnlyInMainProcess
 import mozilla.components.support.ktx.android.os.resetAfter
 import mozilla.components.support.rusthttp.RustHttpConfig
-import org.mozilla.tv.firefox.GleanMetrics.LegacyIds
 import org.mozilla.tv.firefox.components.locale.LocaleAwareApplication
 import org.mozilla.tv.firefox.ext.webRenderComponents
 import org.mozilla.tv.firefox.webrender.VisibilityLifeCycleCallback
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.BuildConstants
 import org.mozilla.tv.firefox.utils.OkHttpWrapper
 import org.mozilla.tv.firefox.utils.ServiceLocator
@@ -67,8 +63,6 @@ open class FirefoxApplication : LocaleAwareApplication() {
             serviceLocator = createServiceLocator()
 
             initRustDependencies()
-            TelemetryIntegration.INSTANCE.init(this)
-            initGlean()
             initFretboard()
 
             enableStrictMode()
@@ -94,29 +88,6 @@ open class FirefoxApplication : LocaleAwareApplication() {
             loadExperiments()
             updateExperiments()
         }
-    }
-
-    // This method is used to call Glean.setUploadEnabled. During the tests, this is
-    // overridden to disable ping upload.
-    @VisibleForTesting
-    protected open fun setGleanUpload() {
-        serviceLocator.settingsRepo.dataCollectionEnabled.observeForever { collectionEnabled ->
-            if (collectionEnabled != null) {
-                // This needs to be called before Glean.initialize, or we risk 1) not
-                // sending startup data, or 2) sending even when the user has toggled
-                // off data collection
-                Glean.setUploadEnabled(collectionEnabled)
-                if (collectionEnabled) {
-                    LegacyIds.clientId.set(UUID.fromString(TelemetryIntegration.INSTANCE.clientId))
-                }
-            }
-        }
-    }
-
-    private fun initGlean() {
-        setGleanUpload()
-        LegacyIds.clientId.set(UUID.fromString(TelemetryIntegration.INSTANCE.clientId))
-        Glean.initialize(applicationContext, Configuration(channel = BuildConfig.BUILD_TYPE))
     }
 
     // ServiceLocator needs to be created in onCreate in order to accept Application

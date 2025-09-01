@@ -24,7 +24,6 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.mozilla.tv.firefox.helpers.RxTestHelper
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import java.util.concurrent.TimeUnit
 
 class FxaRepoTest {
@@ -40,7 +39,6 @@ class FxaRepoTest {
     }
 
     @MockK(relaxed = true) private lateinit var accountManager: FxaAccountManager
-    @MockK(relaxed = true) private lateinit var telemetryIntegration: TelemetryIntegration
 
     private lateinit var admIntegration: ADMIntegration
     private lateinit var receivedTabsRaw: PublishSubject<ADMIntegration.ReceivedTabs>
@@ -60,7 +58,7 @@ class FxaRepoTest {
         }
 
         val context = mockk<Context>()
-        fxaRepo = FxaRepo(context, accountManager, admIntegration, telemetryIntegration)
+        fxaRepo = FxaRepo(context, accountManager, admIntegration)
         accountState = fxaRepo.accountState
         accountStateTestObs = accountState.test()
 
@@ -123,29 +121,6 @@ class FxaRepoTest {
         val profile = Profile("uid", "email", null, "displayName")
         fxaRepo.accountObserver.onProfileUpdated(profile)
         accountStateTestObs.assertValueAt(1) { it is FxaRepo.AccountState.AuthenticatedWithProfile }
-    }
-
-    @Test
-    fun `WHEN fxa state changes THEN telemetry events carrying reauthentication state are sent`() {
-        fun waitPastDebounce() {
-            testScheduler.advanceTimeBy(11, TimeUnit.SECONDS)
-        }
-
-        fxaRepo.accountObserver.onAuthenticated(mockk(relaxed = true), mockk(relaxed = true))
-        waitPastDebounce()
-        verify(exactly = 1) { telemetryIntegration.doesFxaNeedReauthenticationEvent(false) }
-
-        fxaRepo.accountObserver.onLoggedOut()
-        waitPastDebounce()
-        verify(exactly = 2) { telemetryIntegration.doesFxaNeedReauthenticationEvent(false) }
-
-        fxaRepo.accountObserver.onProfileUpdated(mockk(relaxed = true))
-        waitPastDebounce()
-        verify(exactly = 3) { telemetryIntegration.doesFxaNeedReauthenticationEvent(false) }
-
-        fxaRepo.accountObserver.onAuthenticationProblems()
-        waitPastDebounce()
-        verify(exactly = 1) { telemetryIntegration.doesFxaNeedReauthenticationEvent(true) }
     }
 
     @Test

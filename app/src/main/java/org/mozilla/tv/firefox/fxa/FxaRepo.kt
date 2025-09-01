@@ -32,7 +32,6 @@ import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.AuthenticatedNoProfile
 import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.AuthenticatedWithProfile
 import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.NeedsReauthentication
 import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.NotAuthenticated
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.Settings
 import org.mozilla.tv.firefox.utils.URLs
 import java.util.concurrent.TimeUnit
@@ -54,8 +53,7 @@ private val APPLICATION_SCOPES = setOf(
 class FxaRepo(
     val context: Context,
     val accountManager: FxaAccountManager = newInstanceDefaultAccountManager(context),
-    val admIntegration: ADMIntegration, // Consider moving to an FxaReceiveTabsUseCase or rm this comment.
-    private val telemetryIntegration: TelemetryIntegration = TelemetryIntegration.INSTANCE
+    val admIntegration: ADMIntegration // Consider moving to an FxaReceiveTabsUseCase or rm this comment.
 ) {
 
     /**
@@ -98,8 +96,6 @@ class FxaRepo(
         accountManager.initAsync() // If user is already logged in, the appropriate observers will be triggered.
 
         admIntegration.createSendTabFeature(accountManager)
-
-        setupTelemetry()
     }
 
     fun logout() {
@@ -134,7 +130,6 @@ class FxaRepo(
             .putBoolean(Settings.FXA_ONBOARD_SHOWN_PREF, true)
             .apply()
 
-        TelemetryIntegration.INSTANCE.fxaShowOnboardingEvent()
         dialog.show()
     }
 
@@ -153,25 +148,6 @@ class FxaRepo(
         accountManager.authenticatedAccount()?.deviceConstellation()?.pollForEventsAsync()
     }
 
-    @SuppressLint("CheckResult") // This survives for the duration of the app
-    private fun setupTelemetry() {
-        accountState
-            // Filter out intermediate states. E.g., when signing in, we see 'NotAuthenticated',
-            // then 'AuthenticatedWithProfile' and 'AuthenticatedNoProfile' in quick succession. We
-            // only want to use the final value here
-            //
-            // This can strip out useful information if a user signs in and then immediately either
-            // signs out or the app process is killed. These both seem like narrow edge cases. We
-            // use a debounce of 10 seconds here to cover any slow networks during the sign in
-            // process, under the assumption that 10 seconds is still narrow enough that those two
-            // edge cases will still be infrequently hit.
-            .debounce(10, TimeUnit.SECONDS)
-            .map { it is NeedsReauthentication }
-            .subscribe {
-                telemetryIntegration.doesFxaNeedReauthenticationEvent(it)
-            }
-    }
-
     /**
      * See [AccountState] kdoc for more explanation on states.
      */
@@ -182,8 +158,6 @@ class FxaRepo(
 
             // Push service is only needed when logged in (this saves resources)
             admIntegration.initPushFeature()
-
-            telemetryIntegration.fxaLoggedInEvent()
         }
 
         override fun onAuthenticationProblems() {
@@ -195,8 +169,6 @@ class FxaRepo(
 
             // Push service is not needed after logging out (this saves resources)
             admIntegration.shutdownPushFeature()
-
-            telemetryIntegration.fxaLoggedOutEvent()
         }
 
         /**

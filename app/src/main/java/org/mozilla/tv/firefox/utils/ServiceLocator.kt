@@ -56,11 +56,6 @@ import org.mozilla.tv.firefox.webrender.cursor.CursorModel
  *   ```
  *   open val pocket: Pocket get() = Pocket()
  *   ```
- *
- *   #### Concrete value for interface:
- *   ```
- *   open val telemetry: TelemetryInterface by lazy {}
- *   ```
  */
 open class ServiceLocator(val app: Application) {
     private val appVersion = app.packageManager.getPackageInfo(app.packageName, 0).versionName

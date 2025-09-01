@@ -50,7 +50,7 @@ sealed class CursorEvent {
      * attempting to scroll, and failing because the website has no more
      * content in that direction.
      */
-    data class ScrolledToEdge(val edge: Direction) : CursorEvent() // TODO how often does this happen?  Telemetry would be good
+    data class ScrolledToEdge(val edge: Direction) : CursorEvent()
     data class CursorMoved(val direction: Direction) : CursorEvent()
 }
 

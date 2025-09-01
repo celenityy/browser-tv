@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.settings_tile.view.*
 import org.mozilla.tv.firefox.R
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.URLs
 
 class SettingsChannelAdapter(
@@ -18,11 +17,6 @@ class SettingsChannelAdapter(
     private val showSettings: (SettingsScreen) -> Unit
 ) : RecyclerView.Adapter<SettingsTileHolder>() {
     private val settingsItems = arrayOf(
-        SettingsItem(
-            SettingsScreen.DATA_COLLECTION,
-            R.drawable.ic_data_collection,
-            R.string.preference_mozilla_telemetry2,
-            R.id.settings_tile_telemetry),
         SettingsItem(
             SettingsScreen.CLEAR_COOKIES,
             R.drawable.mozac_ic_delete,
@@ -54,12 +48,10 @@ class SettingsChannelAdapter(
         titleView.setText(itemData.titleRes)
         itemView.settings_cardview.setOnClickListener {
             when (val type = itemData.type) {
-                SettingsScreen.DATA_COLLECTION -> showSettings(type as SettingsScreen)
                 SettingsScreen.CLEAR_COOKIES -> showSettings(type as SettingsScreen)
                 SettingsButton.ABOUT -> loadUrl(URLs.URL_ABOUT)
                 SettingsButton.PRIVACY_POLICY -> loadUrl(URLs.PRIVACY_NOTICE_URL)
             }
-            TelemetryIntegration.INSTANCE.settingsTileClickEvent(itemData.type)
         }
         itemView.contentDescription = itemView.context.getString(itemData.titleRes)
         itemView.id = itemData.viewId // Add ids for testing
@@ -74,7 +66,7 @@ class SettingsTileHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 // We differentiate between Settings tiles that lead to other Settings screens, or are just buttons
 interface SettingsTile
 enum class SettingsScreen : SettingsTile {
-    DATA_COLLECTION, CLEAR_COOKIES, FXA_PROFILE
+    CLEAR_COOKIES, FXA_PROFILE
 }
 enum class SettingsButton : SettingsTile {
         ABOUT, PRIVACY_POLICY

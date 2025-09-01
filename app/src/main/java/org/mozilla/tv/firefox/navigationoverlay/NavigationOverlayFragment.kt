@@ -51,8 +51,6 @@ import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState
 import org.mozilla.tv.firefox.hint.HintBinder
 import org.mozilla.tv.firefox.hint.HintViewModel
 import org.mozilla.tv.firefox.hint.InactiveHintViewModel
-import org.mozilla.tv.firefox.telemetry.MenuInteractionMonitor
-import org.mozilla.tv.firefox.telemetry.UrlTextInputLocation
 import org.mozilla.tv.firefox.utils.RoundCornerTransformation
 import org.mozilla.tv.firefox.utils.ServiceLocator
 import org.mozilla.tv.firefox.utils.Settings
@@ -68,7 +66,7 @@ private val uiHandler = Handler(Looper.getMainLooper())
 
 enum class NavigationEvent {
     BACK, FORWARD, RELOAD, LOAD_URL, LOAD_TILE, TURBO, PIN_ACTION, DESKTOP_MODE, EXIT_FIREFOX, FXA_BUTTON,
-    SETTINGS_DATA_COLLECTION, SETTINGS_CLEAR_COOKIES;
+    SETTINGS_CLEAR_COOKIES;
 
     companion object {
         fun fromViewClick(viewId: Int?) = when (viewId) {
@@ -106,15 +104,12 @@ class NavigationOverlayFragment : Fragment() {
                                       autocompleteResult: InlineAutocompleteEditText.AutocompleteResult? ->
         when (event) {
             NavigationEvent.LOAD_URL -> {
-                (activity as MainActivity).onTextInputUrlEntered(value!!, autocompleteResult!!, UrlTextInputLocation.MENU)
+                (activity as MainActivity).onTextInputUrlEntered(value!!, autocompleteResult!!)
                 context?.serviceLocator?.screenController?.showNavigationOverlay(fragmentManager, false)
             }
             NavigationEvent.LOAD_TILE -> {
                 (activity as MainActivity).onNonTextInputUrlEntered(value!!)
                 context?.serviceLocator?.screenController?.showNavigationOverlay(fragmentManager, false)
-            }
-            NavigationEvent.SETTINGS_DATA_COLLECTION -> {
-                serviceLocator.screenController.showSettingsScreen(fragmentManager!!, SettingsScreen.DATA_COLLECTION)
             }
             NavigationEvent.SETTINGS_CLEAR_COOKIES -> {
                 serviceLocator.screenController.showSettingsScreen(fragmentManager!!, SettingsScreen.CLEAR_COOKIES)
@@ -247,20 +242,6 @@ class NavigationOverlayFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         compositeDisposable.clear()
-    }
-
-    fun dispatchKeyEvent(
-        event: KeyEvent,
-        @VisibleForTesting(otherwise = NONE) menuInteractionMonitor: MenuInteractionMonitor = MenuInteractionMonitor
-    ): Boolean {
-        // MenuInteractionMonitor broke, which went unnoticed for several releases, when the overlay was refactored into
-        // a different Fragment: it might be safer to model this reactively, in our architecture, which abstracts away
-        // such framework constructs.
-        if (event.isKeyCodeSelect && event.action == KeyEvent.ACTION_DOWN) {
-            menuInteractionMonitor.selectPressed()
-        }
-
-        return false
     }
 
     private fun exitFirefox() {
@@ -445,7 +426,6 @@ class NavigationOverlayFragment : Fragment() {
                 },
                 showSettings = { type ->
                     val navigationEvent = when (type) {
-                        SettingsScreen.DATA_COLLECTION -> NavigationEvent.SETTINGS_DATA_COLLECTION
                         SettingsScreen.CLEAR_COOKIES -> NavigationEvent.SETTINGS_CLEAR_COOKIES
                         SettingsScreen.FXA_PROFILE -> NavigationEvent.FXA_BUTTON
                     }

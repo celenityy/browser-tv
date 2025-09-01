@@ -14,7 +14,6 @@ import mozilla.components.service.fretboard.ExperimentDescriptor
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.tv.firefox.components.locale.LocaleManager
 import org.mozilla.tv.firefox.ext.serviceLocator
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.UrlUtils
 
 private const val EXTRA_ACTIVE_EXPERIMENTS = "qaActiveExperiments"
@@ -64,7 +63,6 @@ object IntentValidator {
             Intent.ACTION_MAIN -> {
                 val dialParams = intent.extras?.getString(DIAL_PARAMS_KEY) ?: return null
                 if (dialParams.isNotEmpty()) {
-                    TelemetryIntegration.INSTANCE.youtubeCastEvent()
                     return ValidatedIntentData(url = "https://www.youtube.com/tv?$dialParams", source = Session.Source.ACTION_VIEW)
                 }
             }
@@ -73,7 +71,6 @@ object IntentValidator {
                 if (TextUtils.isEmpty(dataString)) {
                     return null // We can't create a session from an Intent without a URL.
                 }
-                TelemetryIntegration.INSTANCE.viewIntentEvent()
                 return ValidatedIntentData(dataString, Session.Source.ACTION_VIEW)
             }
             Intent.ACTION_SEND -> {

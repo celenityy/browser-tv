@@ -44,10 +44,6 @@ class PinnedTileRepo(
     val legacyPinnedTiles = LiveDataReactiveStreams
             .fromPublisher(pinnedTiles.toFlowable(BackpressureStrategy.LATEST))
 
-    // Persist custom & bundled tiles size for telemetry
-    var customTilesSize = 0
-    var bundledTilesSize = 0
-
     private val _sharedPreferences: SharedPreferences = applicationContext.getSharedPreferences(PREF_HOME_TILES, Context.MODE_PRIVATE)
 
     init {
@@ -83,7 +79,6 @@ class PinnedTileRepo(
         if (screenshot != null) {
             PinnedTileScreenshotStore.saveAsync(applicationContext, newPinnedTile.id, screenshot)
         }
-        ++customTilesSize
 
         // We reload tiles from the DB in order to avoid duplicating ordering logic in loadTilesCache
         _pinnedTiles.onNext(loadTilesCache())
@@ -99,14 +94,10 @@ class PinnedTileRepo(
         _pinnedTiles.onNext(_pinnedTiles.value!!)
 
         when (tileToRemove) {
-            is BundledPinnedTile -> {
-
-                --bundledTilesSize
-            }
+            is BundledPinnedTile -> {}
             is CustomPinnedTile -> {
                 persistCustomTiles()
                 PinnedTileScreenshotStore.removeAsync(applicationContext, tileToRemove.id)
-                --customTilesSize
             }
         }
 
@@ -149,7 +140,6 @@ class PinnedTileRepo(
             val tile = BundledPinnedTile.fromJSONObject(jsonObject)
             lhm[tile.url] = tile
         }
-        bundledTilesSize = lhm.size
 
         return lhm
     }
@@ -162,7 +152,6 @@ class PinnedTileRepo(
             val tile = CustomPinnedTile.fromJSONObject(tileJSON)
             lhm.put(tile.url, tile)
         }
-        customTilesSize = lhm.size
 
         return lhm
     }

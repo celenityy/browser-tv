@@ -33,8 +33,6 @@ import org.mozilla.tv.firefox.ext.setupForApp
 import org.mozilla.tv.firefox.ext.webRenderComponents
 import org.mozilla.tv.firefox.fxa.FxaReceivedTab
 import org.mozilla.tv.firefox.onboarding.OnboardingActivity
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
-import org.mozilla.tv.firefox.telemetry.UrlTextInputLocation
 import org.mozilla.tv.firefox.utils.BuildConstants
 import org.mozilla.tv.firefox.utils.OnUrlEnteredListener
 import org.mozilla.tv.firefox.utils.Settings
@@ -157,7 +155,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
 
     override fun onResume() {
         super.onResume()
-        TelemetryIntegration.INSTANCE.startSession(this)
 
         maybeShowOnboarding()
     }
@@ -186,7 +183,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
 
     override fun onPause() {
         super.onPause()
-        TelemetryIntegration.INSTANCE.stopSession(this)
     }
 
     override fun onStart() {
@@ -213,7 +209,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
     override fun onStop() {
         super.onStop()
         LocaleManager.getInstance().resetLocaleIfChanged(applicationContext)
-        TelemetryIntegration.INSTANCE.stopMainActivity()
         startStopCompositeDisposable.clear()
     }
 
@@ -269,8 +264,7 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
 
     override fun onTextInputUrlEntered(
         urlStr: String,
-        autocompleteResult: InlineAutocompleteEditText.AutocompleteResult?,
-        inputLocation: UrlTextInputLocation?
+        autocompleteResult: InlineAutocompleteEditText.AutocompleteResult?
     ) {
         ViewUtils.hideKeyboard(container_navigation_overlay)
         // It'd be much cleaner/safer to do this with a kotlin callback.
@@ -288,8 +282,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
                 event.keyCode == KeyEvent.KEYCODE_DEL) return super.dispatchKeyEvent(event)
 
         val fragmentManager = supportFragmentManager
-
-        TelemetryIntegration.INSTANCE.saveRemoteControlInformation(applicationContext, event)
 
         return videoVoiceCommandMediaSession.dispatchKeyEvent(event) ||
                 serviceLocator.screenController.dispatchKeyEvent(event, fragmentManager) ||
@@ -309,7 +301,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { consumableTab ->
                 consumableTab.consume { tab ->
-                    TelemetryIntegration.INSTANCE.receivedTabEvent(tab.metadata)
                     openReceivedFxaTab(tab)
                     true // Consume value
                 }

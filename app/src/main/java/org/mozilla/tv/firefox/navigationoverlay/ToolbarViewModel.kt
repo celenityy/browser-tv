@@ -17,14 +17,12 @@ import mozilla.components.support.base.observer.Consumable
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.session.SessionRepo
-import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.URLs
 import org.mozilla.tv.firefox.utils.UrlUtils
 
 class ToolbarViewModel(
     private val sessionRepo: SessionRepo,
-    private val pinnedTileRepo: PinnedTileRepo,
-    private val telemetryIntegration: TelemetryIntegration = TelemetryIntegration.INSTANCE
+    private val pinnedTileRepo: PinnedTileRepo
 ) : ViewModel() {
 
     data class State(
@@ -72,21 +70,18 @@ class ToolbarViewModel(
 
     @UiThread
     fun backButtonClicked() {
-        sendOverlayClickTelemetry(NavigationEvent.BACK)
         sessionRepo.attemptBack(forceYouTubeExit = true)
         hideOverlay()
     }
 
     @UiThread
     fun forwardButtonClicked() {
-        sendOverlayClickTelemetry(NavigationEvent.FORWARD)
         sessionRepo.goForward()
         hideOverlay()
     }
 
     @UiThread
     fun reloadButtonClicked() {
-        sendOverlayClickTelemetry(NavigationEvent.RELOAD)
         sessionRepo.reload()
         sessionRepo.pushCurrentValue()
         hideOverlay()
@@ -96,8 +91,6 @@ class ToolbarViewModel(
     fun pinButtonClicked() {
         val pinChecked = state.blockingFirst().pinChecked
         val url = sessionRepo.state.blockingFirst().currentUrl
-
-        sendOverlayClickTelemetry(NavigationEvent.PIN_ACTION, pinChecked = !pinChecked)
 
         if (pinChecked) {
             pinnedTileRepo.removePinnedTile(url)
@@ -117,15 +110,12 @@ class ToolbarViewModel(
         sessionRepo.setTurboModeEnabled(!turboModeActive)
         sessionRepo.reload()
 
-        sendOverlayClickTelemetry(NavigationEvent.TURBO, turboChecked = !turboModeActive)
         currentUrl.let { if (!it.isEqualToHomepage()) hideOverlay() }
     }
 
     @UiThread
     fun desktopModeButtonClicked() {
         val desktopModeChecked = state.blockingFirst().desktopModeChecked
-
-        sendOverlayClickTelemetry(NavigationEvent.DESKTOP_MODE, desktopModeChecked = !desktopModeChecked)
 
         sessionRepo.setDesktopMode(!desktopModeChecked)
         val textId = when {
@@ -139,25 +129,7 @@ class ToolbarViewModel(
 
     @UiThread
     fun exitFirefoxButtonClicked() {
-        sendOverlayClickTelemetry(NavigationEvent.EXIT_FIREFOX)
         _events.onNext(Consumable.from(Action.ExitFirefox))
-    }
-
-    private fun sendOverlayClickTelemetry(
-        event: NavigationEvent,
-        turboChecked: Boolean? = null,
-        pinChecked: Boolean? = null,
-        desktopModeChecked: Boolean? = null
-    ) {
-        @Suppress("DEPRECATION")
-        legacyState.value?.let {
-            telemetryIntegration.overlayClickEvent(
-                event,
-                turboChecked ?: it.turboChecked,
-                pinChecked ?: it.pinChecked,
-                desktopModeChecked ?: it.desktopModeChecked
-            )
-        }
     }
 
     private fun String.isEqualToHomepage() = this == URLs.APP_URL_HOME

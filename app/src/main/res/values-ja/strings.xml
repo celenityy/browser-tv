@@ -107,15 +107,6 @@
     Mock: https://user-images.githubusercontent.com/1721875/47298531-59442f00-d618-11e8-98df-632f74e9ebc3.png -->
     <string name="settings_cookies_confirm">今すぐ消去</string>
 
-    <!-- Title for a screen that explains the purpose of our telemetry, and contains a
-    switch that can toggle it on and off
-     Mock: https://user-images.githubusercontent.com/1721875/47298694-b809a880-d618-11e8-9e18-1d6d47d2045d.png -->
-    <string name="preference_mozilla_telemetry2">使用状況データを送信</string>
-    <!-- Description text that explains the purpose of our telemetry
-      Mock: https://user-images.githubusercontent.com/1721875/47298694-b809a880-d618-11e8-9e18-1d6d47d2045d.png
-      %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV) -->
-    <string name="settings_telemetry_description">Mozilla は %1$s を皆さんに提供し改善するために必要な情報だけを収集するよう努めています。</string>
-
     <string name="turbo_mode">ターボモード</string>
     <!-- This string will be displayed underneath the Enhanced Tracking Protection button (formerly
          'Turbo mode') when it is highlighted and ETP is currently active. -->
