@@ -41,7 +41,6 @@ class DefaultChannelFactory(
             }
         }
         containerView.setRequirements(
-            isAllowedByCurrentExperiment = channelConfig.isEnabledInCurrentExperiment,
             allowedInLocales = channelConfig.enabledInLocales
         )
         if (id != null) containerView.channelTileContainer.id = id

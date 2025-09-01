@@ -49,7 +49,6 @@ class Settings private constructor(context: Context) {
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val resources: Resources = context.resources
-    private val experimentsProvider = context.serviceLocator.experimentsProvider
 
     val defaultSearchEngineName: String?
         get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), null)
@@ -57,10 +56,10 @@ class Settings private constructor(context: Context) {
     fun shouldShowTurboModeOnboarding(): Boolean =
             !preferences.getBoolean(OnboardingActivity.ONBOARD_SHOWN_PREF, false)
 
-    fun shouldShowFxaOnboarding(): Boolean = experimentsProvider.shouldShowSendTab() &&
+    fun shouldShowFxaOnboarding(): Boolean =
             !preferences.getBoolean(FXA_ONBOARD_SHOWN_PREF, false)
 
-    fun shouldShowReceiveTabsPreboarding(): Boolean = experimentsProvider.shouldShowSendTab() &&
+    fun shouldShowReceiveTabsPreboarding(): Boolean =
         !preferences.getBoolean(ReceiveTabPreboardingActivity.ONBOARD_RECEIVE_TABS_SHOWN_PREF, false)
 
     fun shouldShowTVOnboarding(localeManager: LocaleManager, context: Context): Boolean {
@@ -70,7 +69,6 @@ class Settings private constructor(context: Context) {
         val currentLocale = localeManager.getCurrentLocale(context)
 
         return !preferences.getBoolean(ChannelOnboardingActivity.TV_ONBOARDING_SHOWN_PREF, false) &&
-                channelConfig.isEnabledInCurrentExperiment &&
                 currentLocale.languageAndMaybeCountryMatch(channelConfig.enabledInLocales)
     }
 

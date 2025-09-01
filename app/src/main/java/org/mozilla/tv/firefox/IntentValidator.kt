@@ -10,13 +10,11 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import mozilla.components.browser.session.Session
-import mozilla.components.service.fretboard.ExperimentDescriptor
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.tv.firefox.components.locale.LocaleManager
 import org.mozilla.tv.firefox.ext.serviceLocator
 import org.mozilla.tv.firefox.utils.UrlUtils
 
-private const val EXTRA_ACTIVE_EXPERIMENTS = "qaActiveExperiments"
 private const val EXTRA_FETCH_DELAY_KEY = "qaFetchDelaySeconds"
 private const val EXTRA_SELECTED_LOCALE = "qaSelectedLocale"
 
@@ -56,7 +54,6 @@ object IntentValidator {
     }
 
     fun validate(context: Context, intent: SafeIntent): ValidatedIntentData? {
-        setQAExperimentOverrides(intent, context)
         setQALocaleOverride(intent, context)
 
         when (intent.action) {
@@ -85,16 +82,6 @@ object IntentValidator {
             }
         }
         return null
-    }
-
-    private fun setQAExperimentOverrides(intent: SafeIntent, context: Context) {
-        val experimentsArray = intent.extras?.getStringArray(EXTRA_ACTIVE_EXPERIMENTS) ?: return
-        val fretboard = context.serviceLocator.fretboardProvider.fretboard
-        fretboard.clearAllOverrides(context)
-
-        experimentsArray.forEach {
-            fretboard.setOverride(context, ExperimentDescriptor(it), true)
-        }
     }
 
     private fun setQALocaleOverride(intent: SafeIntent, context: Context) {

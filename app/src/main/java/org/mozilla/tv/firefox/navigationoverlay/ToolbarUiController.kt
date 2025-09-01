@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.tooltip.view.tooltip
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.support.ktx.android.view.hideKeyboard
 import org.mozilla.tv.firefox.R
-import org.mozilla.tv.firefox.experiments.ExperimentsProvider
 import org.mozilla.tv.firefox.ext.serviceLocator
 import org.mozilla.tv.firefox.utils.URLs
 import org.mozilla.tv.firefox.utils.ViewUtils
@@ -42,8 +41,7 @@ private const val WRAP_CONTENT = LinearLayout.LayoutParams.WRAP_CONTENT
 class ToolbarUiController(
     private val toolbarViewModel: ToolbarViewModel,
     private val exitFirefox: () -> Unit,
-    private val onNavigationEvent: (NavigationEvent, String?, InlineAutocompleteEditText.AutocompleteResult?) -> Unit,
-    private val experimentsProvider: ExperimentsProvider
+    private val onNavigationEvent: (NavigationEvent, String?, InlineAutocompleteEditText.AutocompleteResult?) -> Unit
 ) {
 
     private var hasUserChangedURLSinceEditTextFocused = false
@@ -125,6 +123,20 @@ class ToolbarUiController(
         setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) hasUserChangedURLSinceEditTextFocused = false }
     }
 
+    data class TurboModeToolbarContent(
+        val imageId: Int,
+        val enabledTextId: Int,
+        val disabledTextId: Int
+    )
+
+    fun getTurboModeToolbar() {
+        TurboModeToolbarContent(
+            imageId = R.drawable.etp_selector,
+            enabledTextId = R.string.toolbar_etp_on,
+            disabledTextId = R.string.toolbar_etp_off
+        )
+    }
+
     fun observeToolbarState(
         layout: View,
         fragmentManager: FragmentManager
@@ -138,7 +150,7 @@ class ToolbarUiController(
 
         val context = layout.context
         val serviceLocator = context.serviceLocator
-        val turboButtonContent = experimentsProvider.getTurboModeToolbar()
+        val turboButtonContent = getTurboModeToolbar()
 
         layout.turboButton.setImageResource(turboButtonContent.imageId)
 

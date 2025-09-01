@@ -53,7 +53,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- This button is set visible if the user is in the experiment. -->
+    <!-- This button is set visible if the feature is enabled. -->
     <!-- Content description is set programmatically.-->
     <ImageButton
         tools:ignore="ContentDescription"

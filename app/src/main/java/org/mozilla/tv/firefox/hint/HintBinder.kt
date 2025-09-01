@@ -44,10 +44,6 @@ object HintBinder {
                             false -> hintContainer.height.toFloat()
                         }
 
-                        // Be very careful when changing this code; the hint bar experiment stays
-                        // disabled when A/B testing is disabled (e.g. like early returning from
-                        // this binding method if [ExperimentsProvider.shouldShowHintBar]
-                        // returns false).
                         hintContainer.animate()
                                 .setListener(object : AnimatorListenerAdapter() {
                                     override fun onAnimationStart(animation: Animator?) {

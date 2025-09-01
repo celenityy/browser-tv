@@ -43,7 +43,6 @@ import org.mozilla.tv.firefox.channels.DefaultChannel
 import org.mozilla.tv.firefox.channels.DefaultChannelFactory
 import org.mozilla.tv.firefox.channels.SettingsChannelAdapter
 import org.mozilla.tv.firefox.channels.SettingsScreen
-import org.mozilla.tv.firefox.experiments.ExperimentConfig
 import org.mozilla.tv.firefox.ext.isKeyCodeSelect
 import org.mozilla.tv.firefox.ext.isVoiceViewEnabled
 import org.mozilla.tv.firefox.ext.serviceLocator
@@ -145,7 +144,7 @@ class NavigationOverlayFragment : Fragment() {
 
         navigationOverlayViewModel = FirefoxViewModelProviders.of(this).get(NavigationOverlayViewModel::class.java)
         toolbarViewModel = FirefoxViewModelProviders.of(this).get(ToolbarViewModel::class.java)
-        hintViewModel = if (serviceLocator.experimentsProvider.shouldShowHintBar()) {
+        hintViewModel = if (true) {
             FirefoxViewModelProviders.of(this).get(OverlayHintViewModel::class.java)
         } else {
             InactiveHintViewModel()
@@ -159,8 +158,7 @@ class NavigationOverlayFragment : Fragment() {
         toolbarUiController = ToolbarUiController(
             toolbarViewModel,
             ::exitFirefox,
-            onNavigationEvent,
-            serviceLocator.experimentsProvider
+            onNavigationEvent
         ).apply {
             onCreateView(view)
         }
@@ -199,7 +197,7 @@ class NavigationOverlayFragment : Fragment() {
 
         initSettingsChannel() // When pulling everything into channels, add this to the channel RV
 
-        exitButton.contentDescription = serviceLocator.experimentsProvider.getAAExitButtonExperiment(ExperimentConfig.AA_TEST)
+        exitButton.contentDescription = getString(R.string.exit_firefox_a11y, getString(R.string.firefox_tv_brand_name_short))
         fxaButton.contentDescription = getString(R.string.fxa_navigation_item_new, getString(R.string.app_name))
 
         val tintDrawable: (Drawable?) -> Unit = { it?.setTint(ContextCompat.getColor(context!!, R.color.photonGrey10_a60p)) }
@@ -236,7 +234,7 @@ class NavigationOverlayFragment : Fragment() {
         toolbarUiController.observeToolbarState(rootView!!, fragmentManager!!)
             .forEach { compositeDisposable.add(it) }
 
-        fxaButton.isVisible = serviceLocator.experimentsProvider.shouldShowSendTab()
+        fxaButton.isVisible = true
     }
 
     override fun onStop() {

@@ -20,7 +20,7 @@ sealed class KillswitchLocales {
 
 /**
  * Can be used to wrap some other [View] in order to prevent it from ever being shown if
- * certain locale and experiment requirements are not met.
+ * certain locale requirements are not met.
  *
  * This is done to prevent bugs similar to #2133. In that bug, a view was set to visibility
  * GONE when disabled, however its animation toggled that visibility back to VISIBLE.
@@ -36,7 +36,6 @@ class KillswitchLayout : FrameLayout {
     // this view, whether or not it was actually applied
     private var desiredVisibility = this.visibility
 
-    private var isAllowedByCurrentExperiment: Boolean? = null
     private var allowedInLocales: KillswitchLocales? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -50,17 +49,15 @@ class KillswitchLayout : FrameLayout {
      * javadoc on [Locale.getCountry]) will match with any country, so long as the
      * language is correct.
      */
-    fun setRequirements(isAllowedByCurrentExperiment: Boolean, allowedInLocales: KillswitchLocales) {
-        this.isAllowedByCurrentExperiment = isAllowedByCurrentExperiment
+    fun setRequirements(allowedInLocales: KillswitchLocales) {
         this.allowedInLocales = allowedInLocales
         visibility = desiredVisibility
     }
 
     /**
      * Sets the visibility to gone if any of the following are true:
-     * 1) Locale/Experiment requirements have not been set
+     * 1) Locale requirements have not been set
      * 2) Current locale is not allowed
-     * 3) Client is not in a required experiment
      *
      * Otherwise, sets visibility as usual
      */
@@ -70,14 +67,9 @@ class KillswitchLayout : FrameLayout {
 
         this.desiredVisibility = visibility
         val context = context ?: return
-        val isAllowedByCurrentExperiment = this.isAllowedByCurrentExperiment
         val allowedInLocales = this.allowedInLocales
 
-        if (isAllowedByCurrentExperiment == null || allowedInLocales == null) {
-            return super.setVisibility(View.GONE)
-        }
-
-        if (!isAllowedByCurrentExperiment) {
+        if (allowedInLocales == null) {
             return super.setVisibility(View.GONE)
         }
 

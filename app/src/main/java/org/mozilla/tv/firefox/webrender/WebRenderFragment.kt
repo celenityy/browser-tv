@@ -112,8 +112,7 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
         if (enabled) window.addFlags(dontSleep)
         else window.clearFlags(dontSleep)
 
-        if (enabled &&
-                serviceLocator?.experimentsProvider?.shouldUseMp4VideoWorkaround() == true) {
+        if (enabled) {
             engineView?.updateFullscreenScrollPosition()
         }
 
@@ -233,7 +232,7 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
         cursorView.setup(context!!.serviceLocator.cursorModel)
                 .addTo(startStopCompositeDisposable)
 
-        val (hintViewModel, progressBarBottomMargin) = if (serviceLocator!!.experimentsProvider.shouldShowHintBar()) {
+        val (hintViewModel, progressBarBottomMargin) = if (true) {
             FirefoxViewModelProviders.of(this).get(WebRenderHintViewModel::class.java) to
                 64.dpToPx(resources.displayMetrics)
         } else {

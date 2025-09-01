@@ -6,7 +6,6 @@ package org.mozilla.tv.firefox.channels
 
 import android.content.Context
 import org.mozilla.tv.firefox.architecture.KillswitchLocales
-import org.mozilla.tv.firefox.ext.serviceLocator
 import java.util.Locale
 
 /**
@@ -14,20 +13,16 @@ import java.util.Locale
  */
 data class ChannelConfig(
     val itemsMayBeRemoved: Boolean = false,
-    val isEnabledInCurrentExperiment: Boolean,
     val enabledInLocales: KillswitchLocales
 ) {
     companion object {
         fun getPinnedTileConfig(context: Context): ChannelConfig = ChannelConfig(
             itemsMayBeRemoved = true,
-            isEnabledInCurrentExperiment = true,
             enabledInLocales = KillswitchLocales.All
         )
 
         fun getTvGuideConfig(context: Context): ChannelConfig = ChannelConfig(
             itemsMayBeRemoved = true,
-            isEnabledInCurrentExperiment =
-                context.serviceLocator.experimentsProvider.shouldShowTvGuideChannels(),
             enabledInLocales = KillswitchLocales.ActiveIn(Locale.US)
         )
     }

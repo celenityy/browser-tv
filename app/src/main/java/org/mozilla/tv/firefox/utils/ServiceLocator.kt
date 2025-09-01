@@ -17,8 +17,6 @@ import org.mozilla.tv.firefox.architecture.ViewModelFactory
 import org.mozilla.tv.firefox.channels.ChannelRepo
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
-import org.mozilla.tv.firefox.experiments.ExperimentsProvider
-import org.mozilla.tv.firefox.experiments.FretboardProvider
 import org.mozilla.tv.firefox.ext.getAccessibilityManager
 import org.mozilla.tv.firefox.ext.webRenderComponents
 import org.mozilla.tv.firefox.framework.FrameworkRepo
@@ -61,8 +59,6 @@ open class ServiceLocator(val app: Application) {
     private val appVersion = app.packageManager.getPackageInfo(app.packageName, 0).versionName
 
     val intentLiveData by lazy { MutableLiveData<Consumable<ValidatedIntentData?>>() }
-    val fretboardProvider: FretboardProvider by lazy { FretboardProvider(app) }
-    val experimentsProvider by lazy { ExperimentsProvider(fretboardProvider.fretboard, app) }
     val turboMode: TurboMode by lazy { TurboMode(app) }
     val viewModelFactory by lazy { ViewModelFactory(this, app) }
     val screenController by lazy { ScreenController(sessionRepo) }

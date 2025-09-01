@@ -35,8 +35,28 @@ class OnboardingActivity : AppCompatActivity() {
         setOnboardShown()
     }
 
+    data class TurboModeOnboardingContent(
+        val titleId: Int,
+        val descriptionId: Int,
+        val enableButtonTextId: Int,
+        val disableButtonTextId: Int,
+        val imageId: Int,
+        val imageContentDescriptionId: Int
+    )
+
+    fun getTurboModeOnboarding() = {
+        TurboModeOnboardingContent(
+            titleId = R.string.onboarding_etp_title,
+            descriptionId = R.string.onboarding_etp_description,
+            enableButtonTextId = R.string.onboarding_etp_enable,
+            disableButtonTextId = R.string.onboarding_etp_disable2,
+            imageId = R.drawable.etp_onboarding,
+            imageContentDescriptionId = R.string.onboarding_etp_image_a11y
+        )
+    }
+
     private fun setContent() {
-        val content = serviceLocator.experimentsProvider.getTurboModeOnboarding()
+        val content = getTurboModeOnboarding()
 
         disable_turbo_mode.text = resources.getString(content.disableButtonTextId)
         enable_turbo_mode.text = resources.getString(content.enableButtonTextId)

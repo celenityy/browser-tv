@@ -63,7 +63,6 @@ open class FirefoxApplication : LocaleAwareApplication() {
             serviceLocator = createServiceLocator()
 
             initRustDependencies()
-            initFretboard()
 
             enableStrictMode()
 
@@ -81,13 +80,6 @@ open class FirefoxApplication : LocaleAwareApplication() {
     private fun initRustDependencies() {
         Megazord.init()
         RustHttpConfig.setClient(lazy { OkHttpClient(OkHttpWrapper.client, this) })
-    }
-
-    private fun initFretboard() {
-        with(serviceLocator.fretboardProvider) {
-            loadExperiments()
-            updateExperiments()
-        }
     }
 
     // ServiceLocator needs to be created in onCreate in order to accept Application

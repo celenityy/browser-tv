@@ -42,13 +42,6 @@ class KillswitchLayoutTest {
     }
 
     @Test
-    fun `GIVEN experiment is disabled WHEN visibility is set THEN visibility should always be gone`() {
-        killswitchLayout.setRequirements(false, KillswitchLocales.All)
-
-        assertVisibilityIsAlwaysGone()
-    }
-
-    @Test
     fun `GIVEN visibility is set WHEN requirements are set THEN visibility should match the earlier set values`() {
         killswitchLayout.visibility = View.VISIBLE
         assertEquals(View.GONE, killswitchLayout.visibility)
