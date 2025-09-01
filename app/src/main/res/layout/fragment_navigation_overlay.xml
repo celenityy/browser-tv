@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="27dp"
         android:background="@color/browser_overlay_background"
-        app:layout_behavior="org.mozilla.tv.firefox.navigationoverlay.NavigationOverlayBehavior"
+        app:layout_behavior="dev.celenity.tv.browser.navigationoverlay.NavigationOverlayBehavior"
         android:orientation="vertical">
 
         <LinearLayout
@@ -38,7 +38,7 @@
         Drawable tinted in code (XML needs API 23+).
 
         android:importantForAutofill (XML needs API 26+) requires tools:ignore="UnusedAttribute" for lint check -->
-        <org.mozilla.tv.firefox.widget.InlineAutocompleteEditText
+        <dev.celenity.tv.browser.widget.InlineAutocompleteEditText
             android:id="@+id/navUrlInput"
             android:layout_width="498dp"
             android:layout_height="@dimen/urlbar_height"
@@ -63,7 +63,7 @@
             android:textIsSelectable="false"
             android:fontFamily="@string/font_ember_regular"/>
     </LinearLayout>
-    <org.mozilla.tv.firefox.navigationoverlay.BrowserNavigationOverlayScrollView
+    <dev.celenity.tv.browser.navigationoverlay.BrowserNavigationOverlayScrollView
         android:id="@+id/navOverlayScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -90,5 +90,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </org.mozilla.tv.firefox.navigationoverlay.BrowserNavigationOverlayScrollView>
+    </dev.celenity.tv.browser.navigationoverlay.BrowserNavigationOverlayScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

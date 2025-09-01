@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-import org.mozilla.gradle.tasks.ValidateAndroidAppReleaseConfiguration
+import dev.celenity.gradle.tasks.ValidateAndroidAppReleaseConfiguration
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
@@ -240,7 +240,7 @@ def addSecretToBuildConfig(variant, fieldName, fileBaseName) {
 
 // -------------------------------------------------------------------------------------------------
 // L10N: Generate list of locales
-// Firefox TV provides its own (Android independent) locale switcher. That switcher requires a list
+// Browser TV provides its own (Android independent) locale switcher. That switcher requires a list
 // of locale codes. We generate that list here to avoid having to manually maintain a list of locales:
 // -------------------------------------------------------------------------------------------------
 
@@ -283,7 +283,7 @@ def getEnabledLocales() {
     return langs.sort { it }
 }
 
-def generatedLocaleListDir = 'src/main/java/org/mozilla/tv/firefox/generated'
+def generatedLocaleListDir = 'src/main/java/dev/celenity/tv/browser/generated'
 def generatedLocaleListFilename = 'LocaleList.java'
 
 task generateLocaleList {
@@ -294,7 +294,7 @@ task generateLocaleList {
 
         localeList.delete()
         localeList.createNewFile()
-        localeList << "package org.mozilla.tv.firefox.generated;" << "\n" << "\n"
+        localeList << "package dev.celenity.tv.browser.generated;" << "\n" << "\n"
         localeList << "import java.util.Arrays;" << "\n"
         localeList << "import java.util.Collections;" << "\n"
         localeList << "import java.util.List;" << "\n"

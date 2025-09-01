@@ -56,7 +56,7 @@
               android:fontFamily="@string/font_ember_regular"/>
         </LinearLayout>
 
-        <org.mozilla.tv.firefox.widget.ResizableKeyboardCoordinatorLayout
+        <dev.celenity.tv.browser.widget.ResizableKeyboardCoordinatorLayout
             app:viewToHideWhenActivated="@+id/erase"
             android:layout_marginTop="0dp"
             android:id="@+id/main_content"
@@ -74,7 +74,7 @@
 
             <include layout="@layout/hint_bar"/>
 
-        </org.mozilla.tv.firefox.widget.ResizableKeyboardCoordinatorLayout>
+        </dev.celenity.tv.browser.widget.ResizableKeyboardCoordinatorLayout>
     </LinearLayout>
 
     <FrameLayout
@@ -85,14 +85,14 @@
         android:visibility="gone" />
 
     <!-- src and initial position set in code. See CursorModel -->
-    <org.mozilla.tv.firefox.webrender.cursor.CursorView
+    <dev.celenity.tv.browser.webrender.cursor.CursorView
         android:id="@+id/cursorView"
         android:layout_width="@dimen/remote_cursor_size"
         android:layout_height="@dimen/remote_cursor_size"
         android:scaleType="centerInside" />
 
-    <!-- Bottom margin for the FirefoxProgressBar is set programmatically -->
-    <org.mozilla.tv.firefox.webrender.FirefoxProgressBar
+    <!-- Bottom margin for the BrowserProgressBar is set programmatically -->
+    <dev.celenity.tv.browser.webrender.BrowserProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

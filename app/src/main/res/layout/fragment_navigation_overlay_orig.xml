@@ -56,7 +56,7 @@
             android:fontFamily="@string/font_ember_regular" />
     </LinearLayout>
 
-    <org.mozilla.tv.firefox.navigationoverlay.BrowserNavigationOverlayScrollView
+    <dev.celenity.tv.browser.navigationoverlay.BrowserNavigationOverlayScrollView
         android:id="@+id/overlayScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -97,7 +97,7 @@
                 Drawable tinted in code (XML needs API 23+).
 
                 android:importantForAutofill (XML needs API 26+) requires tools:ignore="UnusedAttribute" for lint check -->
-                <org.mozilla.tv.firefox.widget.InlineAutocompleteEditText
+                <dev.celenity.tv.browser.widget.InlineAutocompleteEditText
                     android:id="@+id/navUrlInput"
                     android:layout_width="498dp"
                     android:layout_height="@dimen/urlbar_height"
@@ -124,7 +124,7 @@
 
                     <requestFocus />
 
-                </org.mozilla.tv.firefox.widget.InlineAutocompleteEditText>
+                </dev.celenity.tv.browser.widget.InlineAutocompleteEditText>
 
                 <LinearLayout
                     android:id="@+id/channelsContainer"
@@ -154,7 +154,7 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-    </org.mozilla.tv.firefox.navigationoverlay.BrowserNavigationOverlayScrollView>
+    </dev.celenity.tv.browser.navigationoverlay.BrowserNavigationOverlayScrollView>
 
     <include layout="@layout/hint_bar" />
 </LinearLayout>

@@ -5,10 +5,6 @@
     <!-- ## into a separate file like strings_references.xml                                  ## -->
     <!-- ####################################################################################### -->
 
-    <!-- The brand name of this app -->
-    <string name="firefox_tv_brand_name" tools:keep="@string/firefox_tv_brand_name">Firefox TV</string>
-    <string name="firefox_tv_brand_name_short" tools:keep="@string/firefox_tv_brand_name_short">Firefox</string>
-
     <!-- The brand name of our partner company, Pocket. -->
     <string name="pocket_brand_name">Pocket</string>
 
@@ -195,9 +191,9 @@
     Clicking on that button in the YouTube app will show YouTube's instructions on how to cast. -->
     <string name="youtube_casting_onboarding_toast">用您的手机或平板电脑投屏 YouTube 视频。在您的设备上打开 YouTube，然后点按 %s 即可开始使用。</string>
 
-    <!-- Content description for the Exit Firefox button.
-     %1$s will be replaced with the Firefox brand name. -->
-    <string name="exit_firefox_a11y">退出 %1$s</string>
+    <!-- Content description for the Exit Browser button.
+     %1$s will be replaced with the Browser brand name. -->
+    <string name="exit_browser">退出 %1$s</string>
 
     <!-- Hint Strings -->
     <!-- Hint text displayed when the overlay is open.

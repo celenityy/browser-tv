@@ -12,7 +12,7 @@ labels: "🐞 bug"
 ### Actual behavior
 
 ### Device information
-* Fire TV device: ?
-* Latest affected Firefox version: ?
-* Earliest affected Firefox version: ?
+* TV device: ?
+* Latest affected Browser version: ?
+* Earliest affected Browser version: ?
 * Turbo Mode: ?

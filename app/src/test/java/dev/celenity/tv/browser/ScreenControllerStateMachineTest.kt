@@ -1,0 +1,60 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+package dev.celenity.tv.browser
+
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import dev.celenity.tv.browser.ScreenControllerStateMachine.ActiveScreen.NAVIGATION_OVERLAY
+import dev.celenity.tv.browser.ScreenControllerStateMachine.ActiveScreen.WEB_RENDER
+import dev.celenity.tv.browser.ScreenControllerStateMachine.Transition.ADD_OVERLAY
+import dev.celenity.tv.browser.ScreenControllerStateMachine.Transition.EXIT_APP
+import dev.celenity.tv.browser.ScreenControllerStateMachine.Transition.NO_OP
+import dev.celenity.tv.browser.ScreenControllerStateMachine.Transition.REMOVE_OVERLAY
+
+class ScreenControllerStateMachineTest {
+
+    @Test
+    fun `GIVEN overlay is active and no previous sites are in the backstack WHEN back is pressed THEN emit exit_app`() {
+        val currentActiveScreen = NAVIGATION_OVERLAY
+        val canGoBack = false
+        assertEquals(EXIT_APP, ScreenControllerStateMachine.getNewStateBackPress(currentActiveScreen, canGoBack))
+    }
+
+    @Test
+    fun `GIVEN overlay is active and previous sites are in the backstack WHEN back is pressed THEN emit remove_overlay`() {
+        val currentActiveScreen = NAVIGATION_OVERLAY
+        val canGoBack = true
+        assertEquals(REMOVE_OVERLAY, ScreenControllerStateMachine.getNewStateBackPress(currentActiveScreen, canGoBack))
+    }
+
+    @Test
+    fun `GIVEN overlay is active and url is home WHEN menu is pressed THEN emit no_op`() {
+        val currentActiveScreen = NAVIGATION_OVERLAY
+        val currentUrlIsHome = true
+        assertEquals(NO_OP, ScreenControllerStateMachine.getNewStateMenuPress(currentActiveScreen, currentUrlIsHome))
+    }
+
+    @Test
+    fun `GIVEN overlay is active and url is not home WHEN menu is pressed THEN emit remove_overlay`() {
+        val currentActiveScreen = NAVIGATION_OVERLAY
+        val currentUrlIsHome = false
+        assertEquals(REMOVE_OVERLAY, ScreenControllerStateMachine.getNewStateMenuPress(currentActiveScreen, currentUrlIsHome))
+    }
+
+    @Test
+    fun `GIVEN web render is active WHEN back is pressed THEN emit add_overlay`() {
+        val currentActiveScreen = WEB_RENDER
+        assertEquals(ADD_OVERLAY, ScreenControllerStateMachine.getNewStateBackPress(currentActiveScreen, false))
+    }
+
+    @Test
+    fun `GIVEN web render is active WHEN menu is pressed THEN emit add_overlay`() {
+        val currentActiveScreen = WEB_RENDER
+        assertEquals(ADD_OVERLAY, ScreenControllerStateMachine.getNewStateMenuPress(currentActiveScreen, false))
+    }
+
+    // Pocket and Settings fragments will be turned into channels, so they do not have tests
+    // TODO remove this comment once channels have been implemented
+}

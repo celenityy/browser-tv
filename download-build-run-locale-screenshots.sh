@@ -3,7 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# This script will clone, build, and install Firefox TV to device and 
+# This script will clone, build, and install Browser to device and 
 # then execute screenshot tests which may be uploaded to Dropbox by choice 
 
 # Requirements: Android SDK (adb, gradlew)
@@ -15,8 +15,8 @@
 # NOTE: Screengrabfile must target a specific device using:
 #       specific_device '#####'
 
-REPO="https://github.com/mozilla-mobile/firefox-tv.git"
-CLONE_DIR="$HOME/Desktop/firefox-tv"
+REPO="https://github.com/celenityy/browser-tv.git"
+CLONE_DIR="$HOME/Desktop/browser"
 SCREENSHOTS_DIR="fastlane"
 CONFIG="Screengrabfile"
 

@@ -1,0 +1,251 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+package dev.celenity.tv.browser.ext
+
+import android.os.Handler
+import android.os.Looper
+import android.webkit.ValueCallback
+import android.widget.FrameLayout
+import androidx.annotation.VisibleForTesting
+import mozilla.components.concept.engine.EngineView
+import org.mozilla.geckoview.GeckoView
+import org.mozilla.geckoview.ScreenLength
+import dev.celenity.tv.browser.ext.Js.CACHE_JS
+import dev.celenity.tv.browser.ext.Js.JS_OBSERVE_PLAYBACK_STATE
+import dev.celenity.tv.browser.ext.Js.PAUSE_VIDEO
+import dev.celenity.tv.browser.ext.Js.RESTORE_JS
+import dev.celenity.tv.browser.utils.Direction
+import dev.celenity.tv.browser.webrender.FocusedDOMElementCache
+import java.util.WeakHashMap
+
+// Extension methods on the EngineView class. This is used for additional features that are not part
+// of the upstream browser-engine(-gecko) component yet.
+
+private val uiHandler = Handler(Looper.getMainLooper())
+
+/**
+ * Browser for TV needs to configure every WebView appropriately.
+ */
+fun EngineView.setupForApp() {
+    geckoView?.setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            // For why we're modifying the focusedDOMElement, see FocusedDOMElementCacheInterface.
+            //
+            // Any views (like BrowserNavigationOverlay) that may clear the cache, e.g. by
+            // reloading the page, are required to handle their own caching. Here we'll handle
+            // cases where the page cache isn't cleared.
+            focusedDOMElement.cache()
+        } else {
+            // Trying to restore immediately doesn't work - perhaps the WebView hasn't actually
+            // received focus yet? Posting to the end of the UI queue seems to solve the problem.
+            uiHandler.post { focusedDOMElement.restore() }
+        }
+    }
+}
+
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun EngineView.evalJS(javascript: String) {
+    geckoView?.session?.loadUri("javascript:$javascript")
+}
+
+fun EngineView.pauseAllVideoPlaybacks() {
+    evalJS(PAUSE_VIDEO)
+}
+
+fun EngineView.cacheDomElement() {
+    evalJS(CACHE_JS)
+}
+
+fun EngineView.restoreDomElement() {
+    evalJS(RESTORE_JS)
+}
+
+fun EngineView.observePlaybackState() {
+    evalJS(JS_OBSERVE_PLAYBACK_STATE)
+}
+
+fun EngineView.observeScrollPosition() {
+    // No action necessary.
+}
+
+fun EngineView.updateFullscreenScrollPosition() {
+    // No action necessary.
+}
+
+fun EngineView.addSubmitListenerToInputElements() {
+    throw NotImplementedError("This has not been implemented in Gecko. Please move over System implementation")
+}
+
+private fun EngineView.evalJSWithTargetVideo(getExpressionToEval: (videoId: String) -> String) {
+    val ID_TARGET_VIDEO = "targetVideo"
+    val GET_TARGET_VIDEO_OR_RETURN = """
+            |var videos = Array.from(document.querySelectorAll('video'));
+            |if (videos.length === 0) { return; }
+            |
+            |var $ID_TARGET_VIDEO = videos.find(function (video) { return !video.paused });
+            |if (!$ID_TARGET_VIDEO) {
+            |    $ID_TARGET_VIDEO = videos[0];
+            |}
+            """.trimMargin()
+
+    val expressionToEval = getExpressionToEval(ID_TARGET_VIDEO)
+    evalJS("""
+            |(function() {
+            |    $GET_TARGET_VIDEO_OR_RETURN
+            |    $expressionToEval
+            |})();
+            """.trimMargin())
+}
+
+fun EngineView.playTargetVideo() {
+    evalJSWithTargetVideo { videoId -> "$videoId.play();" }
+}
+
+fun EngineView.pauseTargetVideo(isInterruptedByVoiceCommand: Boolean) {
+    fun getJS(videoId: String) = if (!isInterruptedByVoiceCommand) {
+        "$videoId.pause();"
+    } else {
+        // The video is paused for us during a voice command: my theory is that WebView
+        // pauses/resumes videos when audio focus is revoked/granted to it (while it's given
+        // to the voice command). Unfortunately, afaict there is no way to prevent WebView
+        // from resuming these paused videos so we have to pause it after it resumes.
+        // Unfortunately, there is no callback for this (or audio focus changes) so we
+        // inject JS to pause the video immediately after it starts again.
+        //
+        // We timeout the if-playing-starts-pause listener so, if for some reason this
+        // listener isn't called immediately, it doesn't pause the video after the user
+        // attempts to play it in the future (e.g. user says "pause" while video is already
+        // paused and then requests a play).
+        """
+                    | var playingEvent = 'playing';
+                    | var initialExecuteMillis = new Date();
+                    |
+                    | function onPlay() {
+                    |     var now = new Date();
+                    |     var millisPassed = now.getTime() - initialExecuteMillis.getTime();
+                    |     if (millisPassed < 1000) {
+                    |         $videoId.pause();
+                    |     }
+                    |
+                    |     $videoId.removeEventListener(playingEvent, onPlay);
+                    | }
+                    |
+                    | $videoId.addEventListener(playingEvent, onPlay);
+                """.trimMargin()
+    }
+
+    evalJSWithTargetVideo(::getJS)
+}
+
+fun EngineView.seekTargetVideoToPosition(absolutePositionSeconds: Long) {
+    evalJSWithTargetVideo { videoId -> "$videoId.currentTime = $absolutePositionSeconds;" }
+}
+
+fun EngineView.checkYoutubeBack(callback: ValueCallback<String>) {
+    // TODO: handle YT back for gecko variant
+    callback.onReceiveValue("false")
+}
+
+/**
+ * This functionality is not supported by browser-engine-gecko yet. See [EngineView.evalJS] comment for details.
+ */
+fun EngineView.addJavascriptInterface(obj: Any, name: String) {
+    println("TODO: require media interface from platform team $obj $name")
+}
+
+fun EngineView.removeJavascriptInterface(interfaceName: String) {
+    println("TODO: require media interface from platform team $interfaceName")
+}
+
+@Synchronized
+fun EngineView.scrollByClamped(vx: Int, vy: Int) {
+    // TODO: to be addressed #1912; PanZoomController does not update asynchronously
+    geckoView?.apply {
+        val screenLengthX = ScreenLength.fromPixels((vx * 17).toDouble())
+        val screenLengthY = ScreenLength.fromPixels((vy * 17).toDouble())
+
+        panZoomController.scrollBy(screenLengthX, screenLengthY)
+    }
+}
+
+/** TODO: Replace stub when functionality is available in GV (See #1837) */
+fun EngineView.handleYoutubeBack(@Suppress("UNUSED_PARAMETER") indexToGoBackTo: Int) { }
+object WebHistory {
+    val currentIndex: Int
+        get() = 0
+}
+
+/** TODO: Replace stub when functionality is available in GV (See #1837) */
+val EngineView.backForwardList: WebHistory
+    get() = WebHistory
+
+fun EngineView.maybeGoBackBeforeFxaSignIn() {
+    TODO("implemented only with system WebView to speed up development")
+}
+
+val EngineView.focusedDOMElement: FocusedDOMElementCache
+    get() = getOrPutExtension(this).domElementCache
+
+// fun EngineView.saveState(): Bundle {
+//     val bundle = Bundle()
+//     getOrPutExtension(this).geckoView?
+//     return bundle
+// }
+//
+// fun EngineView.restoreState(state: Bundle) {
+//     getOrPutExtension(this).geckoView?.restoreState(state)
+// }
+
+/** TODO: Replace stub when functionality is available in GV */
+fun EngineView.canGoBackTwice(): Boolean {
+    return false
+}
+
+fun EngineView.onPauseIfNotNull() {
+    if (geckoView != null)
+        this.onPause()
+}
+
+fun EngineView.onResumeIfNotNull() {
+    if (geckoView != null)
+        this.onResume()
+}
+
+fun EngineView.couldScrollInDirection(direction: Direction): Boolean =
+        when (direction) {
+            Direction.UP -> geckoView?.canScrollVertically(-1)
+            Direction.DOWN -> geckoView?.canScrollVertically(1)
+            Direction.LEFT -> geckoView?.canScrollHorizontally(-1)
+            Direction.RIGHT -> geckoView?.canScrollHorizontally(1)
+        } == true
+
+// This method is only for adding extension methods here (as a workaround). Do not expose WebView to the app.
+private val EngineView.geckoView: GeckoView?
+    get() = getOrPutExtension(this).geckoView
+
+private val extensions = WeakHashMap<EngineView, EngineViewExtension>()
+
+private fun getOrPutExtension(engineView: EngineView): EngineViewExtension {
+    extensions[engineView]?.let { return it }
+
+    return EngineViewExtension(engineView).also {
+        extensions.clear()
+        extensions[engineView] = it
+    }
+}
+
+/**
+ * Cache of additional properties on [EngineView].
+ */
+private class EngineViewExtension(private val engineView: EngineView) {
+    val domElementCache: FocusedDOMElementCache = FocusedDOMElementCache(engineView)
+
+    /**
+     * Extract the wrapped WebView from the EngineSession. This is a temporary workaround until all required functionality has
+     * been implemented in the upstream component.
+     */
+    val geckoView: GeckoView?
+        get() = (engineView.asView() as FrameLayout).getChildAt(0) as GeckoView
+}

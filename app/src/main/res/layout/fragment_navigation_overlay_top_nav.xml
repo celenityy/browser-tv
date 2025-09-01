@@ -28,7 +28,7 @@
         android:nextFocusUp="@+id/bannerMoreInfoButton"
         android:contentDescription="@string/content_description_reload"/>
 
-    <org.mozilla.tv.firefox.widget.CheckableImageButton
+    <dev.celenity.tv.browser.widget.CheckableImageButton
         android:id="@+id/pinButton"
         style="@style/NavigationButton"
         android:src="@drawable/pin_selector"
@@ -36,12 +36,12 @@
         android:contentDescription="@string/pin_label"/>
 
     <!-- src and content description set programmatically -->
-    <org.mozilla.tv.firefox.widget.CheckableImageButton
+    <dev.celenity.tv.browser.widget.CheckableImageButton
         android:id="@+id/turboButton"
         android:nextFocusUp="@+id/bannerMoreInfoButton"
         style="@style/NavigationButton" />
 
-    <org.mozilla.tv.firefox.widget.CheckableImageButton
+    <dev.celenity.tv.browser.widget.CheckableImageButton
         android:id="@+id/desktopModeButton"
         style="@style/NavigationButton"
         android:src="@drawable/mozac_ic_device_desktop"
