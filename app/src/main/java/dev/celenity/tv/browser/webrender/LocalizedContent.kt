@@ -41,26 +41,7 @@ object LocalizedContent {
 
         val appName = context.resources.getString(R.string.app_name)
         val mplUrl = "https://www.mozilla.org/en-US/MPL/"
-        val trademarkPolicyUrl = "https://www.mozilla.org/foundation/trademarks/policy/"
         val trackingProtectionUrl = "https://wiki.mozilla.org/Security/Tracking_protection#Lists"
-
-        val yourRights = resources.getString(R.string.your_rights)
-        substitutionMap["%your-rights%"] = yourRights
-
-        val content1 = resources.getString(R.string.your_rights_content1, appName)
-        substitutionMap["%your-rights-content1%"] = content1
-
-        val content2 = resources.getString(R.string.your_rights_content2, appName, mplUrl)
-        substitutionMap["%your-rights-content2%"] = content2
-
-        val content3 = resources.getString(R.string.your_rights_content3, appName, trademarkPolicyUrl)
-        substitutionMap["%your-rights-content3%"] = content3
-
-        val content4 = resources.getString(R.string.your_rights_content4, appName, URLs.URL_LICENSES)
-        substitutionMap["%your-rights-content4%"] = content4
-
-        val content5 = resources.getString(R.string.your_rights_content5, appName, URLs.URL_GPL, trackingProtectionUrl)
-        substitutionMap["%your-rights-content5%"] = content5
 
         substitutionMap["%dir%"] = when (context.resources.configuration.layoutDirection) {
             View.LAYOUT_DIRECTION_LTR -> "ltr"

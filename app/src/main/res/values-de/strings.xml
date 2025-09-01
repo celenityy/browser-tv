@@ -20,7 +20,7 @@
     <string name="menu_about">Über</string>
     <string name="preference_language">Sprache</string>
 
-    <!-- This is shown when the user hasn't set a Firefox for Fire TV specific language, i.e. when Firefox for Fire TV
+    <!-- This is shown when the user hasn't set a Browser for TV specific language, i.e. when Browser for TV
          is using the system default language. -->
     <string name="preference_language_systemdefault">Systemstandard</string>
 
@@ -39,9 +39,6 @@
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">Kann zu fehlenden Symbolen oder Grafiken führen</string>
 
-    <!-- In-app link (in settings) to Firefox for Fire TV privacy notice. -->
-    <string name="preference_privacy_notice">Datenschutzhinweis</string>
-
     <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
     <string name="content_description_forward">Vorwärts navigieren</string>
 
@@ -53,11 +50,11 @@
 
     <string name="external_app_prompt_title">Link in anderer App öffnen</string>
     <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
-         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox for Fire TV). -->
+         Argument 2 is the external app name, argument 1 is our name (i.e. Browser for TV). -->
     <string name="external_app_prompt">Sie können %1$s verlassen, um diesen Link in %2$s zu öffnen.</string>
     <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
     <string name="external_app_prompt_no_app_title">App zum Öffnen des Links finden</string>
-    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox for Fire TV) and %2$s is the name of
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Browser for TV) and %2$s is the name of
          the app store installed on the device (usually that's Google Play). -->
     <string name="external_app_prompt_no_app">Anscheinend kann keine der Apps auf Ihrem Gerät diesen Link öffnen. Sie können %1$s verlassen und bei %2$s nach einer App dafür suchen.</string>
     <!-- This label is shown above a list of apps that can be used to open a given link -->
@@ -67,34 +64,7 @@
     <string name="errorpage_title">Seiten-Ladefehler</string>
     <string name="errorpage_refresh">Erneut versuchen</string>
 
-    <string name="your_rights">Ihre Rechte</string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)-->
-    <string name="your_rights_content1"><![CDATA[%1$s ist freie und quelloffene Software, die von Mozilla und anderen Mitwirkenden entwickelt wird.]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA[\"%1$s steht unter der \"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>\" und anderen Open-Source-Lizenzen.\"]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[\"Ihnen werden keine Rechte oder Lizenzen an den Markenrechten der Mozilla Foundation oder einer anderen Partei eingeräumt, dazu zählen die Namen und Logos von Mozilla, Firefox oder %1$s. Weitere Informationen finden Sie \"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hier</a>.]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[Sonstiger Quelltext für %1$s steht unter diversen anderen freien und Open-Source-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Lizenzen</a>.]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the GPL
-    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
-    <string name="your_rights_content5"><![CDATA[\"%1$s nutzt auch von Disconnect, Inc. angebotene Blockierlisten als separate und unabhängige Werke unter der \"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License3</a>\", die \"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hier</a>\" verfügbar sind.\"]]></string>
-
-    <!-- Firefox for Fire TV
+    <!-- Browser for TV
     video strings -->
     <!-- Settings strings -->
     <string name="settings_cookies_dialog_title">Alle Cookies und Website-Daten entfernen</string>
@@ -147,8 +117,8 @@
     <!-- Label shown underneath Pin icon in toolbar when a site is already pinned, to hint to users that
          they can unpin the site to remove it-->
     <string name="unpin_label">Vom Startbildschirm lösen</string>
-    <string name="notification_pinned_site">Am Firefox-TV-Startbildschirm angeheftet</string>
-    <string name="notification_unpinned_site">Vom Firefox-TV-Startbildschirm entfernt</string>
+    <string name="notification_pinned_site">Am Browser-TV-Startbildschirm angeheftet</string>
+    <string name="notification_unpinned_site">Vom Browser-TV-Startbildschirm entfernt</string>
 
     <!-- The title of a tutorial shown to introduce Pocket video recommendations.
     %1$s will be replaced with the Pocket brand name. -->
@@ -178,10 +148,10 @@
     <!-- Content description for Request desktop version button-->
     <string name="request_desktop_site_a11y">Desktop-Version dieser Website anfordern</string>
     <!-- Notification displayed when the user has clicked the "request desktop version" button to turn ON desktop mode,
-    notifying the user that Firefox has requested the "desktop version" from the site -->
+    notifying the user that Browser has requested the "desktop version" from the site -->
     <string name="notification_request_desktop_site">Desktop-Version angefordert</string>
     <!-- Notification displayed when the user has clicked the "request desktop version" button to turn OFF desktop mode,
-    to notify user that Firefox has requested the default "non-desktop version" from the site -->
+    to notify user that Browser has requested the default "non-desktop version" from the site -->
     <string name="notification_request_non_desktop_site">Zu Nicht-Desktop-Version zurückgekehrt</string>
 
     <!-- Notification displayed to introduce a "YouTube casting" feature (similar to "broadcasting")
@@ -205,19 +175,19 @@
     <string name="hint_press_back_to_close_overlay_a11y">Drücken Sie die Zurück-Taste, um zurückzukehren</string>
     <!-- Hint text displayed when the browser is open.
      $IMAGE will be replaced with the image of a hardware menu button.
-     %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
+     %1$s will be replaced with the name of the app (e.g. Browser for TV)
      When the described button is pressed, the overlay will open and the browser will be hidden underneath it -->
     <string name="hint_press_menu_to_open_overlay">Drücken Sie $IMAGE, um die Startseite, Suche, Einstellungen und mehr von %1$s aufzurufen</string>
     <!-- Content description for a hint bar displayed when the browser is open.
-     %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
+     %1$s will be replaced with the name of the app (e.g. Browser for TV)
      When the described button is pressed, the overlay will open and the browser will be hidden underneath it -->
     <string name="hint_press_menu_to_open_overlay_a11y">Drücken Sie die Menü-Taste, um die Startseite, Suche, Einstellungen und mehr von %1$s aufzurufen</string>
 
     <!-- Firefox Accounts Strings-->
     <!-- Description for Sent tab buttons (in navigation toolbar & settings, both on the homescreen)
-     that will launch the Firefox Account sign-in experience so users can receive Firefox tabs on their Fire TV.
-     %1$s will be replaced with Firefox. -->
-    <string name="fxa_navigation_item_new">Neu! Senden Sie %1$s-Tabs an Fire TV</string>
+     that will launch the Firefox Account sign-in experience so users can receive browser tabs on their TV.
+     %1$s will be replaced with Browser. -->
+    <string name="fxa_navigation_item_new">Neu! Senden Sie %1$s-Tabs an TV</string>
     <!-- Description for Sent tab button in navigation toolbar
      that will launch the Firefox Account settings after the user is signed in. -->
     <string name="fxa_navigation_item_signed_in2">Einstellungen für gesendete Tabs</string>
@@ -227,12 +197,12 @@
     <!-- Header for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature. -->
     <string name="fxa_preboarding_header">Sehen Sie Ihre Tabs auf dem großen Bildschirm</string>
     <!-- Instruction text for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature.
-    %1$s will be replaced with Firefox.
-    %2$s will be replaced with the name of our app (i.e. Firefox for Fire TV) -->
+    %1$s will be replaced with Browser.
+    %2$s will be replaced with the name of our app (i.e. Browser for TV) -->
     <string name="fxa_preboarding_instruction">Senden Sie einen Tab von überall, wo Sie %1$s verwenden, und sehen Sie ihn hier. Melden Sie sich bei %2$s an, um zu beginnen.</string>
     <!-- Instruction text for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature.
-    %1$s will be replaced with Firefox.
-    %2$s will be replaced with the name of our app (i.e. Firefox for Fire TV) -->
+    %1$s will be replaced with Browser.
+    %2$s will be replaced with the name of our app (i.e. Browser for TV) -->
     <string name="fxa_preboarding_instruction1">Senden Sie einen Tab von %1$s für Desktop oder Mobilgeräte und sehen Sie ihn hier. Melden Sie sich bei %2$s an, um zu beginnen.</string>
     <!-- Sign-in button text for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature. -->
     <string name="fxa_preboarding_primary_button">Anmelden</string>
@@ -240,12 +210,12 @@
     <string name="fxa_preboarding_secondary_button">Nicht jetzt</string>
     <!-- Shown on the onboarding page that explains how to receive tabs that are sent from other devices.
          This text is announced to screen reader users when they focus an image that will display a graphic explaining the receive tab process-->
-    <string name="fxa_preboarding_image_a11y">Illustration von Tabs, die vom Handy und Tablet an Fire TV gesendet wurden</string>
+    <string name="fxa_preboarding_image_a11y">Illustration von Tabs, die vom Handy und Tablet an TV gesendet wurden</string>
     <!-- Header for Firefox Accounts onboarding screen, which is shown after signing in. -->
     <string name="fxa_onboarding_header">Ihre Tabs. Jetzt bereit für die Hauptsendezeit.</string>
     <!-- Instruction text for Firefox Accounts onboarding screen, which is shown after signing in.
-     %1$s will be replaced with Firefox. -->
-    <string name="fxa_onboarding_instruction">Nun können Sie Tabs erhalten. Wählen Sie zunächst auf %1$s für Desktop und iOS „Tab an Gerät senden“ oder in Firefox Preview „Teilen“. Wählen Sie dann Fire TV und Ihr Tab wird dort nach kurzer Zeit angezeigt.</string>
+     %1$s will be replaced with Browser. -->
+    <string name="fxa_onboarding_instruction">Nun können Sie Tabs erhalten. Wählen Sie zunächst auf %1$s für Desktop und iOS „Tab an Gerät senden“ oder in Android „Teilen“. Wählen Sie dann TV und Ihr Tab wird dort nach kurzer Zeit angezeigt.</string>
     <!-- Text on the dismiss button for Firefox Accounts onboarding screen, which is shown after signing in. -->
     <string name="fxa_onboarding_primary_button">Ok, verstanden</string>
     <!-- Toast shown on webpage when tab is sent from another device
@@ -261,7 +231,7 @@
     <!-- Body text for Firefox Accounts settings page. -->
     <string name="fxa_settings_body_no_display_name">Angemeldet</string>
     <!-- Button text for seeing the onboarding screen on the Firefox Accounts settings page.
-     %1$s will be replaced with Firefox. -->
+     %1$s will be replaced with Browser. -->
     <string name="fxa_settings_primary_button">%1$s Tabs</string>
     <!-- Button text to sign out from the Firefox Accounts settings page -->
     <string name="fxa_settings_secondary_button">Abmelden</string>
@@ -270,17 +240,13 @@
 
     <!-- Strings for the prompt window for users to update the app. -->
     <!-- Header string for the prompt shown to users to update the app.
-    %1$s will be replaced with Firefox. -->
+    %1$s will be replaced with Browser. -->
     <string name="update_prompt_header">Halten Sie %1$s auf dem neuesten Stand</string>
     <!-- Instruction text for the prompt shown to users to update the app.
-    %1$s and %2$s will be replaced with Firefox.-->
+    %1$s and %2$s will be replaced with Browser.-->
     <string name="update_prompt_instruction">Aktualisieren Sie %1$s, um Leistung und Sicherheit auf den neuesten Stand zu bringen. Mit diesem Update können Sie Tabs von anderen %2$s-Browsern senden und hier auf dem großen Bildschirm anzeigen.</string>
     <!-- Button text to update the app. -->
     <string name="update_prompt_primary_button">Aktualisieren</string>
     <!-- Button text to dismiss the prompt to update the app. -->
     <string name="update_prompt_secondary_button">Nicht jetzt</string>
-
-    <!-- Text for the banner. -->
-    <string name="banner_text">Firefox hat den Support auf Amazon Fire TV beendet. Die App funktioniert weiter, erhält aber ab dem 30. April 2021 keine Sicherheits- oder andere Updates mehr.</string>
-    <string name="banner_more_info_button">Mehr erfahren</string>
 </resources>

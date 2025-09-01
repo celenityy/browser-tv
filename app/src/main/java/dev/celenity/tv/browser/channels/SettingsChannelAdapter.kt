@@ -26,12 +26,7 @@ class SettingsChannelAdapter(
             SettingsButton.ABOUT,
             R.drawable.mozac_ic_info,
             R.string.menu_about,
-            R.id.settings_tile_about),
-        SettingsItem(
-            SettingsButton.PRIVACY_POLICY,
-            R.drawable.mozac_ic_globe,
-            R.string.preference_privacy_notice,
-            R.id.settings_tile_privacypolicy)
+            R.id.settings_tile_about)
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SettingsTileHolder(
@@ -50,7 +45,6 @@ class SettingsChannelAdapter(
             when (val type = itemData.type) {
                 SettingsScreen.CLEAR_COOKIES -> showSettings(type as SettingsScreen)
                 SettingsButton.ABOUT -> loadUrl(URLs.URL_ABOUT)
-                SettingsButton.PRIVACY_POLICY -> loadUrl(URLs.PRIVACY_NOTICE_URL)
             }
         }
         itemView.contentDescription = itemView.context.getString(itemData.titleRes)
@@ -69,7 +63,7 @@ enum class SettingsScreen : SettingsTile {
     CLEAR_COOKIES, FXA_PROFILE
 }
 enum class SettingsButton : SettingsTile {
-        ABOUT, PRIVACY_POLICY
+        ABOUT
 }
 
 private data class SettingsItem(val type: SettingsTile, val imgRes: Int, val titleRes: Int, val viewId: Int)

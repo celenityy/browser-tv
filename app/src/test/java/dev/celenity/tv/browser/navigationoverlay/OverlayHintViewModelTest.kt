@@ -48,7 +48,6 @@ class OverlayHintViewModelTest {
 
         sessionRepoState.onNext(fakeSessionState(url = "https://www.mozilla.org"))
         sessionRepoState.onNext(fakeSessionState(url = "https://www.google.com"))
-        sessionRepoState.onNext(fakeSessionState(url = URLs.PRIVACY_NOTICE_URL))
         sessionRepoState.onNext(fakeSessionState(url = URLs.URL_LICENSES))
 
         hints.values().forEach {

@@ -59,7 +59,6 @@ class WebRenderHintViewModelTest {
         pushScrolledToEdge(Direction.DOWN)
         sessionRepoState.onNext(fakeSessionState("https://www.google.com"))
         pushCursorMove(Direction.UP)
-        sessionRepoState.onNext(fakeSessionState(URLs.PRIVACY_NOTICE_URL))
         pushCursorMove(Direction.LEFT)
         pushScrolledToEdge(Direction.UP)
         pushCursorMove(Direction.LEFT)

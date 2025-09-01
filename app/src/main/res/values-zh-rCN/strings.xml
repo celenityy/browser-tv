@@ -20,7 +20,7 @@
     <string name="menu_about">关于</string>
     <string name="preference_language">语言</string>
 
-    <!-- This is shown when the user hasn't set a Firefox for Fire TV specific language, i.e. when Firefox for Fire TV
+    <!-- This is shown when the user hasn't set a Browser for TV specific language, i.e. when Browser for TV
          is using the system default language. -->
     <string name="preference_language_systemdefault">系统默认</string>
 
@@ -39,9 +39,6 @@
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">可能造成图标或图像缺失</string>
 
-    <!-- In-app link (in settings) to Firefox for Fire TV privacy notice. -->
-    <string name="preference_privacy_notice">隐私声明</string>
-
     <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
     <string name="content_description_forward">浏览下一页</string>
 
@@ -53,11 +50,11 @@
 
     <string name="external_app_prompt_title">用另一个应用打开链接</string>
     <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
-         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox for Fire TV). -->
+         Argument 2 is the external app name, argument 1 is our name (i.e. Browser for TV). -->
     <string name="external_app_prompt">您可以离开 %1$s，用 %2$s 打开此链接。</string>
     <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
     <string name="external_app_prompt_no_app_title">寻找可以打开此链接的应用</string>
-    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox for Fire TV) and %2$s is the name of
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Browser for TV) and %2$s is the name of
          the app store installed on the device (usually that's Google Play). -->
     <string name="external_app_prompt_no_app">您的设备上的应用都不能打开此链接。您可以离开 %1$s，到 %2$s 找找适合的应用。</string>
     <!-- This label is shown above a list of apps that can be used to open a given link -->
@@ -67,34 +64,7 @@
     <string name="errorpage_title">页面载入出错</string>
     <string name="errorpage_refresh">重试</string>
 
-    <string name="your_rights">您的权利</string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)-->
-    <string name="your_rights_content1"><![CDATA[%1$s 是由 Mozilla 及贡献者制作的一款自由的开源软件。]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA[\"%1$s 依照 \"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla &amp;#20844;&amp;#20849;&amp;#35768;&amp;#21487;&amp;#35777;</a>及其他一些开源许可证向您授权。]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[您没有取得 Mozilla 基金会或任何一方的商标的任何权利或许可，包括 Mozilla、Firefox 和 %1$s 名称或徽标的许可。有关信息请查阅<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&amp;#27492;&amp;#22788;</a>。]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[%1$s 其他源代码以各类自由和开源<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&amp;#35768;&amp;#21487;&amp;#35777;</a>开放。]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
-    %2$s will be replaced with a URL linking to the GPL
-    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
-    <string name="your_rights_content5"><![CDATA[\"%1$s 还使用 Disconnect 公司提供的阻止列表，它是以 \"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU &amp;#36890;&amp;#29992;&amp;#20844;&amp;#20849;&amp;#35768;&amp;#21487;&amp;#35777; v3</a>\" 提供的一个独立的作品，可在\"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&amp;#36825;&amp;#37324;</a>找到。]]></string>
-
-    <!-- Firefox for Fire TV
+    <!-- Browser for TV
     video strings -->
     <!-- Settings strings -->
     <string name="settings_cookies_dialog_title">清除所有 Cookie 和站点数据</string>
@@ -147,8 +117,8 @@
     <!-- Label shown underneath Pin icon in toolbar when a site is already pinned, to hint to users that
          they can unpin the site to remove it-->
     <string name="unpin_label">取消固定到主屏幕</string>
-    <string name="notification_pinned_site">已固定到 Firefox TV 主屏幕</string>
-    <string name="notification_unpinned_site">已从 Firefox TV 主屏幕移除</string>
+    <string name="notification_pinned_site">已固定到 Browser TV 主屏幕</string>
+    <string name="notification_unpinned_site">已从 Browser TV 主屏幕移除</string>
 
     <!-- The title of a tutorial shown to introduce Pocket video recommendations.
     %1$s will be replaced with the Pocket brand name. -->
@@ -178,10 +148,10 @@
     <!-- Content description for Request desktop version button-->
     <string name="request_desktop_site_a11y">要求此站点的桌面版</string>
     <!-- Notification displayed when the user has clicked the "request desktop version" button to turn ON desktop mode,
-    notifying the user that Firefox has requested the "desktop version" from the site -->
+    notifying the user that Browser has requested the "desktop version" from the site -->
     <string name="notification_request_desktop_site">已发出桌面版请求</string>
     <!-- Notification displayed when the user has clicked the "request desktop version" button to turn OFF desktop mode,
-    to notify user that Firefox has requested the default "non-desktop version" from the site -->
+    to notify user that Browser has requested the default "non-desktop version" from the site -->
     <string name="notification_request_non_desktop_site">返回非桌面版</string>
 
     <!-- Notification displayed to introduce a "YouTube casting" feature (similar to "broadcasting")
@@ -205,19 +175,19 @@
     <string name="hint_press_back_to_close_overlay_a11y">按下后退按钮返回</string>
     <!-- Hint text displayed when the browser is open.
      $IMAGE will be replaced with the image of a hardware menu button.
-     %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
+     %1$s will be replaced with the name of the app (e.g. Browser for TV)
      When the described button is pressed, the overlay will open and the browser will be hidden underneath it -->
     <string name="hint_press_menu_to_open_overlay">按下 $IMAGE 打开 %1$s 主页、搜索、设置等</string>
     <!-- Content description for a hint bar displayed when the browser is open.
-     %1$s will be replaced with the name of the app (e.g. Firefox for Fire TV)
+     %1$s will be replaced with the name of the app (e.g. Browser for TV)
      When the described button is pressed, the overlay will open and the browser will be hidden underneath it -->
     <string name="hint_press_menu_to_open_overlay_a11y">按下菜单按钮打开 %1$s 主页、搜索、设置等</string>
 
     <!-- Firefox Accounts Strings-->
     <!-- Description for Sent tab buttons (in navigation toolbar & settings, both on the homescreen)
-     that will launch the Firefox Account sign-in experience so users can receive Firefox tabs on their Fire TV.
-     %1$s will be replaced with Firefox. -->
-    <string name="fxa_navigation_item_new">新功能！将 %1$s 标签页发送至 Fire TV</string>
+     that will launch the Firefox Account sign-in experience so users can receive browser tabs on their TV.
+     %1$s will be replaced with Browser. -->
+    <string name="fxa_navigation_item_new">新功能！将 %1$s 标签页发送至 TV</string>
     <!-- Description for Sent tab button in navigation toolbar
      that will launch the Firefox Account settings after the user is signed in. -->
     <string name="fxa_navigation_item_signed_in2">标签页发送设置</string>
@@ -227,12 +197,12 @@
     <!-- Header for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature. -->
     <string name="fxa_preboarding_header">在大屏幕上浏览您的标签页</string>
     <!-- Instruction text for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature.
-    %1$s will be replaced with Firefox.
-    %2$s will be replaced with the name of our app (i.e. Firefox for Fire TV) -->
+    %1$s will be replaced with Browser.
+    %2$s will be replaced with the name of our app (i.e. Browser for TV) -->
     <string name="fxa_preboarding_instruction">在您使用 %1$s 的任何设备发送标签页，并在此处查看。登录 %2$s 即可开始使用。</string>
     <!-- Instruction text for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature.
-    %1$s will be replaced with Firefox.
-    %2$s will be replaced with the name of our app (i.e. Firefox for Fire TV) -->
+    %1$s will be replaced with Browser.
+    %2$s will be replaced with the name of our app (i.e. Browser for TV) -->
     <string name="fxa_preboarding_instruction1">在您使用 %1$s 的桌面或移动设备发送标签页，并在此处查看。登录 %2$s 即可开始使用。</string>
     <!-- Sign-in button text for the Firefox Account sign-in pre-boarding, where we introduce the send tab feature. -->
     <string name="fxa_preboarding_primary_button">登录</string>
@@ -240,12 +210,12 @@
     <string name="fxa_preboarding_secondary_button">暂时不要</string>
     <!-- Shown on the onboarding page that explains how to receive tabs that are sent from other devices.
          This text is announced to screen reader users when they focus an image that will display a graphic explaining the receive tab process-->
-    <string name="fxa_preboarding_image_a11y">将手机和平板电脑上的标签页发送至 Fire TV - 图例</string>
+    <string name="fxa_preboarding_image_a11y">将手机和平板电脑上的标签页发送至 TV - 图例</string>
     <!-- Header for Firefox Accounts onboarding screen, which is shown after signing in. -->
     <string name="fxa_onboarding_header">您的标签页，现以更炫方式呈现。</string>
     <!-- Instruction text for Firefox Accounts onboarding screen, which is shown after signing in.
-     %1$s will be replaced with Firefox. -->
-    <string name="fxa_onboarding_instruction">您已准备好接收标签页。要开始使用，请在桌面或 iOS 版 %1$s 上选择“发送标签页到设备” ，亦或在 Firefox Preview 上分享。然后选择 Fire TV，您的标签页片刻后即会出现。</string>
+     %1$s will be replaced with Browser. -->
+    <string name="fxa_onboarding_instruction">您已准备好接收标签页。要开始使用，请在桌面或 iOS 版 %1$s 上选择“发送标签页到设备” ，亦或在 Android 上分享。然后选择 TV，您的标签页片刻后即会出现。</string>
     <!-- Text on the dismiss button for Firefox Accounts onboarding screen, which is shown after signing in. -->
     <string name="fxa_onboarding_primary_button">我知道了</string>
     <!-- Toast shown on webpage when tab is sent from another device
@@ -261,7 +231,7 @@
     <!-- Body text for Firefox Accounts settings page. -->
     <string name="fxa_settings_body_no_display_name">登录成功</string>
     <!-- Button text for seeing the onboarding screen on the Firefox Accounts settings page.
-     %1$s will be replaced with Firefox. -->
+     %1$s will be replaced with Browser. -->
     <string name="fxa_settings_primary_button">%1$s 个标签页</string>
     <!-- Button text to sign out from the Firefox Accounts settings page -->
     <string name="fxa_settings_secondary_button">退出登录</string>
@@ -270,17 +240,13 @@
 
     <!-- Strings for the prompt window for users to update the app. -->
     <!-- Header string for the prompt shown to users to update the app.
-    %1$s will be replaced with Firefox. -->
+    %1$s will be replaced with Browser. -->
     <string name="update_prompt_header">时刻保持 %1$s 最新</string>
     <!-- Instruction text for the prompt shown to users to update the app.
-    %1$s and %2$s will be replaced with Firefox.-->
+    %1$s and %2$s will be replaced with Browser.-->
     <string name="update_prompt_instruction">更新 %1$s 以获得最佳的性能和安全性。此次更新允许您从其他 %2$s 浏览器发送标签页，并在大屏幕上进行查看。</string>
     <!-- Button text to update the app. -->
     <string name="update_prompt_primary_button">更新</string>
     <!-- Button text to dismiss the prompt to update the app. -->
     <string name="update_prompt_secondary_button">暂时不要</string>
-
-    <!-- Text for the banner. -->
-    <string name="banner_text">Firefox已终止对Amazon Fire TV的支持。自2021年4月30日起，该应用仍可继续运行，但将无法收到安全或其他更新。</string>
-    <string name="banner_more_info_button">了解更多</string>
 </resources>
