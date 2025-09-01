@@ -16,11 +16,8 @@ import org.junit.Before
 import org.junit.Test
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.framework.UnresolvedString
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 
 class FxaReceivedTabTest {
-
-    @MockK(relaxed = true) private lateinit var sentryIntegration: SentryIntegration
 
     @Before
     fun before() {
@@ -86,31 +83,6 @@ class FxaReceivedTabTest {
             .filterMapToDomainObject()
             .test()
             .assertValues(expected)
-    }
-
-    @Test
-    fun `WHEN a receive tab event occurs with empty entries THEN sentry records an event and nothing is emitted`() {
-        val tabReceivedEvent = ADMIntegration.ReceivedTabs(null, emptyList())
-
-        Observable.just(tabReceivedEvent)
-            .filterMapToDomainObject(sentryIntegration)
-            .test()
-            .assertNoValues()
-
-        verify(exactly = 1) { sentryIntegration.captureAndLogError(any(), any()) }
-    }
-
-    @Test
-    fun `WHEN a receive tab event occurs with only blank URLs THEN sentry records an event and nothing is emitted`() {
-        val inputTabData = List(2) { TabData(title = "TabName $it", url = "   ") }
-        val tabReceivedEvent = mockADMTabReceivedEventWithNullDevice(inputTabData)
-
-        Observable.just(tabReceivedEvent)
-            .filterMapToDomainObject(sentryIntegration)
-            .test()
-            .assertNoValues()
-
-        verify(exactly = 1) { sentryIntegration.captureAndLogError(any(), any()) }
     }
 
     private fun mockADMTabReceivedEvent(

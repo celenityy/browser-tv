@@ -32,7 +32,6 @@ import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.AuthenticatedNoProfile
 import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.AuthenticatedWithProfile
 import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.NeedsReauthentication
 import org.mozilla.tv.firefox.fxa.FxaRepo.AccountState.NotAuthenticated
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.Settings
 import org.mozilla.tv.firefox.utils.URLs
@@ -56,8 +55,7 @@ class FxaRepo(
     val context: Context,
     val accountManager: FxaAccountManager = newInstanceDefaultAccountManager(context),
     val admIntegration: ADMIntegration, // Consider moving to an FxaReceiveTabsUseCase or rm this comment.
-    private val telemetryIntegration: TelemetryIntegration = TelemetryIntegration.INSTANCE,
-    private val sentryIntegration: SentryIntegration = SentryIntegration
+    private val telemetryIntegration: TelemetryIntegration = TelemetryIntegration.INSTANCE
 ) {
 
     /**

@@ -18,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
-import io.sentry.Sentry
 import kotlinx.android.synthetic.main.activity_main.container_navigation_overlay
 import kotlinx.android.synthetic.main.overlay_debug.debugLog
 import mozilla.components.browser.session.Session
@@ -134,7 +133,6 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
         super.onNewIntent(unsafeIntent)
 
         if (serviceLocator.sessionManager.selectedSession == null) {
-            Sentry.capture(IllegalStateException("onNewIntent is called with null selectedSession"))
             return
         }
 

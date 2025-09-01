@@ -23,7 +23,6 @@ import mozilla.components.support.rusthttp.RustHttpConfig
 import org.mozilla.tv.firefox.GleanMetrics.LegacyIds
 import org.mozilla.tv.firefox.components.locale.LocaleAwareApplication
 import org.mozilla.tv.firefox.ext.webRenderComponents
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 import org.mozilla.tv.firefox.webrender.VisibilityLifeCycleCallback
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.BuildConstants
@@ -66,9 +65,6 @@ open class FirefoxApplication : LocaleAwareApplication() {
         // situation where we create a GeckoRuntime from the Gecko child process
         applicationContext.runOnlyInMainProcess {
             serviceLocator = createServiceLocator()
-
-            // Enable crash reporting. Don't add anything above here because if it crashes, we won't know.
-            SentryIntegration.init(this, serviceLocator.settingsRepo)
 
             initRustDependencies()
             TelemetryIntegration.INSTANCE.init(this)

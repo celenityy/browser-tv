@@ -15,9 +15,7 @@ fun View.validateKnownViewById(): Int {
     if (this.id == View.NO_ID) {
         when (this) {
             is NestedWebView -> return ENGINE_VIEW_ID
-            else -> {
-                // TODO: need sentry/telemetry to keep track of what views without IDs get passed in
-            }
+            else -> {}
         }
     }
 

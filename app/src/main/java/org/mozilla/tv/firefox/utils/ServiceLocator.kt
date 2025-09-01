@@ -59,7 +59,7 @@ import org.mozilla.tv.firefox.webrender.cursor.CursorModel
  *
  *   #### Concrete value for interface:
  *   ```
- *   open val telemetry: TelemetryInterface by lazy { SentryWrapper() }
+ *   open val telemetry: TelemetryInterface by lazy {}
  *   ```
  */
 open class ServiceLocator(val app: Application) {

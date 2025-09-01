@@ -35,7 +35,6 @@ object LocalizedContent {
             aboutVersion = "$versionName (Build #$engineVersion)"
         } catch (e: PackageManager.NameNotFoundException) {
             // Nothing to do if we can't find the package name.
-            // TODO: Should we add an sentry log here? Why would we ever end up here
         }
 
         substitutionMap["%about-version%"] = aboutVersion

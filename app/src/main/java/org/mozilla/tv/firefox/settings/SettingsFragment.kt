@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.sentry.Sentry
 import kotlinx.android.synthetic.main.settings_screen_buttons.view.cancel_action
 import kotlinx.android.synthetic.main.settings_screen_buttons.view.confirm_action
 import kotlinx.android.synthetic.main.settings_screen_fxa_profile.view.avatarImage
@@ -58,7 +57,6 @@ class SettingsFragment : Fragment() {
             SettingsScreen.CLEAR_COOKIES -> setupClearCookiesScreen(inflater, container, settingsVM)
             SettingsScreen.FXA_PROFILE -> setupFxaProfileScreen(inflater, container)
             else -> {
-                Sentry.capture(IllegalStateException("Unexpected Settings type received: $type"))
                 return container!!
             }
         }

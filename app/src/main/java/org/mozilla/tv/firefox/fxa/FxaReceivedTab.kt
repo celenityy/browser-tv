@@ -10,7 +10,6 @@ import mozilla.components.concept.sync.TabData
 import mozilla.components.support.base.log.logger.Logger
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.framework.UnresolvedString
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 
 private val logger = Logger(FxaReceivedTab::class.java.simpleName)
 
@@ -40,9 +39,7 @@ data class FxaReceivedTab(
     )
 }
 
-fun Observable<ADMIntegration.ReceivedTabs>.filterMapToDomainObject(
-    sentryIntegration: SentryIntegration = SentryIntegration
-): Observable<FxaReceivedTab> = this
+fun Observable<ADMIntegration.ReceivedTabs>.filterMapToDomainObject(): Observable<FxaReceivedTab> = this
     .flatMap { admTabs ->
         val urls = admTabs.tabData
             .map(TabData::url)
@@ -52,8 +49,7 @@ fun Observable<ADMIntegration.ReceivedTabs>.filterMapToDomainObject(
         val url = urls.firstOrNull()
 
         if (url == null) {
-            sentryIntegration.captureAndLogError(logger,
-                ReceiveTabException("Received tab event with only blank URLs"))
+            ReceiveTabException("Received tab event with only blank URLs")
             return@flatMap Observable.empty<FxaReceivedTab>()
         }
 

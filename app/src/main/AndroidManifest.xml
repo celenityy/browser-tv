@@ -8,7 +8,6 @@
           package="org.mozilla.tv.firefox">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Used by sentry. -->
 
     <!-- Required for media playback voice control.
            https://developer.amazon.com/blogs/appstore/post/623addd5-6184-4e7f-a969-123a653cfb1a/implementing-voice-control-with-the-media-session-api-on-amazon-fire-tv -->

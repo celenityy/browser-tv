@@ -26,7 +26,6 @@ class TelemetryIntegrationTest {
     private lateinit var appContext: Application
     private lateinit var telemetryIntegration: TelemetryIntegration
     private lateinit var telemetrySpy: Telemetry
-    private lateinit var sentrySpy: SentryIntegration
 
     @Before
     fun setup() {
@@ -34,8 +33,7 @@ class TelemetryIntegrationTest {
         val telemetry = TelemetryFactory.createTelemetry(appContext)
         telemetrySpy = spy(telemetry)
         TelemetryHolder.set(telemetrySpy)
-        sentrySpy = spy(SentryIntegration)
-        telemetryIntegration = TestTelemetryIntegration(sentrySpy)
+        telemetryIntegration = TestTelemetryIntegration()
     }
 
     @Test
@@ -48,29 +46,10 @@ class TelemetryIntegrationTest {
         verify(telemetrySpy, times(1)).recordSessionStart()
         verify(telemetrySpy, times(1)).recordSessionEnd(any())
     }
-
-    @Test
-    fun `WHEN TelemetryWrapper is called out of order THEN sentry should capture callstack`() {
-        telemetryIntegration.stopSession(appContext)
-        telemetryIntegration.startSession(appContext)
-
-        verify(sentrySpy, times(1)).capture(anyNonNull())
-    }
-
-    @Test
-    fun `GIVEN session is running WHEN stopSession is called twice in a row THEN sentry should capture callstack`() {
-        telemetryIntegration.startSession(appContext)
-        telemetryIntegration.stopSession(appContext)
-        telemetryIntegration.stopSession(appContext)
-
-        verify(sentrySpy, times(1)).capture(anyNonNull())
-    }
 }
 
 /**
- * Allows us to pass a non-default value for [SentryIntegration] for testing
+ * Allows us to pass a non-default value for testing
  * purposes
  */
-private class TestTelemetryIntegration(
-    sentryIntegration: SentryIntegration
-) : TelemetryIntegration(sentryIntegration)
+private class TestTelemetryIntegration() : TelemetryIntegration()

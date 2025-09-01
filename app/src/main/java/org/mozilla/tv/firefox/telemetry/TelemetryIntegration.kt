@@ -38,9 +38,7 @@ private const val YOUTUBE_TILE_ID = "youtube"
         "TooManyFunctions",
         "LargeClass"
 )
-open class TelemetryIntegration protected constructor(
-    private val sentryIntegration: SentryIntegration = SentryIntegration
-) {
+open class TelemetryIntegration protected constructor() {
 
     companion object {
         val INSTANCE: TelemetryIntegration by lazy { TelemetryIntegration() }
@@ -155,10 +153,6 @@ open class TelemetryIntegration protected constructor(
     @UiThread // via TelemetryHomeTileUniqueClickPerSessionCounter
     fun stopSession(context: Context) {
         // We cannot use named arguments here as we are calling into Java code
-        DeprecatedTelemetryHolder.get().recordSessionEnd { // onFailure =
-            sentryIntegration.capture(IllegalStateException("Telemetry#recordSessionEnd called when no session was active"))
-        }
-
         TelemetryEvent.create(Category.ACTION, Method.BACKGROUND, Object.APP).queue()
 
         // We call reset in both startSession and stopSession. We call it here to make sure we

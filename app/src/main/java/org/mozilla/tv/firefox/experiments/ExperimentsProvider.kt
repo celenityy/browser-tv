@@ -5,7 +5,6 @@
 package org.mozilla.tv.firefox.experiments
 
 import android.content.Context
-import io.sentry.Sentry
 import mozilla.components.service.fretboard.ExperimentDescriptor
 import mozilla.components.service.fretboard.Fretboard
 import org.mozilla.tv.firefox.R
@@ -33,17 +32,12 @@ class ExperimentsProvider(private val fretboard: Fretboard, private val context:
                         context.resources.getString(R.string.firefox_tv_brand_name_short))
                 // Fallback: AA testing should be 50/50 so technically should never get to else.
                 else -> {
-                    Sentry.capture(ExperimentIllegalStateException("AATestIllegalBranchName"))
                     context.resources.getString(R.string.exit_firefox_a11y,
                         context.resources.getString(R.string.firefox_tv_brand_name_short))
                 }
             }
         } else {
             // The user is currently not part of the experiment
-
-            // Sentry disabled because I'm concerned about the impact of sending this error to our servers so many times
-            // a day and we take no action when we see this error. See #2155 for a proper investigation.
-            // Sentry.capture(NotInExperimentException("AAExperiment"))
             context.resources.getString(R.string.exit_firefox_a11y,
                 context.resources.getString(R.string.firefox_tv_brand_name_short))
         }
@@ -58,7 +52,6 @@ class ExperimentsProvider(private val fretboard: Fretboard, private val context:
             expDescriptor.name.endsWith(ExperimentSuffix.B.value) -> false
             expDescriptor.name.endsWith(ExperimentSuffix.C.value) -> true
             else -> {
-                Sentry.capture(ExperimentIllegalStateException("Hint Bar Illegal Branch Name"))
                 false
             }
         }
@@ -72,7 +65,6 @@ class ExperimentsProvider(private val fretboard: Fretboard, private val context:
             expDescriptor.name.endsWith(ExperimentSuffix.B.value) -> true
             expDescriptor.name.endsWith(ExperimentSuffix.C.value) -> true
             else -> {
-                Sentry.capture(ExperimentIllegalStateException("TV Guide Channels Illegal Branch Name"))
                 false
             }
         }
@@ -95,7 +87,6 @@ class ExperimentsProvider(private val fretboard: Fretboard, private val context:
             expDescriptor.name.endsWith(ExperimentSuffix.A.value) -> false
             expDescriptor.name.endsWith(ExperimentSuffix.B.value) -> true
             else -> {
-                Sentry.capture(ExperimentIllegalStateException("MP4 Video Workaround Illegal Branch Name"))
                 false
             }
         }
@@ -108,7 +99,6 @@ class ExperimentsProvider(private val fretboard: Fretboard, private val context:
             expDescriptor.name.endsWith(ExperimentSuffix.A.value) -> false
             expDescriptor.name.endsWith(ExperimentSuffix.B.value) -> true
             else -> {
-                Sentry.capture(ExperimentIllegalStateException("Turbo Mode Rebrand Illegal Branch Name: ${expDescriptor.name}"))
                 false
             }
         }

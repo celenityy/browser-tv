@@ -18,7 +18,6 @@ import mozilla.components.service.fxa.toAuthType
 import mozilla.components.support.base.log.logger.Logger
 import org.mozilla.tv.firefox.ScreenController
 import org.mozilla.tv.firefox.session.SessionRepo
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 
 private val logger = Logger("FxaLoginUseCase")
 
@@ -43,7 +42,6 @@ class FxaLoginUseCase(
     private val fxaRepo: FxaRepo,
     private val sessionRepo: SessionRepo,
     private val screenController: ScreenController,
-    private val sentryIntegration: SentryIntegration = SentryIntegration
 ) {
 
     private val _onLoginSuccess = PublishSubject.create<Unit>()
@@ -60,8 +58,7 @@ class FxaLoginUseCase(
 
             // This may be null when the FxA library fails to do things internally, mostly likely due to network issues.
             if (loginUri == null) {
-                sentryIntegration.captureAndLogError(
-                    logger, IllegalStateException("beginAuthenticationAsync returned null loginUri"))
+                logger, IllegalStateException("beginAuthenticationAsync returned null loginUri")
                 return@launch
             }
 
@@ -95,9 +92,8 @@ class FxaLoginUseCase(
                     Observable.just(loginSuccessKeys)
                 } else {
                     // Since we received a login success URL, this is never expected. However, since this action is
-                    // controlled by a server, we don't want to crash the app so we log to Sentry instead.
-                    sentryIntegration.captureAndLogError(
-                        logger, IllegalStateException("Received success URI but success keys cannot be found"))
+                    // controlled by a server, we don't want to crash the app so we log instead.
+                    logger, IllegalStateException("Received success URI but success keys cannot be found")
                     Observable.empty()
                 }
             }

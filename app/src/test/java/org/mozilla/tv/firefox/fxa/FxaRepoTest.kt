@@ -24,7 +24,6 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.mozilla.tv.firefox.helpers.RxTestHelper
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import java.util.concurrent.TimeUnit
 
@@ -42,7 +41,6 @@ class FxaRepoTest {
 
     @MockK(relaxed = true) private lateinit var accountManager: FxaAccountManager
     @MockK(relaxed = true) private lateinit var telemetryIntegration: TelemetryIntegration
-    @MockK(relaxed = true) private lateinit var sentryIntegration: SentryIntegration
 
     private lateinit var admIntegration: ADMIntegration
     private lateinit var receivedTabsRaw: PublishSubject<ADMIntegration.ReceivedTabs>
@@ -62,7 +60,7 @@ class FxaRepoTest {
         }
 
         val context = mockk<Context>()
-        fxaRepo = FxaRepo(context, accountManager, admIntegration, telemetryIntegration, sentryIntegration)
+        fxaRepo = FxaRepo(context, accountManager, admIntegration, telemetryIntegration)
         accountState = fxaRepo.accountState
         accountStateTestObs = accountState.test()
 

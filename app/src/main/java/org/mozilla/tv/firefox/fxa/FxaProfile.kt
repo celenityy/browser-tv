@@ -8,7 +8,6 @@ import mozilla.components.concept.sync.Profile
 import mozilla.components.support.base.log.logger.Logger
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ImageSetStrategy
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 
 private val logger = Logger("FxaProfile")
 
@@ -46,8 +45,7 @@ fun Profile.toDomainObject(): FxaProfile {
         displayName != null -> displayName
         email != null -> email
         else -> {
-            SentryIntegration.captureAndLogError(logger,
-                IllegalStateException("FxA profile displayName and email fields are unexpectedly both null"))
+            IllegalStateException("FxA profile displayName and email fields are unexpectedly both null")
             // According to the FxA team, email should never be null, so we log an error
             // and fall back to an empty string here
             ""

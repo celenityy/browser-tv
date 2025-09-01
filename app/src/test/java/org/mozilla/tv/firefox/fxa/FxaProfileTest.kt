@@ -12,7 +12,6 @@ import org.junit.Assert
 import org.junit.Test
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ImageSetStrategy
-import org.mozilla.tv.firefox.telemetry.SentryIntegration
 
 class FxaProfileTest {
 
@@ -46,14 +45,6 @@ class FxaProfileTest {
     fun `GIVEN profile has no displayName or email WHEN profile is converted to domain object THEN displayName should be blank`() {
         val profile = Profile("uid", null, null, null)
         Assert.assertEquals("", profile.toDomainObject().displayName)
-    }
-
-    @Test
-    fun `GIVEN profile has no displayName or email WHEN profile is converted to domain object THEN sentry should log an error`() {
-        mockkObject(SentryIntegration)
-
-        Profile("uid", null, null, null).toDomainObject()
-        verify(exactly = 1) { SentryIntegration.captureAndLogError(any(), any()) }
     }
 
     @Test
