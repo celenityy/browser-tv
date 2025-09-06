@@ -1,0 +1,46 @@
+diff --git a/mobile/android/geckoview/src/main/AndroidManifest.xml b/mobile/android/geckoview/src/main/AndroidManifest.xml
+index ac6e718f3c..85d5bc0d87 100644
+--- a/mobile/android/geckoview/src/main/AndroidManifest.xml
++++ b/mobile/android/geckoview/src/main/AndroidManifest.xml
+@@ -87,14 +87,14 @@
+                 android:isolatedProcess="false"
+                 android:process=":ipdlunittest">
+         </service>
+-        <service
++        <!-- <service
+                 android:name="org.mozilla.gecko.crashhelper.CrashHelper"
+                 android:enabled="true"
+                 android:exported="false"
+                 android:isolatedProcess="false"
+                 android:process=":crashhelper"
+                 android:stopWithTask="true">
+-        </service>
++        </service> -->
+     </application>
+ 
+ </manifest>
+diff --git a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
+index 3eaf228e93..0825f8e49d 100644
+--- a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
++++ b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
+@@ -423,7 +423,7 @@ public final class GeckoRuntime implements Parcelable {
+   }
+ 
+   private int[] startCrashHelper() {
+-    final Context context = GeckoAppShell.getApplicationContext();
++/*    final Context context = GeckoAppShell.getApplicationContext();
+     final CrashHelper.Pipes pipes = CrashHelper.createCrashHelperPipes(context);
+ 
+     if (pipes == null) {
+@@ -444,9 +444,9 @@ public final class GeckoRuntime implements Parcelable {
+           Context.BIND_AUTO_CREATE);
+     } catch (final ClassNotFoundException e) {
+       Log.w(LOGTAG, "Couldn't find the crash helper class");
+-    }
++    }*/
+ 
+-    return new int[] {pipes.mBreakpadClient.detachFd(), pipes.mClient.detachFd()};
++    return new int[] {-1, -1};
+   }
+ 
+   /* package */ boolean init(
