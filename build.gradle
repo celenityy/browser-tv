@@ -25,12 +25,7 @@ buildscript {
 
     // This logic is duplicated in the allprojects block: I don't know how to fix that.
     repositories {
-        maven {
-            url "https://maven.mozilla.org/maven2"
-            content {
-                includeGroupByRegex Dependencies.RepoMatching.mozilla
-            }
-        }
+        mavenLocal()
         google() {
             content {
                 // Improve performance: only check google maven for mozilla deps.
@@ -81,13 +76,7 @@ detekt {
 allprojects {
     // This logic is duplicated in the buildscript block: I don't know how to fix that.
     repositories {
-        maven {
-            url "https://maven.mozilla.org/maven2"
-            content {
-                // Improve performance: only check moz maven for mozilla deps.
-                includeGroupByRegex Dependencies.RepoMatching.mozilla
-            }
-        }
+        mavenLocal()
         google() {
             content {
                 // Improve performance: only check google maven for google deps.
