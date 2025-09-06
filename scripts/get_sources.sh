@@ -4,6 +4,12 @@ set -euo pipefail
 
 source "$(dirname $0)/versions.sh"
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PLATFORM=macos
+else
+    PLATFORM=linux
+fi
+
 clone_repo() {
     url="$1"
     path="$2"
@@ -169,13 +175,13 @@ echo "Downloading Phoenix..."
 download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/android/phoenix.js" "$PATCHDIR/preferences/phoenix.js"
 
 # Get WebAssembly SDK
-if [[ -z ${FDROID_BUILD+x} ]]; then
-    echo "Downloading prebuilt wasi-sdk..."
-    download_and_extract "wasi-sdk" "https://github.com/itsaky/ironfox/releases/download/$WASI_TAG/$WASI_TAG-firefox.tar.xz"
-else
+if [[ "$PLATFORM" == "macos" ]] || [[ -n ${FDROID_BUILD+x} ]]; then
     echo "Cloning wasi-sdk..."
     clone_repo "https://github.com/WebAssembly/wasi-sdk" "$WASISDKDIR" "$WASI_TAG"
-    (cd "$WASISDKDIR" && git submodule update --init --depth=1)
+    (cd "$WASISDKDIR" && git submodule update --init --depth=64)
+else
+    echo "Downloading prebuilt wasi-sdk..."
+    download_and_extract "wasi-sdk" "https://github.com/itsaky/ironfox/releases/download/$WASI_TAG/$WASI_TAG-firefox.tar.xz"
 fi
 
 # Clone application-services
