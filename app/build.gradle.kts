@@ -13,8 +13,6 @@ if (localPropertiesFile.exists()) {
     localPropertiesFile.inputStream().use { properties.load(it) }
 }
 
-var includeFirebase = true
-
 android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
@@ -96,7 +94,6 @@ android {
             dimension = "appstore"
             applicationIdSuffix = ".foss"
             buildConfigField("Boolean", "BUILT_IN_AUTO_UPDATE", "false")
-            includeFirebase = false//do not include firebase in the foss build
         }
     }
 
@@ -148,19 +145,6 @@ dependencies {
 
     //"debugImplementation"("com.squareup.leakcanary:leakcanary-android:2.7")
 
-    "googleImplementation"("com.google.firebase:firebase-core:21.1.1")
-    "googleImplementation"("com.google.firebase:firebase-crashlytics-ktx:18.6.2")
-
-    "genericImplementation"("com.google.firebase:firebase-core:21.1.1")
-    "genericImplementation"("com.google.firebase:firebase-crashlytics-ktx:18.6.2")
-
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.9")
-}
-
-if(includeFirebase) {
-    plugins {
-        id("com.google.gms.google-services")
-        id("com.google.firebase.crashlytics")
-    }
 }
