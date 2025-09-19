@@ -141,8 +141,6 @@ dependencies {
     val geckoviewVersion = "143.0.20250908174027"
     implementation("org.mozilla.geckoview:geckoview:$geckoviewVersion")
 
-    //"debugImplementation"("com.squareup.leakcanary:leakcanary-android:2.7")
-
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.9")
 }
