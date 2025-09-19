@@ -142,5 +142,5 @@ dependencies {
     implementation("org.mozilla.geckoview:geckoview:$geckoviewVersion")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.9")
+    testImplementation("org.robolectric:robolectric:4.15.1")
 }
