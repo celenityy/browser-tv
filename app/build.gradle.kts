@@ -14,14 +14,14 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    compileSdk = 34
-    buildToolsVersion = "34.0.0"
+    compileSdk = 36
+    buildToolsVersion = "36.0.0"
     namespace = "com.phlox.tvwebbrowser"
 
     defaultConfig {
         applicationId = "com.phlox.tvwebbrowser"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 61
         versionName = "2.0.1"
 
