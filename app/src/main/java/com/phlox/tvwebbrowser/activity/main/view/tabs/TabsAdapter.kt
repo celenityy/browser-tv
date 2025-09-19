@@ -23,13 +23,13 @@ import kotlinx.coroutines.launch
 
 
 class TabsAdapter(private val tabsView: TabsView) : RecyclerView.Adapter<TabViewHolder>() {
+    var tabsModel: TabsModel? = null
     private val tabsCopy =
         ArrayList<WebTabState>().apply { addAll(tabsModel?.tabsStates ?: emptyList()) }
     var current: Int = 0
     var listener: Listener? = null
     val uiHandler = Handler(Looper.getMainLooper())
     var checkedView: CheckableContainer? = null
-    var tabsModel: TabsModel? = null
         set(value) {
             field = value
             onTabListChanged()
