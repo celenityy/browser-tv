@@ -9,13 +9,14 @@ import com.phlox.tvwebbrowser.model.WebTabState
 import com.phlox.tvwebbrowser.utils.AndroidBug5497Workaround
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoViewWithVirtualCursor
+import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
 
 object WebEngineFactory {
     @UiThread
     suspend fun initialize(context: Context, webViewContainer: GeckoViewWithVirtualCursor) {
         if (TVBro.config.isWebEngineGecko()) {
             GeckoWebEngine.initialize(context, webViewContainer)
-            //HomePageHelper.prepareHomePageFiles()
+            HomePageHelper.prepareHomePageFiles()
         } else {
             AndroidBug5497Workaround.assistActivity(context as Activity)
         }

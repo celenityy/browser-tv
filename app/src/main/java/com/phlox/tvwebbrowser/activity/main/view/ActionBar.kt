@@ -20,6 +20,7 @@ import com.phlox.tvwebbrowser.activity.downloads.ActiveDownloadsModel
 import com.phlox.tvwebbrowser.databinding.ViewActionbarBinding
 import com.phlox.tvwebbrowser.utils.Utils
 import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
+import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
 
 class ActionBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -123,7 +124,7 @@ class ActionBar @JvmOverloads constructor(
     }
 
     fun setAddressBoxText(text: String) {
-        if (text == Config.HOME_PAGE_URL) {
+        if (text == HomePageHelper.HOME_PAGE_URL) {
             vb.etUrl.setText("")
         } else {
             vb.etUrl.setText(text)

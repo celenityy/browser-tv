@@ -52,6 +52,7 @@ import com.phlox.tvwebbrowser.webengine.WebEngine
 import com.phlox.tvwebbrowser.webengine.WebEngineFactory
 import com.phlox.tvwebbrowser.webengine.WebEngineWindowProviderCallback
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
 import com.phlox.tvwebbrowser.widgets.NotificationView
 import kotlinx.coroutines.*
 import java.io.File
@@ -215,7 +216,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         viewModel.homePageLinks.subscribe(this) {
             Log.i(TAG, "homePageLinks updated")
             val currentUrl = tabsModel.currentTab.value?.url ?: return@subscribe
-            if (Config.HOME_PAGE_URL == currentUrl) {
+            if (HomePageHelper.HOME_PAGE_URL == currentUrl) {
                 tabsModel.currentTab.value?.webEngine?.reload()
             }
         }
@@ -1086,7 +1087,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
 
             if (URLUtil.isNetworkUrl(url) || uri.scheme.equals("javascript", true) ||
                     uri.scheme.equals("data", true) || uri.scheme.equals("about", true) ||
-                    uri.scheme.equals("blob", true)) {
+                    uri.scheme.equals("blob", true) || uri.scheme.equals("file", true)) {
                 Log.d(TAG, "shouldOverrideUrlLoading: network url: $url")
                 return false
             }
@@ -1181,7 +1182,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         }
 
         override fun isDialogsBlockingEnabled(): Boolean {
-            if (tab.url == Config.HOME_PAGE_URL) return false
+            if (tab.url == HomePageHelper.HOME_PAGE_URL) return false
             return runBlocking(Dispatchers.Main.immediate) { tab.shouldBlockNewWindow(true, false) }
         }
 
@@ -1384,10 +1385,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
                     it.show()
                 }
             }
-        }
-
-        override fun markBookmarkRecommendationAsUseful(bookmarkOrder: Int) {
-            viewModel.markBookmarkRecommendationAsUseful(bookmarkOrder)
         }
     }
 

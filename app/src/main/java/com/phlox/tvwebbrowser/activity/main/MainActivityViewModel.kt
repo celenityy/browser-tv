@@ -14,6 +14,7 @@ import com.phlox.tvwebbrowser.utils.UpdateChecker
 import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
 import com.phlox.tvwebbrowser.utils.deleteDirectory
 import com.phlox.tvwebbrowser.utils.observable.ObservableList
+import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -93,87 +94,7 @@ class MainActivityViewModel: ActiveModel() {
                 Config.HomePageLinksMode.BOOKMARKS -> {
                     val favorites = ArrayList<FavoriteItem>()
                     favorites.addAll(AppDatabase.db.favoritesDao().getHomePageBookmarks())
-                    val outdatedUsefulAffiliateLinks = favorites.filter { it.validUntil != null && it.validUntil!!.before(Date()) && it.useful }
-                    outdatedUsefulAffiliateLinks.forEach {
-                        it.validUntil = null
-                        //destUrl if provided is affiliate link that can be outdated.
-                        //With each affiliate link there also must be provided a direct link to the site
-                        //so we can continue to use it after affiliate link is outdated if it was useful for user at least once
-                        it.destUrl = null
-                        AppDatabase.db.favoritesDao().update(it)
-                    }
-                    val hasOutdatedAffiliateLinks = favorites.any { it.validUntil != null && it.validUntil!!.before(Date())}
-                    if ((favorites.isEmpty() && !config.initialBookmarksSuggestionsLoaded) || hasOutdatedAffiliateLinks) {
-                        val suggestions = withContext(Dispatchers.IO) {
-                            val countryCode = /*if (BuildConfig.DEBUG) "debug" else*/ try {
-                                val response = URL("http://ip-api.com/json/").readText()
-                                val jsonObject = JSONObject(response)
-                                jsonObject.getString("countryCode")
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                null
-                            } ?: Locale.getDefault().country ?: "default"
-
-                            try {
-                                val recommendationsUrl = "${Config.HOME_PAGE_URL}recommendations/$countryCode.json"
-                                val response = URL(recommendationsUrl).readText()
-                                val jsonArray = JSONArray(response)
-                                val result = mutableListOf<FavoriteItem>()
-                                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-                                for (i in 0 until jsonArray.length()) {
-                                    val jsonObject = jsonArray.getJSONObject(i)
-                                    val title = jsonObject.getString("title")
-                                    val url = jsonObject.getString("url")
-                                    val favicon = jsonObject.opt("favicon") as String?
-                                    val destUrl = jsonObject.opt("dest_url") as String?
-                                    val description = jsonObject.opt("description") as String?
-                                    val validUntil = jsonObject.opt("valid_until") as String?
-                                    val favorite = FavoriteItem()
-                                    favorite.title = title
-                                    favorite.url = url
-                                    favorite.favicon = favicon
-                                    favorite.destUrl = destUrl
-                                    favorite.description = description
-                                    favorite.order = i
-                                    favorite.homePageBookmark = true
-                                    if (validUntil != null) {
-                                        favorite.validUntil = dateFormat.parse(validUntil)
-                                    }
-                                    result.add(favorite)
-                                }
-                                result
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                null
-                            }
-                        }
-
-                        if (suggestions != null) {
-                            if (hasOutdatedAffiliateLinks) {
-                                for (i in (favorites.size - 1) downTo 0) {
-                                    val f = favorites[i]
-                                    if (f.validUntil != null && f.validUntil!!.before(Date())) {
-                                        AppDatabase.db.favoritesDao().delete(f)
-                                        favorites.removeAt(i)
-                                        val replacement = suggestions.find { it.order == f.order }
-                                        if (replacement != null) {
-                                            replacement.id = AppDatabase.db.favoritesDao().insert(replacement)
-                                            favorites.add(i, replacement)
-                                            continue
-                                        }
-                                    }
-                                }
-                            } else {
-                                for (s in suggestions) {
-                                    s.id = AppDatabase.db.favoritesDao().insert(s)
-                                }
-                                config.initialBookmarksSuggestionsLoaded = true
-                            }
-                            homePageLinks.replaceAll(suggestions.map { HomePageLink.fromBookmarkItem(it) })
-                        }
-                    } else {
-                        homePageLinks.replaceAll(favorites.map { HomePageLink.fromBookmarkItem(it) })
-                    }
+                    homePageLinks.replaceAll(favorites.map { HomePageLink.fromBookmarkItem(it) })
                 }
             }
         }
@@ -181,7 +102,7 @@ class MainActivityViewModel: ActiveModel() {
 
     fun logVisitedHistory(title: String?, url: String, faviconHash: String?) {
         Log.d(TAG, "logVisitedHistory: $url")
-        if ((url == lastHistoryItem?.url) || url == Config.HOME_PAGE_URL || !url.startsWith("http", true)) {
+        if ((url == lastHistoryItem?.url) || url == HomePageHelper.HOME_PAGE_URL || !url.startsWith("http", true)) {
             return
         }
 
@@ -327,14 +248,6 @@ class MainActivityViewModel: ActiveModel() {
             if (index != -1) {
                 homePageLinks[index] = HomePageLink.fromBookmarkItem(item)
             }
-        }
-    }
-
-    fun markBookmarkRecommendationAsUseful(bookmarkOrder: Int) {
-        val link = homePageLinks.find { it.order == bookmarkOrder } ?: return
-        if (link.favoriteId == null || link.validUntil == null) return
-        modelScope.launch {
-            AppDatabase.db.favoritesDao().markAsUseful(link.favoriteId)
         }
     }
 }

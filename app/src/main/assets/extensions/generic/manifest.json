@@ -20,8 +20,7 @@
     },
     {
       "matches": [
-        "https://tvbro.phlox.dev/appcontent/home/*",
-        "*://*/appcontent/home/*"
+        "file:///data/user/0/com.phlox.tvwebbrowser/files/home_page/index.html"
       ],
       "js": [
         "home.js"

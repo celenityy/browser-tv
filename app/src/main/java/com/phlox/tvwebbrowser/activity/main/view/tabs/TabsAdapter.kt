@@ -17,6 +17,7 @@ import com.phlox.tvwebbrowser.databinding.ViewHorizontalWebtabItemBinding
 import com.phlox.tvwebbrowser.model.WebTabState
 import com.phlox.tvwebbrowser.singleton.FaviconsPool
 import com.phlox.tvwebbrowser.utils.activity
+import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
 import com.phlox.tvwebbrowser.widgets.CheckableContainer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -82,7 +83,7 @@ class TabsAdapter(private val tabsView: TabsView) : RecyclerView.Adapter<TabView
             vb.ivFavicon.setImageResource(R.drawable.ic_launcher)
 
             val url = tabState.url
-            if (url != Config.HOME_PAGE_URL && url != Config.HOME_URL_ALIAS) {
+            if (url != HomePageHelper.HOME_PAGE_URL && url != Config.HOME_URL_ALIAS) {
                 val scope = (itemView.activity as AppCompatActivity).lifecycleScope
                 scope.launch(Dispatchers.Main) {
                     val favicon = FaviconsPool.get(url)

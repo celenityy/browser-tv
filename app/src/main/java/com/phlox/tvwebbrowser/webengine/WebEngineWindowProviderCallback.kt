@@ -44,5 +44,4 @@ interface WebEngineWindowProviderCallback {
     fun onExitFullscreen()
     fun onVisited(url: String)
     fun suggestActionsForLink(href: String, x: Int, y: Int)
-    fun markBookmarkRecommendationAsUseful(bookmarkOrder: Int)
 }

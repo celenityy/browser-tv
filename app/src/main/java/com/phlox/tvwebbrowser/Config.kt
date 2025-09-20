@@ -26,7 +26,7 @@ class Config(val prefs: SharedPreferences) {
         const val HOME_PAGE_SUGGESTIONS_MODE = "home_page_suggestions_mode"
         const val WEB_ENGINE = "web_engine"
         const val ALLOW_AUTOPLAY_MEDIA = "allow_autoplay_media"
-        //const val HOME_PAGE_VERSION_EXTRACTED = "home_page_version_extracted"
+        const val HOME_PAGE_VERSION_EXTRACTED = "home_page_version_extracted"
         const val INITIAL_BOOKMARKS_SUGGESTIONS_LOADED = "initial_bookmarks_suggestions_loaded"
         const val ADBLOCK_ENABLED_PREF_KEY = "adblock_enabled"
         const val ADBLOCK_LAST_UPDATE_LIST_KEY = "adblock_last_update"
@@ -42,7 +42,6 @@ class Config(val prefs: SharedPreferences) {
         val SearchEnginesNames = arrayOf("ddg", "ddgnoai", "ddghtml", "ddglite", "mojeek", "leta-brave", "leta-google", "startpage", "startpage-eu", "wikipedia", "custom")
         val SearchEnginesURLs = listOf("https://duckduckgo.com/?q=[query]", "https://noai.duckduckgo.com/?q=[query]", "https://html.duckduckgo.com/html/?q=[query]", "https://lite.duckduckgo.com/lite/?q=[query]", "https://www.mojeek.com/search?q=[query]", "https://leta.mullvad.net/?q=[query]&engine=brave", "https://leta.mullvad.net/?q=[query]&engine=google", "https://www.startpage.com/sp/search?query=[query]", "https://eu.startpage.com/sp/search?query=[query]", "https://wikipedia.org/wiki/Special:Search?search=[query]", "")
         val SupportedWebEngines = arrayOf(ENGINE_GECKO_VIEW)
-        const val HOME_PAGE_URL = "https://tvbro.phlox.dev/appcontent/home/"
     }
 
     enum class Theme {
@@ -142,11 +141,11 @@ class Config(val prefs: SharedPreferences) {
             prefs.edit().putBoolean(ALLOW_AUTOPLAY_MEDIA, value).apply()
         }
 
-    /*var homePageVersionExtracted: Int
+    var homePageVersionExtracted: Int
         get() = prefs.getInt(HOME_PAGE_VERSION_EXTRACTED, 0)
         set(value) {
             prefs.edit().putInt(HOME_PAGE_VERSION_EXTRACTED, value).apply()
-        }*/
+        }
 
     var initialBookmarksSuggestionsLoaded: Boolean
         get() = prefs.getBoolean(INITIAL_BOOKMARKS_SUGGESTIONS_LOADED, false)

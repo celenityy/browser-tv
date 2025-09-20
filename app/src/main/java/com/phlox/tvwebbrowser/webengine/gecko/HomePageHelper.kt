@@ -7,9 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object HomePageHelper {
-    /*private const val HOME_PAGE_VERSION = 1
+    private const val HOME_PAGE_VERSION = 1
     var homePageFilesReady: Boolean = false
-    private const val forceExtractHomePageFiles: Boolean = true//for debug only
+    private const val forceExtractHomePageFiles: Boolean = true //for debug only
     private const val HOME_PAGE_DIR_NAME = "home_page"
     val HOME_PAGE_URL = "file://${TVBro.instance.filesDir}/${HOME_PAGE_DIR_NAME}/index.html"
 
@@ -37,5 +37,5 @@ object HomePageHelper {
         }
 
         homePageFilesReady = filesReady
-    }*/
+    }
 }
