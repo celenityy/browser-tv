@@ -12,7 +12,6 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.phlox.tvwebbrowser.TVBro
 import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.LogUtils
 import com.phlox.tvwebbrowser.utils.Utils
 import com.phlox.tvwebbrowser.webengine.WebEngineFactory
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
@@ -92,7 +91,6 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
             }
         } catch (e: JSONException) {
             e.printStackTrace()
-            LogUtils.recordException(e)
         }
 
     }

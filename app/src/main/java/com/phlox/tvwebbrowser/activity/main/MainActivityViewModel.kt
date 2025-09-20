@@ -10,7 +10,6 @@ import com.phlox.tvwebbrowser.model.HistoryItem
 import com.phlox.tvwebbrowser.model.HomePageLink
 import com.phlox.tvwebbrowser.model.WebTabState
 import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.LogUtils
 import com.phlox.tvwebbrowser.utils.UpdateChecker
 import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
 import com.phlox.tvwebbrowser.utils.deleteDirectory
@@ -73,7 +72,6 @@ class MainActivityViewModel: ActiveModel() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            LogUtils.recordException(e)
         }
     }
 
