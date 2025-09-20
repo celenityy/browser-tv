@@ -180,7 +180,6 @@
   <string name="media_front_camera">Przednia kamera</string>
   <string name="media_microphone">Mikrofon</string>
   <string name="media_other">Nieznane źródło</string>
-  <string name="web_browser_engine_temporary_setting">Silnik przeglądarki internetowej (ustawienie tymczasowe)</string>
   <string name="need_restart_message">Uruchom ponownie aplikację, aby zastosować zmiany</string>
   <string name="restart">Uruchom ponownie</string>
   <string name="yes">Tak</string>
@@ -189,6 +188,4 @@
   <string name="site_asks_to_open_unknown_url_message">Czy chcesz otworzyć ten adres URL w aplikacji zewnętrznej?</string>
   <string name="err_no_app_to_handle_url">Nie można znaleźć odpowiedniej aplikacji do obsługi tego adresu URL</string>
   <string name="home_page_links">Linki na stronie głównej</string>
-  <string name="settings_engine_change_gecko_msg">Zalecane wymagania systemowe GeckoView: 3 GB RAM, 64-bitowy ośmiordzeniowy procesor. Czy chcesz kontynuować\?</string>
-  <string name="settings_engine_change_webview_msg">W przyszłych aktualizacjach WebView będzie miał mniej funkcji. Czy chcesz kontynuować\?</string>
 </resources>

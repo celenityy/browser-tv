@@ -180,7 +180,6 @@
   <string name="media_front_camera">Fotocamera frontale</string>
   <string name="media_microphone">Microfono</string>
   <string name="media_other">Fonte sconosciuta</string>
-  <string name="web_browser_engine_temporary_setting">Motore del browser Web (impostazione temporanea)</string>
   <string name="need_restart_message">Riavvia l&amp;#39;app per applicare le modifiche</string>
   <string name="restart">Ricomincia</string>
   <string name="yes">SÌ</string>
@@ -189,6 +188,4 @@
   <string name="site_asks_to_open_unknown_url_message">Vuoi aprire questo URL in un&amp;#39;app esterna?</string>
   <string name="err_no_app_to_handle_url">Impossibile trovare un&amp;#39;applicazione adatta per gestire questo URL</string>
   <string name="home_page_links">Link in home page</string>
-  <string name="settings_engine_change_gecko_msg">Requisiti di sistema consigliati da GeckoView: 3 GB di RAM, CPU octa-core a 64 bit. Vuoi continuare\?</string>
-  <string name="settings_engine_change_webview_msg">WebView avrà meno funzionalità negli aggiornamenti futuri. Vuoi continuare\?</string>
 </resources>

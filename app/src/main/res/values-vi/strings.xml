@@ -180,7 +180,6 @@
   <string name="media_front_camera">Camera trước</string>
   <string name="media_microphone">Micro</string>
   <string name="media_other">Không rõ nguồn</string>
-  <string name="web_browser_engine_temporary_setting">Web browser engine (cài đặt tạm thời)</string>
   <string name="need_restart_message">Khởi động lại ứng dụng để áp dụng các thay đổi</string>
   <string name="restart">Khởi động lại</string>
   <string name="yes">CÓ</string>
@@ -189,6 +188,4 @@
   <string name="site_asks_to_open_unknown_url_message">Bạn có muốn mở URL này trong ứng dụng bên ngoài không?</string>
   <string name="err_no_app_to_handle_url">Không thể tìm thấy ứng dụng phù hợp để xử lý URL này</string>
   <string name="home_page_links">Liên kết trên trang chủ</string>
-  <string name="settings_engine_change_gecko_msg">Yêu cầu hệ thống được GeckoView đề xuất: RAM 3 GB, CPU lõi tám 64 bit. Bạn có muốn tiếp tục\?</string>
-  <string name="settings_engine_change_webview_msg">WebView sẽ có ít tính năng hơn trong các bản cập nhật trong tương lai. Bạn có muốn tiếp tục\?</string>
 </resources>

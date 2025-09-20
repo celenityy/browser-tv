@@ -152,7 +152,6 @@
     <string name="media_front_camera">前置鏡頭</string>
     <string name="media_microphone">麥克風</string>
     <string name="media_other">未知來源</string>
-    <string name="web_browser_engine_temporary_setting">網頁瀏覽器引擎 (暫時設定)</string>
     <string name="need_restart_message">重新啟動應用程式以套用變更</string>
     <string name="restart">重新啟動</string>
     <string name="yes">是</string>

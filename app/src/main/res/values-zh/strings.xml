@@ -180,7 +180,6 @@
   <string name="media_front_camera">前置相机</string>
   <string name="media_microphone">话筒</string>
   <string name="media_other">未知媒体来源</string>
-  <string name="web_browser_engine_temporary_setting">浏览器引擎 (临时设置)</string>
   <string name="need_restart_message">重新启动应用以应用此更改</string>
   <string name="restart">重新启动</string>
   <string name="yes">是</string>
@@ -189,6 +188,4 @@
   <string name="site_asks_to_open_unknown_url_message">您想允许此站点使用外部应用打开此 URL 吗?</string>
   <string name="err_no_app_to_handle_url">找不到合适的应用来处理此 URL</string>
   <string name="home_page_links">主页上的链接</string>
-  <string name="settings_engine_change_gecko_msg">GeckoView 推荐的系统要求：3GB RAM、64 位八核 CPU。 你想继续吗\?</string>
-  <string name="settings_engine_change_webview_msg">WebView 在未来的更新中将会减少功能。 你想继续吗\?</string>
 </resources>

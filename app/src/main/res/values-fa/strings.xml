@@ -184,7 +184,6 @@
   <string name="media_front_camera">دوربین جلو</string>
   <string name="media_microphone">میکروفون</string>
   <string name="media_other">منبع نامعلوم</string>
-  <string name="web_browser_engine_temporary_setting">موتور مرورگر وب (تنظیم موقت)</string>
   <string name="need_restart_message">برای اعمال تغییرات، برنامه را مجددا راه اندازی کنید</string>
   <string name="restart">راه اندازی مجدد</string>
   <string name="yes">آره</string>
@@ -193,6 +192,4 @@
   <string name="site_asks_to_open_unknown_url_message">آیا می خواهید این URL را در برنامه خارجی باز کنید؟</string>
   <string name="err_no_app_to_handle_url">نمی توان برنامه مناسبی برای مدیریت این URL پیدا کرد</string>
   <string name="home_page_links">لینک ها در صفحه اصلی</string>
-  <string name="settings_engine_change_gecko_msg">سیستم مورد نیاز توصیه شده GeckoView: 3 گیگابایت رم، CPU هشت هسته ای 64 بیتی. می خواهید ادامه دهید؟</string>
-  <string name="settings_engine_change_webview_msg">WebView در به روز رسانی های بعدی ویژگی های کمتری خواهد داشت. می خواهید ادامه دهید؟</string>
 </resources>

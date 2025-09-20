@@ -31,8 +31,6 @@ class MainSettingsView @JvmOverloads constructor(
     var config = TVBro.config
 
     init {
-        initWebBrowserEngineSettingsUI()
-
         initHomePageAndSearchEngineConfigUI()
 
         initUAStringConfigUI(context)
@@ -48,25 +46,6 @@ class MainSettingsView @JvmOverloads constructor(
                 WebEngineFactory.clearCache(context)
                 Toast.makeText(context, android.R.string.ok, Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun initWebBrowserEngineSettingsUI() {
-        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, Config.SupportedWebEngines)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        vb.spWebEngine.adapter = adapter
-
-        vb.spWebEngine.setSelection(Config.SupportedWebEngines.indexOf(config.webEngine), false)
-
-        vb.spWebEngine.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (config.webEngine == Config.SupportedWebEngines[position]) return
-                config.webEngine = Config.SupportedWebEngines[position]
-                showRestartDialog()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 

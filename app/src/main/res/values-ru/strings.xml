@@ -180,7 +180,6 @@
   <string name="media_front_camera">Передняя камера</string>
   <string name="media_microphone">Микрофон</string>
   <string name="media_other">Неизвестный источник</string>
-  <string name="web_browser_engine_temporary_setting">"Движок" веб-браузера (временная настройка)</string>
   <string name="need_restart_message">Перезапустите приложение, чтобы применить изменения</string>
   <string name="restart">Перезапуск</string>
   <string name="yes">Да</string>
@@ -189,6 +188,4 @@
   <string name="site_asks_to_open_unknown_url_message">Вы хотите открыть этот URL-адрес во внешнем приложении?</string>
   <string name="err_no_app_to_handle_url">Не удаётся найти подходящее приложение для обработки этого URL-адреса</string>
   <string name="home_page_links">Ссылки на главной странице</string>
-  <string name="settings_engine_change_gecko_msg">Рекомендуемые системные требования GeckoView: 3 ГБ ОЗУ, 64-битный восьмиядерный процессор. Вы хотите продолжать\?</string>
-  <string name="settings_engine_change_webview_msg">В будущих обновлениях WebView будет меньше функций. Вы хотите продолжать\?</string>
 </resources>
