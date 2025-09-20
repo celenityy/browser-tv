@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.service.downloads
+package dev.celenity.browser.tv.service.downloads
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -14,12 +14,12 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.downloads.ActiveDownloadsModel
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.downloads.ActiveDownloadsModel
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
 import java.io.File
 import java.util.*
 import java.util.concurrent.Executors
@@ -104,7 +104,7 @@ class DownloadService : Service() {
                     Formatter.formatShortFileSize(this, total)
         }
         if (notificationBuilder == null) {
-            notificationBuilder = NotificationCompat.Builder(this, TVBro.CHANNEL_ID_DOWNLOADS)
+            notificationBuilder = NotificationCompat.Builder(this, BrowserTV.CHANNEL_ID_DOWNLOADS)
                     .setOngoing(true)
                     .setOnlyAlertOnce(true)
                     .setSmallIcon(R.drawable.ic_launcher)

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.model
+package dev.celenity.browser.tv.model
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,11 +10,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.webengine.WebEngineFactory
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.webengine.WebEngineFactory
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -132,13 +132,13 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
     }
 
     private fun getThumbnailPath(hash: String) =
-        TVBro.instance.cacheDir.absolutePath + File.separator + TAB_THUMBNAILS_DIR + File.separator + hash + ".png"
+        BrowserTV.instance.cacheDir.absolutePath + File.separator + TAB_THUMBNAILS_DIR + File.separator + hash + ".png"
 
     private fun getWVStatePath(hash: String): String {
         return if (hash.startsWith(GECKO_SESSION_STATE_HASH_PREFIX)) {
-            TVBro.instance.filesDir.absolutePath + File.separator + TAB_WVSTATES_DIR + File.separator + hash.substring(GECKO_SESSION_STATE_HASH_PREFIX.length)
+            BrowserTV.instance.filesDir.absolutePath + File.separator + TAB_WVSTATES_DIR + File.separator + hash.substring(GECKO_SESSION_STATE_HASH_PREFIX.length)
         } else {
-            TVBro.instance.filesDir.absolutePath + File.separator + TAB_WVSTATES_DIR + File.separator + hash
+            BrowserTV.instance.filesDir.absolutePath + File.separator + TAB_WVSTATES_DIR + File.separator + hash
         }
     }
 
@@ -209,7 +209,7 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
             }
         }
         try {
-            val statesDir = File(TVBro.instance.filesDir.absolutePath + File.separator + TAB_WVSTATES_DIR)
+            val statesDir = File(BrowserTV.instance.filesDir.absolutePath + File.separator + TAB_WVSTATES_DIR)
             if (statesDir.exists() || statesDir.mkdir()) {
                 File(getWVStatePath(stateFileName)).writeBytes(stateBytes)
                 wvStateFileName = stateFileName

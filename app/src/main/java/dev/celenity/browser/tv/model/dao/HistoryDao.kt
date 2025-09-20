@@ -1,11 +1,11 @@
-package com.phlox.tvwebbrowser.model.dao
+package dev.celenity.browser.tv.model.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RoomWarnings
-import com.phlox.tvwebbrowser.model.HistoryItem
+import dev.celenity.browser.tv.model.HistoryItem
 
 @Dao
 interface HistoryDao {

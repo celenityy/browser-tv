@@ -1,7 +1,7 @@
-package com.phlox.tvwebbrowser.model.dao
+package dev.celenity.browser.tv.model.dao
 
 import androidx.room.*
-import com.phlox.tvwebbrowser.model.WebTabState
+import dev.celenity.browser.tv.model.WebTabState
 
 @Dao
 interface TabsDao {

@@ -1,12 +1,12 @@
-package com.phlox.tvwebbrowser.singleton
+package dev.celenity.browser.tv.singleton
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.util.LruCache
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.model.HostConfig
-import com.phlox.tvwebbrowser.utils.FaviconExtractor
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.model.HostConfig
+import dev.celenity.browser.tv.utils.FaviconExtractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -112,7 +112,7 @@ object FaviconsPool {
     }
 
     fun favIconsDir(): String {
-        return TVBro.instance.cacheDir.absolutePath + File.separator + FAVICONS_DIR
+        return BrowserTV.instance.cacheDir.absolutePath + File.separator + FAVICONS_DIR
     }
 
     private suspend fun saveFavicon(host: String, bitmap: Bitmap, hostConfig: HostConfig?) = withContext(Dispatchers.IO) {

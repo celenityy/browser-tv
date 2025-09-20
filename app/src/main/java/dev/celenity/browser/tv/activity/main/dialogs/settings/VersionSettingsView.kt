@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.settings
+package dev.celenity.browser.tv.activity.main.dialogs.settings
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,23 +11,23 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ScrollView
-import com.phlox.tvwebbrowser.BuildConfig
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.IncognitoModeMainActivity
-import com.phlox.tvwebbrowser.activity.main.AutoUpdateModel
-import com.phlox.tvwebbrowser.activity.main.MainActivity
-import com.phlox.tvwebbrowser.activity.main.SettingsModel
-import com.phlox.tvwebbrowser.databinding.ViewSettingsVersionBinding
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
-import com.phlox.tvwebbrowser.utils.activity
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.BuildConfig
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.IncognitoModeMainActivity
+import dev.celenity.browser.tv.activity.main.AutoUpdateModel
+import dev.celenity.browser.tv.activity.main.MainActivity
+import dev.celenity.browser.tv.activity.main.SettingsModel
+import dev.celenity.browser.tv.databinding.ViewSettingsVersionBinding
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.utils.activity
 
 @SuppressLint("SetTextI18n")
 class VersionSettingsView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr) {
     private var vb = ViewSettingsVersionBinding.inflate(LayoutInflater.from(getContext()), this, true)
-    var config = TVBro.config
+    var config = BrowserTV.config
     var settingsModel = ActiveModelsRepository.get(SettingsModel::class, activity!!)
     var autoUpdateModel = ActiveModelsRepository.get(AutoUpdateModel::class, activity!!)
     var callback: Callback? = null

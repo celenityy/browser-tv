@@ -1,20 +1,20 @@
-package com.phlox.tvwebbrowser.webengine
+package dev.celenity.browser.tv.webengine
 
 import android.app.Activity
 import android.content.Context
 import androidx.annotation.UiThread
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.main.view.CursorLayout
-import com.phlox.tvwebbrowser.model.WebTabState
-import com.phlox.tvwebbrowser.utils.AndroidBug5497Workaround
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
-import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.activity.main.view.CursorLayout
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.utils.AndroidBug5497Workaround
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
 
 object WebEngineFactory {
     @UiThread
     suspend fun initialize(context: Context, webViewContainer: CursorLayout) {
-        if (TVBro.config.isWebEngineGecko()) {
+        if (BrowserTV.config.isWebEngineGecko()) {
             GeckoWebEngine.initialize(context, webViewContainer)
             HomePageHelper.prepareHomePageFiles()
         } else {
@@ -28,7 +28,7 @@ object WebEngineFactory {
     }
 
     suspend fun clearCache(ctx: Context) {
-        if (TVBro.config.isWebEngineGecko()) {
+        if (BrowserTV.config.isWebEngineGecko()) {
             GeckoWebEngine.clearCache(ctx)
         } else {
             // We only support GeckoView
@@ -36,7 +36,7 @@ object WebEngineFactory {
     }
 
     fun onThemeSettingUpdated(value: Config.Theme) {
-        if (TVBro.config.isWebEngineGecko()) {
+        if (BrowserTV.config.isWebEngineGecko()) {
             GeckoWebEngine.onThemeSettingUpdated(value)
         }
     }

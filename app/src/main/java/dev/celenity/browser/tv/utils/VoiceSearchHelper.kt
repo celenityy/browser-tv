@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.utils
+package dev.celenity.browser.tv.utils
 
 import android.Manifest
 import android.app.Activity
@@ -26,8 +26,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.DrawableCompat
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.databinding.ViewSpeachRecognizerResultsBinding
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.databinding.ViewSpeachRecognizerResultsBinding
 
 
 class VoiceSearchHelper(private val activity: Activity, private val requestCode: Int, private val permissionRequestCode: Int) {

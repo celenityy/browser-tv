@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.singleton
+package dev.celenity.browser.tv.singleton
 
 import androidx.room.Database
 import androidx.room.Room
@@ -6,10 +6,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.model.*
-import com.phlox.tvwebbrowser.model.dao.*
-import com.phlox.tvwebbrowser.model.util.Converters
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.model.*
+import dev.celenity.browser.tv.model.dao.*
+import dev.celenity.browser.tv.model.util.Converters
 
 @Database(entities = [
     Download::class, FavoriteItem::class,
@@ -198,7 +198,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         val db: AppDatabase by lazy {
             Room.databaseBuilder(
-                TVBro.instance,
+                BrowserTV.instance,
                 AppDatabase::class.java, "main.db"
             ).addMigrations(MIGRATION_1_2, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_8, MIGRATION_8_9,
                 MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14,

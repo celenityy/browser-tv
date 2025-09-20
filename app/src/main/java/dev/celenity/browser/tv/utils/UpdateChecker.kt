@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.utils
+package dev.celenity.browser.tv.utils
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import com.phlox.tvwebbrowser.R
+import dev.celenity.browser.tv.R
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.File

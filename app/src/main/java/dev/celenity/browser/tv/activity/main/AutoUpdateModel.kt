@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main
+package dev.celenity.browser.tv.activity.main
 
 import android.content.Intent
 import android.net.Uri
@@ -6,19 +6,19 @@ import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.phlox.tvwebbrowser.BuildConfig
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.utils.UpdateChecker
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
-import com.phlox.tvwebbrowser.utils.sameDay
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.BuildConfig
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.utils.UpdateChecker
+import dev.celenity.browser.tv.utils.activemodel.ActiveModel
+import dev.celenity.browser.tv.utils.sameDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
 class AutoUpdateModel: ActiveModel() {
-    val config = TVBro.config
+    val config = BrowserTV.config
     var needToShowUpdateDlgAgain: Boolean = false
     val updateChecker = UpdateChecker(BuildConfig.VERSION_CODE)
     var lastUpdateNotificationTime: Calendar

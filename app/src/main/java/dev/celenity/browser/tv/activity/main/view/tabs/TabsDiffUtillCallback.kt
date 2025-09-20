@@ -1,7 +1,7 @@
-package com.phlox.tvwebbrowser.activity.main.view.tabs
+package dev.celenity.browser.tv.activity.main.view.tabs
 
 import androidx.recyclerview.widget.DiffUtil
-import com.phlox.tvwebbrowser.model.WebTabState
+import dev.celenity.browser.tv.model.WebTabState
 
 class TabsDiffUtillCallback(val oldList: List<WebTabState>, val newList: List<WebTabState>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size

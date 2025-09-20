@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.webengine
+package dev.celenity.browser.tv.webengine
 
 import android.content.Context
 import android.content.Intent

@@ -1,8 +1,8 @@
-package com.phlox.tvwebbrowser.singleton.shortcuts
+package dev.celenity.browser.tv.singleton.shortcuts
 
 import android.view.KeyEvent
 
-import com.phlox.tvwebbrowser.R
+import dev.celenity.browser.tv.R
 
 /**
  * Created by PDT on 06.08.2017.

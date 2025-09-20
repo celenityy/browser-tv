@@ -203,7 +203,7 @@ mkdir -vp mobile/android/branding/browser-tv/locales/en-US
 $SED -i -e 's/Fennec/Browser TV/g; s/Firefox/Browser TV/g' build/moz.configure/init.configure
 $SED -i -e 's|"MOZ_APP_VENDOR", ".*"|"MOZ_APP_VENDOR", "celenity"|g' mobile/android/moz.configure
 echo '' >>mobile/android/moz.configure
-echo 'include("browser.configure")' >>mobile/android/moz.configure
+echo 'include("browser-tv.configure")' >>mobile/android/moz.configure
 
 # Apply patches
 apply_patches

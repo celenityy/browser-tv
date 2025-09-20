@@ -1,11 +1,11 @@
-package com.phlox.tvwebbrowser.activity.downloads
+package dev.celenity.browser.tv.activity.downloads
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.utils.Utils
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.utils.Utils
 
 import java.util.ArrayList
 

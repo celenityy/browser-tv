@@ -1,8 +1,8 @@
-package com.phlox.tvwebbrowser.webengine.gecko
+package dev.celenity.browser.tv.webengine.gecko
 
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.utils.deleteDirectory
-import com.phlox.tvwebbrowser.utils.extractAssets
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.utils.deleteDirectory
+import dev.celenity.browser.tv.utils.extractAssets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -11,12 +11,12 @@ object HomePageHelper {
     var homePageFilesReady: Boolean = false
     private const val forceExtractHomePageFiles: Boolean = true //for debug only
     private const val HOME_PAGE_DIR_NAME = "home_page"
-    val HOME_PAGE_URL = "file://${TVBro.instance.filesDir}/${HOME_PAGE_DIR_NAME}/index.html"
+    val HOME_PAGE_URL = "file://${BrowserTV.instance.filesDir}/${HOME_PAGE_DIR_NAME}/index.html"
 
     suspend fun prepareHomePageFiles() {
         if (homePageFilesReady) return
-        val ctx = TVBro.instance
-        val config = TVBro.config
+        val ctx = BrowserTV.instance
+        val config = BrowserTV.config
         val filesReady = withContext(Dispatchers.IO) {
             val homePageDir = ctx.filesDir.resolve(HOME_PAGE_DIR_NAME)
             try {

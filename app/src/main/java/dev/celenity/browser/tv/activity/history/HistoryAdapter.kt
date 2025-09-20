@@ -1,12 +1,12 @@
-package com.phlox.tvwebbrowser.activity.history
+package dev.celenity.browser.tv.activity.history
 
 import android.util.MutableBoolean
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 
-import com.phlox.tvwebbrowser.model.HistoryItem
-import com.phlox.tvwebbrowser.utils.Utils
+import dev.celenity.browser.tv.model.HistoryItem
+import dev.celenity.browser.tv.utils.Utils
 
 import java.util.ArrayList
 

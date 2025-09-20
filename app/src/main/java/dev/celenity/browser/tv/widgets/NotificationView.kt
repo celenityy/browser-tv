@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.widgets
+package dev.celenity.browser.tv.widgets
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +8,7 @@ import android.view.ViewPropertyAnimator
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
-import com.phlox.tvwebbrowser.databinding.ViewNotificationBinding
+import dev.celenity.browser.tv.databinding.ViewNotificationBinding
 
 open class NotificationView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null

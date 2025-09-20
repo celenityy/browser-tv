@@ -1,8 +1,8 @@
-package com.phlox.tvwebbrowser.model.dao
+package dev.celenity.browser.tv.model.dao
 
 import androidx.room.*
-import com.phlox.tvwebbrowser.model.FavoriteItem
-import com.phlox.tvwebbrowser.model.HistoryItem
+import dev.celenity.browser.tv.model.FavoriteItem
+import dev.celenity.browser.tv.model.HistoryItem
 
 @Dao
 interface FavoritesDao {

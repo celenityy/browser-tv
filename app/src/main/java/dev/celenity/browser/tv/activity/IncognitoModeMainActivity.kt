@@ -1,11 +1,11 @@
-package com.phlox.tvwebbrowser.activity
+package dev.celenity.browser.tv.activity
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.main.MainActivity
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.activity.main.MainActivity
 
 //Same as MainActivity but runs in separate process
 //and store all WebView data separately
@@ -24,7 +24,7 @@ class IncognitoModeMainActivity: MainActivity() {
 
     override fun onDestroy() {
         if (isFinishing) {
-            TVBro.instance.needToExitProcessAfterMainActivityFinish = true
+            BrowserTV.instance.needToExitProcessAfterMainActivityFinish = true
         }
         super.onDestroy()
     }

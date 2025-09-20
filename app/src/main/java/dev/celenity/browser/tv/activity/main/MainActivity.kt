@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main
+package dev.celenity.browser.tv.activity.main
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -29,31 +29,31 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.postDelayed
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.BuildConfig
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.IncognitoModeMainActivity
-import com.phlox.tvwebbrowser.activity.downloads.DownloadsActivity
-import com.phlox.tvwebbrowser.activity.history.HistoryActivity
-import com.phlox.tvwebbrowser.activity.main.dialogs.favorites.FavoriteEditorDialog
-import com.phlox.tvwebbrowser.activity.main.dialogs.favorites.FavoritesDialog
-import com.phlox.tvwebbrowser.activity.main.dialogs.settings.SettingsDialog
-import com.phlox.tvwebbrowser.activity.main.view.ActionBar
-import com.phlox.tvwebbrowser.activity.main.view.tabs.TabsAdapter.Listener
-import com.phlox.tvwebbrowser.databinding.ActivityMainBinding
-import com.phlox.tvwebbrowser.model.*
-import com.phlox.tvwebbrowser.service.downloads.DownloadService
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.singleton.shortcuts.ShortcutMgr
-import com.phlox.tvwebbrowser.utils.*
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
-import com.phlox.tvwebbrowser.webengine.WebEngine
-import com.phlox.tvwebbrowser.webengine.WebEngineFactory
-import com.phlox.tvwebbrowser.webengine.WebEngineWindowProviderCallback
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
-import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
-import com.phlox.tvwebbrowser.widgets.NotificationView
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.BuildConfig
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.IncognitoModeMainActivity
+import dev.celenity.browser.tv.activity.downloads.DownloadsActivity
+import dev.celenity.browser.tv.activity.history.HistoryActivity
+import dev.celenity.browser.tv.activity.main.dialogs.favorites.FavoriteEditorDialog
+import dev.celenity.browser.tv.activity.main.dialogs.favorites.FavoritesDialog
+import dev.celenity.browser.tv.activity.main.dialogs.settings.SettingsDialog
+import dev.celenity.browser.tv.activity.main.view.ActionBar
+import dev.celenity.browser.tv.activity.main.view.tabs.TabsAdapter.Listener
+import dev.celenity.browser.tv.databinding.ActivityMainBinding
+import dev.celenity.browser.tv.model.*
+import dev.celenity.browser.tv.service.downloads.DownloadService
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.singleton.shortcuts.ShortcutMgr
+import dev.celenity.browser.tv.utils.*
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.webengine.WebEngine
+import dev.celenity.browser.tv.webengine.WebEngineFactory
+import dev.celenity.browser.tv.webengine.WebEngineWindowProviderCallback
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
+import dev.celenity.browser.tv.widgets.NotificationView
 import kotlinx.coroutines.*
 import java.io.File
 import java.io.InputStream
@@ -88,7 +88,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     private var running: Boolean = false
     private var isFullscreen: Boolean = false
     private lateinit var prefs: SharedPreferences
-    protected val config = TVBro.config
+    protected val config = BrowserTV.config
     private val voiceSearchHelper = VoiceSearchHelper(this, VOICE_SEARCH_REQUEST_CODE,
         MY_PERMISSIONS_REQUEST_VOICE_SEARCH_PERMISSIONS)
     private var lastCommonRequestsCode = COMMON_REQUESTS_START_CODE
@@ -120,7 +120,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         tabsModel = ActiveModelsRepository.get(TabsModel::class, this)
         autoUpdateModel = ActiveModelsRepository.get(AutoUpdateModel::class, this)
         uiHandler = Handler()
-        prefs = getSharedPreferences(TVBro.MAIN_PREFS_NAME, Context.MODE_PRIVATE)
+        prefs = getSharedPreferences(BrowserTV.MAIN_PREFS_NAME, Context.MODE_PRIVATE)
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb.root)
 
@@ -1101,7 +1101,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
                 Log.d(TAG, "shouldOverrideUrlLoading: non-network url: $url")
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                if (intent.resolveActivity(TVBro.instance.packageManager) != null) {
+                if (intent.resolveActivity(BrowserTV.instance.packageManager) != null) {
                     runOnUiThread {
                         askUserAndOpenInExternalApp(url, intent)
                     }

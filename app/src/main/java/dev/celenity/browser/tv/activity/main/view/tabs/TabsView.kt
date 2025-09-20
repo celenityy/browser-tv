@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.view.tabs
+package dev.celenity.browser.tv.activity.main.view.tabs
 
 import android.app.AlertDialog
 import android.content.Context
@@ -8,14 +8,14 @@ import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.activity.main.SettingsModel
-import com.phlox.tvwebbrowser.activity.main.TabsModel
-import com.phlox.tvwebbrowser.activity.main.view.tabs.TabsAdapter.Listener
-import com.phlox.tvwebbrowser.databinding.ViewTabsBinding
-import com.phlox.tvwebbrowser.model.WebTabState
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
-import com.phlox.tvwebbrowser.utils.observable.ObservableList
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.SettingsModel
+import dev.celenity.browser.tv.activity.main.TabsModel
+import dev.celenity.browser.tv.activity.main.view.tabs.TabsAdapter.Listener
+import dev.celenity.browser.tv.databinding.ViewTabsBinding
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.utils.observable.ObservableList
 
 class TabsView @JvmOverloads constructor(
   context: Context,

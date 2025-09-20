@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.webengine.gecko
+package dev.celenity.browser.tv.webengine.gecko
 
 import android.content.Context
 import android.graphics.Bitmap

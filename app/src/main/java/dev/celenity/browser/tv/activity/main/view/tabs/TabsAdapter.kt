@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.view.tabs
+package dev.celenity.browser.tv.activity.main.view.tabs
 
 import android.os.Handler
 import android.os.Looper
@@ -9,16 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.activity.main.TabsModel
-import com.phlox.tvwebbrowser.activity.main.view.tabs.TabsAdapter.TabViewHolder
-import com.phlox.tvwebbrowser.databinding.ViewHorizontalWebtabItemBinding
-import com.phlox.tvwebbrowser.model.WebTabState
-import com.phlox.tvwebbrowser.singleton.FaviconsPool
-import com.phlox.tvwebbrowser.utils.activity
-import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
-import com.phlox.tvwebbrowser.widgets.CheckableContainer
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.TabsModel
+import dev.celenity.browser.tv.activity.main.view.tabs.TabsAdapter.TabViewHolder
+import dev.celenity.browser.tv.databinding.ViewHorizontalWebtabItemBinding
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.singleton.FaviconsPool
+import dev.celenity.browser.tv.utils.activity
+import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
+import dev.celenity.browser.tv.widgets.CheckableContainer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

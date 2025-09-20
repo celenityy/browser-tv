@@ -1,6 +1,5 @@
-package com.phlox.tvwebbrowser.model
+package dev.celenity.browser.tv.model
 
-import com.phlox.tvwebbrowser.TVBro
 import org.json.JSONObject
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs
+package dev.celenity.browser.tv.activity.main.dialogs
 
 import android.app.Dialog
 import android.content.Context
@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.singleton.shortcuts.Shortcut
-import com.phlox.tvwebbrowser.singleton.shortcuts.ShortcutMgr
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.singleton.shortcuts.Shortcut
+import dev.celenity.browser.tv.singleton.shortcuts.ShortcutMgr
 
 /**
  * Created by PDT on 06.08.2017.

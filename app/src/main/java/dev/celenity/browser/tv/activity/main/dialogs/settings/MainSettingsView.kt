@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.settings
+package dev.celenity.browser.tv.activity.main.dialogs.settings
 
 import android.app.AlertDialog
 import android.content.Context
@@ -10,15 +10,15 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.main.MainActivity
-import com.phlox.tvwebbrowser.activity.main.SettingsModel
-import com.phlox.tvwebbrowser.databinding.ViewSettingsMainBinding
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
-import com.phlox.tvwebbrowser.utils.activity
-import com.phlox.tvwebbrowser.webengine.WebEngineFactory
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.MainActivity
+import dev.celenity.browser.tv.activity.main.SettingsModel
+import dev.celenity.browser.tv.databinding.ViewSettingsMainBinding
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.utils.activity
+import dev.celenity.browser.tv.webengine.WebEngineFactory
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.system.exitProcess
@@ -28,7 +28,7 @@ class MainSettingsView @JvmOverloads constructor(
 ) : ScrollView(context, attrs, defStyleAttr) {
     private var vb = ViewSettingsMainBinding.inflate(LayoutInflater.from(getContext()), this, true)
     var settingsModel = ActiveModelsRepository.get(SettingsModel::class, activity!!)
-    var config = TVBro.config
+    var config = BrowserTV.config
 
     init {
         initHomePageAndSearchEngineConfigUI()
@@ -54,8 +54,8 @@ class MainSettingsView @JvmOverloads constructor(
             .setTitle(R.string.need_restart)
             .setMessage(R.string.need_restart_message)
             .setPositiveButton(R.string.exit) { _, _ ->
-                TVBro.instance.needToExitProcessAfterMainActivityFinish = true
-                TVBro.instance.needRestartMainActivityAfterExitingProcess = true
+                BrowserTV.instance.needToExitProcessAfterMainActivityFinish = true
+                BrowserTV.instance.needRestartMainActivityAfterExitingProcess = true
                 activity!!.finish()
             }
             .setCancelable(false)

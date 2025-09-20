@@ -1,12 +1,12 @@
-package com.phlox.tvwebbrowser.webengine
+package dev.celenity.browser.tv.webengine
 
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.model.HomePageLink
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.model.HomePageLink
 import java.io.InputStream
 
 interface WebEngineWindowProviderCallback {

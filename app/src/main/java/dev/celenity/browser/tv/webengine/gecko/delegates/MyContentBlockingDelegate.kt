@@ -1,6 +1,6 @@
-package com.phlox.tvwebbrowser.webengine.gecko.delegates
+package dev.celenity.browser.tv.webengine.gecko.delegates
 
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import org.mozilla.geckoview.ContentBlocking
 import org.mozilla.geckoview.GeckoSession
 

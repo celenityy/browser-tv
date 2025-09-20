@@ -1,13 +1,13 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.settings
+package dev.celenity.browser.tv.activity.main.dialogs.settings
 
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.View
 import com.fedir.segmentedbutton.SegmentedButton
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.activity.main.SettingsModel
-import com.phlox.tvwebbrowser.widgets.SegmentedButtonTabsAdapter
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.SettingsModel
+import dev.celenity.browser.tv.widgets.SegmentedButtonTabsAdapter
 
 class SettingsDialog(context: Context, val model: SettingsModel) : Dialog(context), DialogInterface.OnDismissListener, VersionSettingsView.Callback {
     private var mainView: MainSettingsView? = null

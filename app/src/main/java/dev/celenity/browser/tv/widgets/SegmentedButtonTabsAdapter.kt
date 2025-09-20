@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.widgets
+package dev.celenity.browser.tv.widgets
 
 import android.util.SparseArray
 import android.view.View

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.webengine.gecko.delegates
+package dev.celenity.browser.tv.webengine.gecko.delegates
 
 import android.graphics.Bitmap
 import android.net.Uri
@@ -6,10 +6,9 @@ import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.singleton.FaviconsPool
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.singleton.FaviconsPool
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

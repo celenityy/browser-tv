@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.downloads
+package dev.celenity.browser.tv.activity.downloads
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.model.Download
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.model.Download
 import java.text.SimpleDateFormat
 import java.util.Date
 

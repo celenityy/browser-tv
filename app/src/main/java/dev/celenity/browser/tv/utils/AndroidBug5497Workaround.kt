@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.utils
+package dev.celenity.browser.tv.utils
 
 import android.app.Activity
 import android.graphics.Rect

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.favorites
+package dev.celenity.browser.tv.activity.main.dialogs.favorites
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,13 +7,13 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.databinding.ViewFavoriteItemBinding
-import com.phlox.tvwebbrowser.model.FavoriteItem
-import com.phlox.tvwebbrowser.singleton.FaviconsPool
-import com.phlox.tvwebbrowser.utils.activity
-import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.databinding.ViewFavoriteItemBinding
+import dev.celenity.browser.tv.model.FavoriteItem
+import dev.celenity.browser.tv.singleton.FaviconsPool
+import dev.celenity.browser.tv.utils.activity
+import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

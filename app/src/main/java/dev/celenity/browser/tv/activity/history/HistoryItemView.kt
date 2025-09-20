@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.history
+package dev.celenity.browser.tv.activity.history
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.TextView
 
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.model.HistoryItem
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.model.HistoryItem
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat

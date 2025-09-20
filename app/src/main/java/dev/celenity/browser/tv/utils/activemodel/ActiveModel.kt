@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.utils.activemodel
+package dev.celenity.browser.tv.utils.activemodel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +9,7 @@ import kotlinx.coroutines.cancel
  * This class is like ViewModel from Jetpack but better =)
  * It can be used not only with activities and Fragments, but also for example
  * with Services or other Active models (but with manual marking as Needless -
- * @see com.phlox.tvwebbrowser.utils.statemodel.ActiveModelsRepository#markAsNeedless()).
+ * @see dev.celenity.browser.tv.utils.statemodel.ActiveModelsRepository#markAsNeedless()).
  * This also will survive not only configuration changes but also Activity switching -
  * If you go from one Activity to another and they both accessing the same ActiveModel
  * class then actually they will access the same object what can be good for performance.

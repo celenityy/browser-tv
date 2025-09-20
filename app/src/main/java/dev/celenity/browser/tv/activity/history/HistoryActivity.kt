@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.history
+package dev.celenity.browser.tv.activity.history
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -14,13 +14,13 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.databinding.ActivityHistoryBinding
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.BaseAnimationListener
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.utils.VoiceSearchHelper
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.databinding.ActivityHistoryBinding
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.BaseAnimationListener
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.utils.VoiceSearchHelper
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

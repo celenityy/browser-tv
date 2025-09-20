@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.service.downloads
+package dev.celenity.browser.tv.service.downloads
 
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -9,10 +9,10 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import android.webkit.CookieManager
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.DownloadUtils
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.DownloadUtils
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
@@ -199,7 +199,7 @@ class StreamDownloadTask(override var downloadInfo: Download, val stream: InputS
 private fun cancelDownloadIfNeeded(downloadInfo: Download) {
     val filePath = downloadInfo.filepath
     if (filePath.isEmpty()) return
-    val contentResolver = TVBro.instance.contentResolver
+    val contentResolver = BrowserTV.instance.contentResolver
     if (downloadInfo.cancelled) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val rowsDeleted = contentResolver.delete(Uri.parse(filePath), null)
@@ -218,7 +218,7 @@ private fun cancelDownloadIfNeeded(downloadInfo: Download) {
 }
 
 private fun prepareDownloadOutput(downloadInfo: Download): OutputStream {
-    val contentResolver = TVBro.instance.contentResolver
+    val contentResolver = BrowserTV.instance.contentResolver
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         val downloadsCollection =
             MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)

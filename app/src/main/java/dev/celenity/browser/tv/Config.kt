@@ -1,10 +1,10 @@
-package com.phlox.tvwebbrowser
+package dev.celenity.browser.tv
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Build
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.utils.observable.ObservableValue
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.utils.observable.ObservableValue
 import org.mozilla.geckoview.GeckoRuntimeSettings
 
 class Config(val prefs: SharedPreferences) {
@@ -172,7 +172,7 @@ class Config(val prefs: SharedPreferences) {
         }
 
     var autoCheckUpdates: Boolean
-        get() = prefs.getBoolean(AUTO_CHECK_UPDATES_KEY, Utils.isInstalledByAPK(TVBro.instance))
+        get() = prefs.getBoolean(AUTO_CHECK_UPDATES_KEY, Utils.isInstalledByAPK(BrowserTV.instance))
         set(value) {
             prefs.edit().putBoolean(AUTO_CHECK_UPDATES_KEY, value).apply()
         }

@@ -1,12 +1,12 @@
-package com.phlox.tvwebbrowser.webengine.gecko.delegates
+package dev.celenity.browser.tv.webengine.gecko.delegates
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.core.content.ContextCompat
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.PermissionDelegate
@@ -34,7 +34,7 @@ class MyPermissionDelegate(private val webEngine: GeckoWebEngine): PermissionDel
             PermissionDelegate.PERMISSION_PERSISTENT_STORAGE -> R.string.request_storage
             PermissionDelegate.PERMISSION_XR -> R.string.request_xr
             PermissionDelegate.PERMISSION_AUTOPLAY_AUDIBLE, PermissionDelegate.PERMISSION_AUTOPLAY_INAUDIBLE ->
-                return if (!TVBro.config.allowAutoplayMedia) {
+                return if (!BrowserTV.config.allowAutoplayMedia) {
                 GeckoResult.fromValue(ContentPermission.VALUE_DENY)
             } else {
                 GeckoResult.fromValue(ContentPermission.VALUE_ALLOW)

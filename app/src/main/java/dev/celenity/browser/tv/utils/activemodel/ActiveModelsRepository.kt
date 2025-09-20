@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.utils.activemodel
+package dev.celenity.browser.tv.utils.activemodel
 
 import android.app.Activity
 import android.app.Application

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs
+package dev.celenity.browser.tv.activity.main.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.activity.main.SettingsModel
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.SettingsModel
 
 /**
  * Created by fedex on 18.01.17.

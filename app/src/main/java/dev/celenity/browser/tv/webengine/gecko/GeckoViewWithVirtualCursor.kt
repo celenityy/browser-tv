@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.webengine.gecko
+package dev.celenity.browser.tv.webengine.gecko
 
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -15,8 +15,8 @@ import android.view.MotionEvent
 import android.view.MotionEvent.PointerProperties
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.utils.dip2px
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.utils.dip2px
 import org.mozilla.geckoview.ScreenLength
 
 

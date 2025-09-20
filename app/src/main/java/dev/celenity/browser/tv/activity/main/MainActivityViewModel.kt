@@ -1,20 +1,20 @@
-package com.phlox.tvwebbrowser.activity.main
+package dev.celenity.browser.tv.activity.main
 
 import android.os.Build
 import android.util.Log
-import com.phlox.tvwebbrowser.BuildConfig
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.model.FavoriteItem
-import com.phlox.tvwebbrowser.model.HistoryItem
-import com.phlox.tvwebbrowser.model.HomePageLink
-import com.phlox.tvwebbrowser.model.WebTabState
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.UpdateChecker
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
-import com.phlox.tvwebbrowser.utils.deleteDirectory
-import com.phlox.tvwebbrowser.utils.observable.ObservableList
-import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.BuildConfig
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.model.FavoriteItem
+import dev.celenity.browser.tv.model.HistoryItem
+import dev.celenity.browser.tv.model.HomePageLink
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.UpdateChecker
+import dev.celenity.browser.tv.utils.activemodel.ActiveModel
+import dev.celenity.browser.tv.utils.deleteDirectory
+import dev.celenity.browser.tv.utils.observable.ObservableList
+import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -36,7 +36,7 @@ class MainActivityViewModel: ActiveModel() {
     var lastHistoryItem: HistoryItem? = null
     private var lastHistoryItemSaveJob: Job? = null
     val homePageLinks = ObservableList<HomePageLink>()
-    val config = TVBro.config
+    val config = BrowserTV.config
 
     fun loadState() = modelScope.launch(Dispatchers.Main) {
         Log.d(TAG, "loadState")
@@ -53,7 +53,7 @@ class MainActivityViewModel: ActiveModel() {
             Log.i(TAG, "App version code changed from ${config.appVersionCodeMark} to ${BuildConfig.VERSION_CODE}")
             config.appVersionCodeMark = BuildConfig.VERSION_CODE
             withContext(Dispatchers.IO) {
-                UpdateChecker.clearTempFilesIfAny(TVBro.instance)
+                UpdateChecker.clearTempFilesIfAny(BrowserTV.instance)
             }
         }
     }
@@ -78,7 +78,7 @@ class MainActivityViewModel: ActiveModel() {
 
     private suspend fun loadHomePageLinks() {
         Log.d(TAG, "loadHomePageLinks")
-        val config = TVBro.config
+        val config = BrowserTV.config
         if (config.homePageMode == Config.HomePageMode.HOME_PAGE) {
             when (config.homePageLinksMode) {
                 Config.HomePageLinksMode.MOST_VISITED -> {
@@ -130,7 +130,7 @@ class MainActivityViewModel: ActiveModel() {
 
     fun onTabTitleUpdated(tab: WebTabState) {
         Log.d(TAG, "onTabTitleUpdated: ${tab.url} ${tab.title}")
-        if (TVBro.config.incognitoMode) return
+        if (BrowserTV.config.incognitoMode) return
         val lastHistoryItem = lastHistoryItem ?: return
         if (tab.url == lastHistoryItem.url) {
             lastHistoryItem.title = tab.title
@@ -144,13 +144,13 @@ class MainActivityViewModel: ActiveModel() {
 
     fun prepareSwitchToIncognito() {
         Log.d(TAG, "prepareSwitchToIncognito")
-        if (TVBro.config.isWebEngineGecko()) return
+        if (BrowserTV.config.isWebEngineGecko()) return
         //to isolate incognito mode data:
         //in api >= 28 we just use another directory for WebView data
         //on earlier apis we backup-ing existing WebView data directory
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val incognitoWebViewData = File(
-                TVBro.instance.filesDir.parentFile!!.absolutePath +
+                BrowserTV.instance.filesDir.parentFile!!.absolutePath +
                         "/" + WEB_VIEW_DATA_FOLDER + "_" + INCOGNITO_DATA_DIRECTORY_SUFFIX
             )
             if (incognitoWebViewData.exists()) {
@@ -159,11 +159,11 @@ class MainActivityViewModel: ActiveModel() {
             }
         } else {
             val webViewData = File(
-                TVBro.instance.filesDir.parentFile!!.absolutePath +
+                BrowserTV.instance.filesDir.parentFile!!.absolutePath +
                         "/" + WEB_VIEW_DATA_FOLDER
             )
             val backupedWebViewData = File(
-                TVBro.instance.filesDir.parentFile!!.absolutePath +
+                BrowserTV.instance.filesDir.parentFile!!.absolutePath +
                         "/" + WEB_VIEW_DATA_FOLDER + WEB_VIEW_DATA_BACKUP_DIRECTORY_SUFFIX
             )
             if (backupedWebViewData.exists()) {
@@ -172,9 +172,9 @@ class MainActivityViewModel: ActiveModel() {
             }
             webViewData.renameTo(backupedWebViewData)
             val webViewCache =
-                File(TVBro.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER)
+                File(BrowserTV.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER)
             val backupedWebViewCache = File(
-                TVBro.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER +
+                BrowserTV.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER +
                         WEB_VIEW_DATA_BACKUP_DIRECTORY_SUFFIX
             )
             webViewCache.renameTo(backupedWebViewCache)
@@ -186,18 +186,18 @@ class MainActivityViewModel: ActiveModel() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val webViewData = File(
-                TVBro.instance.filesDir.parentFile!!.absolutePath +
+                BrowserTV.instance.filesDir.parentFile!!.absolutePath +
                         "/" + WEB_VIEW_DATA_FOLDER + "_" + INCOGNITO_DATA_DIRECTORY_SUFFIX
             )
             deleteDirectory(webViewData)
             var webViewCache =
                 File(
-                    TVBro.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER +
+                    BrowserTV.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER +
                             "_" + INCOGNITO_DATA_DIRECTORY_SUFFIX
                 )
             if (!webViewCache.exists()) {
                 webViewCache = File(
-                    TVBro.instance.cacheDir.absolutePath + "/" +
+                    BrowserTV.instance.cacheDir.absolutePath + "/" +
                             WEB_VIEW_CACHE_FOLDER.lowercase(Locale.getDefault()) +
                             "_" + INCOGNITO_DATA_DIRECTORY_SUFFIX
                 )
@@ -205,21 +205,21 @@ class MainActivityViewModel: ActiveModel() {
             deleteDirectory(webViewCache)
         } else {
             val webViewData = File(
-                TVBro.instance.filesDir.parentFile!!.absolutePath +
+                BrowserTV.instance.filesDir.parentFile!!.absolutePath +
                         "/" + WEB_VIEW_DATA_FOLDER
             )
             deleteDirectory(webViewData)
             val webViewCache =
-                File(TVBro.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER)
+                File(BrowserTV.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER)
             deleteDirectory(webViewCache)
 
             val backupedWebViewData = File(
-                TVBro.instance.filesDir.parentFile!!.absolutePath +
+                BrowserTV.instance.filesDir.parentFile!!.absolutePath +
                         "/" + WEB_VIEW_DATA_FOLDER + WEB_VIEW_DATA_BACKUP_DIRECTORY_SUFFIX
             )
             backupedWebViewData.renameTo(webViewData)
             val backupedWebViewCache = File(
-                TVBro.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER +
+                BrowserTV.instance.cacheDir.absolutePath + "/" + WEB_VIEW_CACHE_FOLDER +
                         WEB_VIEW_DATA_BACKUP_DIRECTORY_SUFFIX
             )
             backupedWebViewCache.renameTo(webViewCache)

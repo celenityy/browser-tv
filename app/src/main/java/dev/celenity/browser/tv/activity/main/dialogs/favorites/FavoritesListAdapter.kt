@@ -1,10 +1,10 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.favorites
+package dev.celenity.browser.tv.activity.main.dialogs.favorites
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 
-import com.phlox.tvwebbrowser.model.FavoriteItem
+import dev.celenity.browser.tv.model.FavoriteItem
 
 /**
  * Created by PDT on 13.09.2016.

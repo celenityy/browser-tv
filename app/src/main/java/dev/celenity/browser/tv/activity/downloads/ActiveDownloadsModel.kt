@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.downloads
+package dev.celenity.browser.tv.activity.downloads
 
 import android.content.ContentValues
 import android.net.Uri
@@ -6,13 +6,13 @@ import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.util.Log
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.service.downloads.DownloadTask
-import com.phlox.tvwebbrowser.service.downloads.FileDownloadTask
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.observable.ObservableList
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.service.downloads.DownloadTask
+import dev.celenity.browser.tv.service.downloads.FileDownloadTask
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.observable.ObservableList
+import dev.celenity.browser.tv.utils.activemodel.ActiveModel
 import java.io.File
 
 class ActiveDownloadsModel: ActiveModel() {
@@ -27,7 +27,7 @@ class ActiveDownloadsModel: ActiveModel() {
 
     suspend fun deleteItem(download: Download) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val contentResolver = TVBro.instance.contentResolver
+            val contentResolver = BrowserTV.instance.contentResolver
             val rowsDeleted = contentResolver.delete(Uri.parse(download.filepath), null)
             if (rowsDeleted < 1) {
                 Log.e(FileDownloadTask.TAG, "Failed to delete file from MediaStore")

@@ -1,12 +1,12 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.favorites
+package dev.celenity.browser.tv.activity.main.dialogs.favorites
 
 import android.app.Dialog
 import android.content.Context
 import android.view.View
 import android.widget.*
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.model.FavoriteItem
-import com.phlox.tvwebbrowser.singleton.AppDatabase
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.model.FavoriteItem
+import dev.celenity.browser.tv.singleton.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

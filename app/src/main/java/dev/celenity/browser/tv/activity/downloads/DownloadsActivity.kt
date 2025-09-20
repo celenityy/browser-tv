@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.downloads
+package dev.celenity.browser.tv.activity.downloads
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -19,12 +19,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.BuildConfig
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.databinding.ActivityDownloadsBinding
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.BuildConfig
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.databinding.ActivityDownloadsBinding
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File

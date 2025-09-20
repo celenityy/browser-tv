@@ -1,6 +1,6 @@
 console.log("Browser TV home content extension loaded");
 
-const homeExtPort = browser.runtime.connectNative("tvbro");
+const homeExtPort = browser.runtime.connectNative("browsertv");
 function postMessageToHomePagePort(action, data) {
     //console.log("Sending message to native app: " + action);
     homeExtPort.postMessage({ action: action, data: data });

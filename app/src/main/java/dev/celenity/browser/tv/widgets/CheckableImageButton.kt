@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.widgets
+package dev.celenity.browser.tv.widgets
 
 import android.R.attr
 import android.content.Context

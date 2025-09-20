@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.utils
+package dev.celenity.browser.tv.utils
 
 import android.util.JsonReader
 import android.webkit.MimeTypeMap

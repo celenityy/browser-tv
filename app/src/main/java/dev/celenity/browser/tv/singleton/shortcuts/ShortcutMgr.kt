@@ -1,11 +1,11 @@
-package com.phlox.tvwebbrowser.singleton.shortcuts
+package dev.celenity.browser.tv.singleton.shortcuts
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.Config
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.Config
 
-import com.phlox.tvwebbrowser.activity.main.MainActivity
+import dev.celenity.browser.tv.activity.main.MainActivity
 
 import java.util.HashMap
 
@@ -19,7 +19,7 @@ class ShortcutMgr private constructor() {
 
     init {
         shortcuts = HashMap()
-        prefs = TVBro.instance.getSharedPreferences(PREFS_SHORTCUTS, Context.MODE_PRIVATE)
+        prefs = BrowserTV.instance.getSharedPreferences(PREFS_SHORTCUTS, Context.MODE_PRIVATE)
         for (shortcut in Shortcut.values()) {
             shortcut.keyCode = prefs.getInt(shortcut.prefsKey, shortcut.keyCode)
             if (shortcut.keyCode != 0) {

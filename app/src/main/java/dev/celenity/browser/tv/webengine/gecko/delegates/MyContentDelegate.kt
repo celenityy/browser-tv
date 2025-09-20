@@ -1,13 +1,13 @@
-package com.phlox.tvwebbrowser.webengine.gecko.delegates
+package dev.celenity.browser.tv.webengine.gecko.delegates
 
 import android.util.Log
 import android.view.PointerIcon
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.model.Download
-import com.phlox.tvwebbrowser.utils.DownloadUtils
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoViewWithVirtualCursor
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.utils.DownloadUtils
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.webengine.gecko.GeckoViewWithVirtualCursor
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import org.json.JSONObject
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoSession

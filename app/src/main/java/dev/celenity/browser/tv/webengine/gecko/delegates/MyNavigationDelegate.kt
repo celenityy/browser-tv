@@ -1,13 +1,13 @@
-package com.phlox.tvwebbrowser.webengine.gecko.delegates
+package dev.celenity.browser.tv.webengine.gecko.delegates
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.webkit.WebResourceResponse
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.singleton.FaviconsPool
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.singleton.FaviconsPool
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import kotlinx.coroutines.runBlocking
 import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.GeckoResult
@@ -182,7 +182,7 @@ class MyNavigationDelegate(private val webEngine: GeckoWebEngine) : GeckoSession
         if (errorTemplate != null) return errorTemplate
 
         return try {
-            errorTemplate = TVBro.instance.resources.assets
+            errorTemplate = BrowserTV.instance.resources.assets
                 .open(ERROR_TEMPLATE_FILE)
                 .bufferedReader()
                 .use(BufferedReader::readText)

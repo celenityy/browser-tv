@@ -1,9 +1,9 @@
-package com.phlox.tvwebbrowser.activity.history
+package dev.celenity.browser.tv.activity.history
 
-import com.phlox.tvwebbrowser.model.HistoryItem
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.observable.ObservableValue
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
+import dev.celenity.browser.tv.model.HistoryItem
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.observable.ObservableValue
+import dev.celenity.browser.tv.utils.activemodel.ActiveModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.view
+package dev.celenity.browser.tv.activity.main.view
 
 import android.content.Context
 import android.graphics.*
@@ -8,7 +8,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.FrameLayout
-import com.phlox.tvwebbrowser.utils.Utils
+import dev.celenity.browser.tv.utils.Utils
 
 /**
  * Created by PDT on 25.08.2016.

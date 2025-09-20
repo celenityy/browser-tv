@@ -1,9 +1,9 @@
-package com.phlox.tvwebbrowser.activity.main
+package dev.celenity.browser.tv.activity.main
 
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
-import com.phlox.tvwebbrowser.utils.observable.ObservableValue
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.utils.activemodel.ActiveModel
+import dev.celenity.browser.tv.utils.observable.ObservableValue
 
 class SettingsModel : ActiveModel() {
     companion object {
@@ -11,7 +11,7 @@ class SettingsModel : ActiveModel() {
         const val TV_BRO_UA_PREFIX = "TV Bro/1.0 "
     }
 
-    val config = TVBro.config
+    val config = BrowserTV.config
 
     //Home page settings
     var homePage by config::homePage

@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.model
+package dev.celenity.browser.tv.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

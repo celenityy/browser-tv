@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.webengine.gecko
+package dev.celenity.browser.tv.webengine.gecko
 
 import android.content.Context
 import android.content.Intent
@@ -11,20 +11,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.UiThread
-import com.phlox.tvwebbrowser.BuildConfig
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.main.view.CursorLayout
-import com.phlox.tvwebbrowser.model.WebTabState
-import com.phlox.tvwebbrowser.utils.observable.ObservableValue
-import com.phlox.tvwebbrowser.webengine.WebEngine
-import com.phlox.tvwebbrowser.webengine.WebEngineWindowProviderCallback
-import com.phlox.tvwebbrowser.webengine.gecko.delegates.*
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.BuildConfig
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.view.CursorLayout
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.utils.observable.ObservableValue
+import dev.celenity.browser.tv.webengine.WebEngine
+import dev.celenity.browser.tv.webengine.WebEngineWindowProviderCallback
+import dev.celenity.browser.tv.webengine.gecko.delegates.AppWebExtensionBackgroundPortDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.AppWebExtensionPortDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyContentBlockingDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyContentDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyHistoryDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyMediaSessionDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyNavigationDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyPermissionDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyProgressDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.MyPromptDelegate
 import org.json.JSONObject
-import org.mozilla.geckoview.*
+import org.mozilla.geckoview.ContentBlocking
+import org.mozilla.geckoview.GeckoResult
+import org.mozilla.geckoview.GeckoRuntime
+import org.mozilla.geckoview.GeckoRuntimeSettings
+import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.SessionState
+import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.StorageController.ClearFlags
+import org.mozilla.geckoview.WebExtension
 import org.mozilla.geckoview.WebExtension.MessageDelegate
 import java.lang.ref.WeakReference
 import kotlin.coroutines.resume
@@ -49,7 +64,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                     builder.consoleOutput(true)
                 }
                 builder.aboutConfigEnabled(true)
-                    .preferredColorScheme(TVBro.config.theme.value.toGeckoPreferredColorScheme())
+                    .preferredColorScheme(BrowserTV.config.theme.value.toGeckoPreferredColorScheme())
                     .forceUserScalableEnabled(true)
                 builder.contentBlocking(
                         ContentBlocking.Settings.Builder()
@@ -62,11 +77,11 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                     .build())
                 runtime = GeckoRuntime.create(context, builder.build())
 
-                val webExtInstallResult = if (APP_WEB_EXTENSION_VERSION == TVBro.config.appWebExtensionVersion) {
+                val webExtInstallResult = if (APP_WEB_EXTENSION_VERSION == BrowserTV.config.appWebExtensionVersion) {
                     Log.d(TAG, "appWebExtension already installed")
                     runtime.webExtensionController.ensureBuiltIn(
                         "resource://android/assets/extensions/generic/",
-                        "tvbro@mock.com"
+                        "browsertv-generic@celenity.dev"
                     )
                 } else {
                     Log.d(TAG, "installing appWebExtension")
@@ -76,7 +91,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                 webExtInstallResult.accept({ extension ->
                     Log.d(TAG, "extension accepted: ${extension?.metaData?.description}")
                     appWebExtension.value = extension
-                    TVBro.config.appWebExtensionVersion = APP_WEB_EXTENSION_VERSION
+                    BrowserTV.config.appWebExtensionVersion = APP_WEB_EXTENSION_VERSION
                 }
                 ) { e -> Log.e(TAG, "Error registering WebExtension", e) }
             }
@@ -129,7 +144,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
     init {
         Log.d(TAG, "init")
         session = GeckoSession(GeckoSessionSettings.Builder()
-            .usePrivateMode(TVBro.config.incognitoMode)
+            .usePrivateMode(BrowserTV.config.incognitoMode)
             .viewportMode(GeckoSessionSettings.VIEWPORT_MODE_MOBILE)
             .userAgentMode(GeckoSessionSettings.USER_AGENT_MODE_MOBILE)
             .useTrackingProtection(true)
@@ -171,7 +186,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                         port.setDelegate(it)
                     }
                 }
-            }, "tvbro")
+            }, "browsertv")
 
         extension.setMessageDelegate(object : MessageDelegate {
             override fun onMessage(nativeApp: String, message: Any,
@@ -186,7 +201,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                     port.setDelegate(it)
                 }
             }
-        }, "tvbro_bg")            
+        }, "browsertv_bg")            
     }
 
     override fun saveState(): Any? {
@@ -221,18 +236,18 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
             session.open(runtime)
         }
         if (Config.HOME_URL_ALIAS == url) {
-            when (TVBro.config.homePageMode) {
+            when (BrowserTV.config.homePageMode) {
                 Config.HomePageMode.BLANK -> {
                     //nothing to do
                 }
                 Config.HomePageMode.CUSTOM, Config.HomePageMode.SEARCH_ENGINE -> {
-                    session.loadUri(TVBro.config.homePage)
+                    session.loadUri(BrowserTV.config.homePage)
                 }
                 Config.HomePageMode.HOME_PAGE -> {
                     if (HomePageHelper.homePageFilesReady) {
                         session.loadUri(HomePageHelper.HOME_PAGE_URL)
                     } else {
-                        Toast.makeText(TVBro.instance, R.string.error, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(BrowserTV.instance, R.string.error, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

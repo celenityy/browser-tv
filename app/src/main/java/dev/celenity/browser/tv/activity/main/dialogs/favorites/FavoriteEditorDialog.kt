@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.favorites
+package dev.celenity.browser.tv.activity.main.dialogs.favorites
 
 import android.app.Dialog
 import android.content.Context
@@ -8,8 +8,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.model.FavoriteItem
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.model.FavoriteItem
 
 /**
  * Created by PDT on 13.09.2016.

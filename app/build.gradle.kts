@@ -75,7 +75,7 @@ android {
                 val versionName = variant.versionName
                 val arch = output.filters.first().identifier
                 output.outputFileName =
-                    "tvbro-${versionName}(${arch}).apk"
+                    "browser-tv-${versionName}(${arch}).apk"
             }
     }
 
@@ -118,7 +118,7 @@ dependencies {
     implementation("de.halfbit:pinned-section-listview:1.0.0")
 
     // https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/
-    val geckoviewVersion = "143.0.20250919144100"
+    val geckoviewVersion = "143.0.20250920172911"
     implementation("org.mozilla.geckoview:geckoview-arm64-v8a:$geckoviewVersion")
 
     testImplementation("junit:junit:4.13.2")

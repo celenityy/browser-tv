@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.dialogs.settings
+package dev.celenity.browser.tv.activity.main.dialogs.settings
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,13 +10,13 @@ import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.RelativeLayout
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.activity.main.SettingsModel
-import com.phlox.tvwebbrowser.activity.main.dialogs.ShortcutDialog
-import com.phlox.tvwebbrowser.databinding.ViewShortcutBinding
-import com.phlox.tvwebbrowser.singleton.shortcuts.ShortcutMgr
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
-import com.phlox.tvwebbrowser.utils.activity
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.main.SettingsModel
+import dev.celenity.browser.tv.activity.main.dialogs.ShortcutDialog
+import dev.celenity.browser.tv.databinding.ViewShortcutBinding
+import dev.celenity.browser.tv.singleton.shortcuts.ShortcutMgr
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.utils.activity
 
 
 class ShortcutsSettingsView @JvmOverloads constructor(

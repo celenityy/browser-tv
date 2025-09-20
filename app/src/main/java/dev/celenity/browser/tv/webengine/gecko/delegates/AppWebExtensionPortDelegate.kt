@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.webengine.gecko.delegates
+package dev.celenity.browser.tv.webengine.gecko.delegates
 
 import android.graphics.Bitmap
 import android.net.Uri
@@ -6,10 +6,10 @@ import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.singleton.FaviconsPool
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.singleton.FaviconsPool
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -31,14 +31,14 @@ class AppWebExtensionPortDelegate(val port: WebExtension.Port, val webEngine: Ge
                 }
                 "onHomePageLoaded" -> {
                     val callback = webEngine.callback ?: return
-                    val cfg = TVBro.config
+                    val cfg = BrowserTV.config
                     val jsArr = JSONArray()
                     for (item in callback.getHomePageLinks()) {
                         jsArr.put(item.toJsonObj())
                     }
                     var links = jsArr.toString()
                     links = links.replace("'", "\\'")
-                    if (Utils.isFireTV(TVBro.instance)) {
+                    if (Utils.isFireTV(BrowserTV.instance)) {
                         webEngine.evaluateJavascript("hideVoiceSearchUI()")
                     }
                     webEngine.evaluateJavascript("renderLinks('${cfg.homePageLinksMode.name}', $links)")
@@ -49,7 +49,7 @@ class AppWebExtensionPortDelegate(val port: WebExtension.Port, val webEngine: Ge
                     val data = msgJson.getJSONObject("data")
                     val engine = data.getString("engine")
                     val customSearchEngineURL = data.getString("customSearchEngineURL")
-                    TVBro.config.searchEngineURL.value = customSearchEngineURL
+                    BrowserTV.config.searchEngineURL.value = customSearchEngineURL
                 }
                 "onEditBookmark" -> {
                     val index = msgJson.getInt("data")

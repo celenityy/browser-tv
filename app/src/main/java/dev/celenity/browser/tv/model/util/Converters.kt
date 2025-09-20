@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.model.util
+package dev.celenity.browser.tv.model.util
 
 import androidx.room.TypeConverter
 import java.util.*

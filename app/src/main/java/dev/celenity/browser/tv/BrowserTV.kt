@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser
+package dev.celenity.browser.tv
 
 import android.app.Activity
 import android.app.Application
@@ -9,8 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import com.phlox.tvwebbrowser.activity.main.MainActivity
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.activity.main.MainActivity
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.util.concurrent.ArrayBlockingQueue
@@ -21,12 +21,12 @@ import kotlin.system.exitProcess
 /**
  * Created by PDT on 09.09.2016.
  */
-class TVBro : Application(), Application.ActivityLifecycleCallbacks {
+class BrowserTV : Application(), Application.ActivityLifecycleCallbacks {
     companion object {
-        lateinit var instance: TVBro
+        lateinit var instance: BrowserTV
         const val CHANNEL_ID_DOWNLOADS: String = "downloads"
         const val MAIN_PREFS_NAME = "main.xml"
-        val TAG = TVBro::class.simpleName
+        val TAG = BrowserTV::class.simpleName
 
         val config: Config get() = instance._config
     }
@@ -96,7 +96,7 @@ class TVBro : Application(), Application.ActivityLifecycleCallbacks {
             Log.i(TAG, "onActivityDestroyed: exiting process")
             if (needRestartMainActivityAfterExitingProcess) {
                 Log.i(TAG, "onActivityDestroyed: restarting main activity")
-                val intent = Intent(this@TVBro, MainActivity::class.java)
+                val intent = Intent(this@BrowserTV, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
             }

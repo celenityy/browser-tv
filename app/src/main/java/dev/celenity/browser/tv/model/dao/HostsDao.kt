@@ -1,7 +1,7 @@
-package com.phlox.tvwebbrowser.model.dao
+package dev.celenity.browser.tv.model.dao
 
 import androidx.room.*
-import com.phlox.tvwebbrowser.model.HostConfig
+import dev.celenity.browser.tv.model.HostConfig
 
 @Dao
 interface HostsDao {

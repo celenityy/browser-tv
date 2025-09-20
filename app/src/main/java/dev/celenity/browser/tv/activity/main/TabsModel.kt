@@ -1,15 +1,15 @@
-package com.phlox.tvwebbrowser.activity.main
+package dev.celenity.browser.tv.activity.main
 
 import android.view.View
 import android.view.ViewGroup
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.model.WebTabState
-import com.phlox.tvwebbrowser.singleton.AppDatabase
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModel
-import com.phlox.tvwebbrowser.utils.observable.ObservableList
-import com.phlox.tvwebbrowser.utils.observable.ObservableValue
-import com.phlox.tvwebbrowser.webengine.WebEngineWindowProviderCallback
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.singleton.AppDatabase
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.utils.activemodel.ActiveModel
+import dev.celenity.browser.tv.utils.observable.ObservableList
+import dev.celenity.browser.tv.utils.observable.ObservableValue
+import dev.celenity.browser.tv.webengine.WebEngineWindowProviderCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,7 +22,7 @@ class TabsModel : ActiveModel() {
     var loaded = false
     val currentTab = ObservableValue<WebTabState?>(null)
     val tabsStates = ObservableList<WebTabState>()
-    private val config = TVBro.config
+    private val config = BrowserTV.config
     private var incognitoMode = config.incognitoMode
 
     init {
@@ -131,6 +131,6 @@ class TabsModel : ActiveModel() {
         if (needReloadUrl) {
             newTab.webEngine.loadUrl(newTab.url)
         }
-        newTab.webEngine.setNetworkAvailable(Utils.isNetworkConnected(TVBro.instance))
+        newTab.webEngine.setNetworkAvailable(Utils.isNetworkConnected(BrowserTV.instance))
     }
 }

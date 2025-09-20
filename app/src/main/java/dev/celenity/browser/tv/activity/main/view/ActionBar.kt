@@ -1,4 +1,4 @@
-package com.phlox.tvwebbrowser.activity.main.view
+package dev.celenity.browser.tv.activity.main.view
 
 import android.content.Context
 import android.transition.TransitionManager
@@ -13,14 +13,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.phlox.tvwebbrowser.Config
-import com.phlox.tvwebbrowser.R
-import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.downloads.ActiveDownloadsModel
-import com.phlox.tvwebbrowser.databinding.ViewActionbarBinding
-import com.phlox.tvwebbrowser.utils.Utils
-import com.phlox.tvwebbrowser.utils.activemodel.ActiveModelsRepository
-import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
+import dev.celenity.browser.tv.BrowserTV
+import dev.celenity.browser.tv.Config
+import dev.celenity.browser.tv.R
+import dev.celenity.browser.tv.activity.downloads.ActiveDownloadsModel
+import dev.celenity.browser.tv.databinding.ViewActionbarBinding
+import dev.celenity.browser.tv.utils.Utils
+import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
+import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
 
 class ActionBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -84,7 +84,7 @@ class ActionBar @JvmOverloads constructor(
 
         if (isInEditMode) return
 
-        val incognitoMode = TVBro.config.incognitoMode
+        val incognitoMode = BrowserTV.config.incognitoMode
 
         vb.ibMenu.setOnClickListener { callback?.closeWindow() }
         vb.ibDownloads.setOnClickListener { callback?.showDownloads() }
