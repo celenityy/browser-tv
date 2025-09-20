@@ -1,0 +1,15 @@
+diff --git a/build.gradle b/build.gradle
+index 9f5241cb8a..a7b8edd494 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -25,8 +25,8 @@ buildscript {
+         classpath libs.androidx.navigation.safeargs
+         classpath libs.osslicenses.plugin
+         classpath libs.tools.benchmarkgradle
+-        classpath libs.glean.gradle.plugin
+-        classpath "${ApplicationServicesConfig.groupId}:tooling-nimbus-gradle:${ApplicationServicesConfig.version}"
++        // classpath libs.glean.gradle.plugin
++        // classpath "${ApplicationServicesConfig.groupId}:tooling-nimbus-gradle:${ApplicationServicesConfig.version}"
+     }
+ }
+ 

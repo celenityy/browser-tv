@@ -7,3 +7,11 @@
 /captures
 *.keystore
 *.hprof
+/env
+/build
+/gecko
+/gmscore
+/patches/preferences/phoenix.js
+/patches/preferences/phoenix-extended.js
+/scripts/env_local.sh
+/wasi-sdk

@@ -1,0 +1,62 @@
+diff --git a/settings.gradle b/settings.gradle
+index db3a3e3dbf..aa0487aa83 100644
+--- a/settings.gradle
++++ b/settings.gradle
+@@ -54,15 +54,15 @@ project(':geckoview').projectDir = new File("${gradle.mozconfig.topsrcdir}/mobil
+ project(':exoplayer2').projectDir = new File("${gradle.mozconfig.topsrcdir}/mobile/android/exoplayer2")
+ project(':android-components').projectDir = new File("${gradle.mozconfig.topsrcdir}/mobile/android/android-components")
+ 
+-if (!gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT || gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT == "fenix") {
++if (gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT == "fenix") {
+     include ':fenix'
+     project(':fenix').projectDir = new File("${gradle.mozconfig.topsrcdir}/mobile/android/fenix/app")
+ }
+-if (!gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT || gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT == "focus") {
++if (gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT == "focus") {
+     include ':focus-android'
+     project(':focus-android').projectDir = new File("${gradle.mozconfig.topsrcdir}/mobile/android/focus-android/app")
+ }
+-if (!gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT || gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT == "geckoview_example") {
++if (gradle.mozconfig.substs.MOZ_ANDROID_SUBPROJECT == "geckoview_example") {
+     include ':components:samples-browser'
+     include ':components:samples-compose-browser'
+     include ':components:samples-toolbar'
+diff --git a/mobile/android/gradle.configure b/mobile/android/gradle.configure
+index 866f9455d2..6ba698bbf1 100644
+--- a/mobile/android/gradle.configure
++++ b/mobile/android/gradle.configure
+@@ -368,22 +368,22 @@ set_config(
+ def gradle_android_archive_geckoview_subproject_tasks(build_config, aab_enabled):
+     """Gradle tasks run by |mach android archive-geckoview| if just building geckoview."""
+     tasks = [
+-        "test_runner:assemble{geckoview_example.variant.name}".format(
+-            geckoview_example=build_config.geckoview_example
+-        ),
+-        "geckoview_example:assemble{geckoview_example.variant.name}".format(
+-            geckoview_example=build_config.geckoview_example
+-        ),
++#        "test_runner:assemble{geckoview_example.variant.name}".format(
++#            geckoview_example=build_config.geckoview_example
++#        ),
++#        "geckoview_example:assemble{geckoview_example.variant.name}".format(
++#            geckoview_example=build_config.geckoview_example
++#        ),
+     ]
+ 
+     if aab_enabled:
+         tasks += [
+-            "test_runner:bundle{geckoview_example.variant.name}".format(
+-                geckoview_example=build_config.geckoview_example
+-            ),
+-            "geckoview_example:bundle{geckoview_example.variant.name}".format(
+-                geckoview_example=build_config.geckoview_example
+-            ),
++#            "test_runner:bundle{geckoview_example.variant.name}".format(
++#                geckoview_example=build_config.geckoview_example
++#            ),
++#            "geckoview_example:bundle{geckoview_example.variant.name}".format(
++#                geckoview_example=build_config.geckoview_example
++#            ),
+         ]
+     return tasks
+ 

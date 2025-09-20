@@ -1,0 +1,234 @@
+categories:
+  - name: "Build System"
+    excerpt: "Modifications to improve and stabilize the build process."
+    description: >
+      Patches in this category focus on altering the build system by removing unnecessary dependencies,
+      fixing build issues, or optimizing the build flow to ensure successful compilation and better reproducibility.
+
+  - name: "Dependency"
+    excerpt: "Changes that remove or replace proprietary or external dependencies."
+    description: >
+      These patches remove dependencies on closed-source or third-party services/libraries, replacing them with open-source
+      alternatives (where desired) to enhance transparency, privacy, and control over the software stack.
+
+  - name: "Mozilla"
+    excerpt: "Changes that remove and/or replace undesired Mozilla functionality."
+    description: >
+      These patches disable, remove, or replace unwanted Mozilla-related functionality from the browser. This includes
+      advertising, data collection, promotions, and other services not required for critical functionality.
+
+  - name: "Privacy"
+    excerpt: "Enhancements that improve user privacy and strengthen data protection."
+    description: >
+      This category includes patches that protect against various forms of tracking, as well as patches that limit
+      data exposure and reduce the browser's required permissions.
+
+  - name: "Security"
+    excerpt: "Patches that improve default security settings and reduce attack surfaces."
+    description: >
+      These patches tweak or enhance security-related settings and features, such as enabling HTTPS-only mode,
+      securing PDF handling, and reducing exposure to potentially dangerous web content.
+
+  - name: "User Control"
+    excerpt: "Unlocking advanced settings and configuration options for power users."
+    description: >
+      Focused on user empowerment, these patches provide access to advanced or hidden configuration options
+      such as about:config or secret developer settings to allow deeper browser customization.
+
+  - name: "User Experience"
+    excerpt: "Improvements to usability and everyday browsing comfort."
+    description: >
+      These patches improve the overall browsing experience by blocking annoyances like autoplaying media,
+      creating a smoother and less disruptive user journey.
+
+  - name: "User Interface"
+    excerpt: "Visual and interface customizations for branding and clarity."
+    description: >
+      UI-focused patches customize the appearance of the browser, introduce branding changes,
+      and simplify or declutter interface elements to enhance user clarity and recognition.
+
+patches:
+  # Build System
+  - file: "gecko-fix-125-compile.patch"
+    name: "Fix v125 Compile Error"
+    description: "Fixes a compilation issue introduced in Firefox v125."
+    reason: "Addresses technical bug in the build process."
+    effect: "Ensures successful compilation of the browser."
+    category: "Build System"
+
+  - file: "gecko-localize-maven.patch"
+    name: "Remove Mozilla Maven Repositories (Gecko)"
+    description: "Removes Mozilla repositories substitution and replaces them with local maven repositories."
+    reason: "Reduces dependency on Mozilla infrastructure and improves build reproducibility."
+    effect: "Provides more control over build dependencies with fewer connections to Mozilla servers."
+    category: "Build System"
+
+  - file: "gecko-remove-example-dependencies.patch"
+    name: "Remove Unwanted Example/Sample Dependencies"
+    description: "Prevents building and configuring unnecessary/unwanted example/sample libraries."
+    reason: "Allows for faster builds, with less overhead."
+    effect: "Reduces build-time, and reduces the complexity of the overall build process."
+    category: "Build System"
+
+  - file: "gecko-remove-subprojects.patch"
+    name: "Remove Unwanted Subprojects"
+    description: "Prevents building and configuring unnecessary/unwanted subprojects."
+    reason: "Allows for faster builds, with less overhead."
+    effect: "Reduces build-time, and reduces the complexity of the overall build process."
+    category: "Build System"
+
+  - file: "gecko-remove-unwanted-gradle-plugins.patch"
+    name: "Remove Unwanted Gradle Plug-ins"
+    description: "Prevents building and configuring unnecessary/unwanted Gradle plug-ins."
+    reason: "Allows for faster builds, with less overhead."
+    effect: "Reduces build-time, and reduces the complexity of the overall build process."
+    category: "Build System"
+
+  - file: "geckoview-unbreak-fido.patch"
+    name: "Fix FIDO-related Compile Error"
+    description: "Fixes a compilation issue introduced in Firefox v143, related to FIDO."
+    reason: "Addresses technical bug in the build process."
+    effect: "Ensures successful compilation of the browser."
+    category: "Build System"
+
+  # Dependency
+  - file: "gecko-remove-gmp-sources.patch"
+    name: "Remove GMP (Gecko Media Plugins) Sources"
+    description: "Removes Firefox's default sources for installing Gecko Media Plugins (GMP: https://wiki.mozilla.org/GeckoMediaPlugins), such as OpenH264 and Widevine (the latter is proprietary)."
+    reason: "To prevent the installation of unwanted/unnecessary plug-ins."
+    effect: "Improves security for users, by reducing attack surface, and protects freedom, by ensuring that proprietary plug-ins are not installed."
+    category: "Dependency"
+
+  # Mozilla
+  - file: "gecko-remove-abouttelemetry.patch"
+    name: "Remove `about:telemetry`"
+    description: "Removes the internal `about:telemetry` page."
+    reason: "To improve UX."
+    effect: "Prevents users from incorrectly believing telemetry is supported/enabled."
+    category: "Mozilla"
+
+  - file: "geckoview-disable-crash-reporting.patch"
+    name: "Disable Crash Reporting (GeckoView)"
+    description: "Disables the collection and submission of crash reports within GeckoView."
+    reason: "To prevent submitting personal and/or sensitive data to Mozilla."
+    effect: "Prevents unwanted collection and transmission of crash reports."
+    category: "Mozilla"
+
+  - file: "gecko-disable-nimbus.patch"
+    name: "Disable Nimbus Experimentation (Gecko)"
+    description: "Prevents A/B testing and remote configuration of settings via Nimbus within Gecko."
+    reason: "To reduce data collection and remove Mozilla's ability to remotely change browser settings."
+    effect: "Ensures user configurations remain consistent and are controlled locally."
+    category: "Mozilla"
+
+  - file: "gecko-rs-blocker.patch"
+    name: "Block Remote Settings (Gecko)"
+    description: "Restricts Remote Settings to only download collections specified in preferences."
+    reason: "To prevent the download/use of unnecessary and undesired Remote Settings from Mozilla (ex. for experimentation)."
+    effect: "Network activity is further limited, less data is shared with Mozilla, and the user is put in control of what specifically they want to download from Remote Settings."
+    category: "Mozilla"
+
+  - file: "gecko-support-addon-installation-without-mozaddonmanager.patch"
+    name: "Adds support for installing add-ons without the mozAddonManager API."
+    description: "Adds support for installing add-ons from `addons.mozilla.org`, without allowing Mozilla to enable, uninstall, and query a list of the user's installed add-ons (via the privileged mozAddonManager API), in addition to websites specified with the `xpinstall.whitelist.add` series of prefs."
+    reason: "To prevent fingerprinting, reduce attack surface, and to improve freedom by allowing users to install add-ons from sites other than AMO if desired (though installing add-ons outside of AMO is of course STRONGLY recommended against)."
+    effect: "Allows users to install add-ons from addons.mozilla.org (via the mozAddonManager API) without compromising their privacy and security, and allows installation from other sites if desired by the user."
+    category: "Mozilla"
+
+  # Privacy
+  - file: "gecko-custom-ublock-origin-assets.patch"
+    name: "Enhanced uBlock Configuration"
+    description: "Sets uBlock Origin to use a custom/enhanced config by default."
+    reason: "To provide stronger out-of-box content blocking."
+    effect: "Better ad and tracker blocking with optimized filter lists."
+    category: "Privacy"
+
+  - file: "geckoview-disable-network-connectivity-monitoring.patch"
+    name: "Disable Network Connectivity Status Monitoring (GeckoView)"
+    description: "Prevents GeckoView from monitoring the status of the user's internet connection."
+    reason: "To prevent the browser from accessing network information (with the `ACCESS_NETWORK_STATE` permission)."
+    effect: "Reduces required permissions and limits data exposed to the browser."
+    category: "Privacy"
+
+  - file: "gecko-disable-network-id.patch"
+    name: "Disable Network ID generation"
+    description: "Prevents Firefox from generating an internal network ID that could potentially be used to track users (https://gitlab.torproject.org/tpo/applications/tor-browser/-/commit/4c548fa04b668a310c90c0e783ec404420f06257)."
+    reason: "To prevent the browser from generating an ID that could be used for tracking/fingerprinting."
+    effect: "Protects users against tracking/fingerprinting."
+    category: "Privacy"
+
+  - file: "gecko-stub-beacon.patch"
+    name: "Stub the Beacon API (navigator.sendBeacon)"
+    description: "To prevent tracking and the submission of analytics, without aiding fingerprinting and causing undesired breakage."
+    reason: "The Beacon API (navigator.sendBeacon)'s explicit, stated purpose/use case is for analytics/tracking (https://developer.mozilla.org/docs/Web/API/Beacon_API). However, disabling it entirely (like standard Firefox allows) is undesired, as it causes breakage, aids fingerprinting, and can allow trackers to fallback to other mechanisms for submitting data (as they can tell it's disabled/unavailable). Stubbing the API instead fixes these issues."
+    effect: "Users are protected against tracking, and benefit from added attack surface reduction, without causing breakage and having to deal with the usual side effects that appear when the Beacon API is disabled."
+    category: "Privacy"
+
+  - file: "gecko-prevent-pdfjs-fingerprinting.patch"
+    name: "Prevent fingerprinting based on whether PDF.js is enabled/disabled"
+    description: "Prevents aiding fingerprinting when Firefox's internal PDF viewer (PDF.js) is disabled."
+    reason: "To allow users to disable PDF.js if preferred (ex. in favor of an external viewer, like GrapheneOS's: https://github.com/GrapheneOS/PdfViewer), without increasing fingerprintability."
+    effect: "Users can safely disable PDF.js if preferred, without compromising their privacy."
+    category: "Privacy"
+
+  # Security
+  - file: "gecko-certificate-pinning.patch"
+    name: "Certificate Pinning"
+    description: |
+      Updates and expands the list of domains supported by Mozilla's built-in certificate pinning.
+    reason: "To protect against MITM attacks by restricting which certificate authorities can issue valid certificates for included websites. Example of a real-world attack that this protects against: https://blog.mozilla.org/security/2011/08/29/fraudulent-google-com-certificate/."
+    effect: "Users are provided with a more secure browsing experience."
+    category: "Security"
+
+  - file: "gecko-harden-pdfjs.patch"
+    name: "Harden PDF.js"
+    description: "Hardens Firefox's built-in PDF Viewer (PDF.js)."
+    reason: "To reduce attack surface and protect users from various attacks, with changes inspired by GrapheneOS's PDF Viewer: https://github.com/GrapheneOS/PdfViewer."
+    effect: "Users are provided with a more secure PDF viewing experience, while still enjoying it from the comfort of their browser."
+    category: "Security"
+
+  - file: "gecko-prevent-extensions-from-changing-browser-settings.patch"
+    name: "Prevent Extensions From Changing Browser Settings"
+    description: "Prevents extensions from changing various browser settings."
+    reason: "To prevent extensions from making unauthorized changes to browser settings."
+    effect: "Ensures browser settings aren't changed without explicit user consent."
+    category: "Security"
+
+  # User Control
+  - file: "gecko-enable-aboutinference.patch"
+    name: "Enable `about:inference`"
+    description: "Enables the `about:inference` page."
+    reason: "To allow users to control machine learning models."
+    effect: "Users can easily test and configure installed machine learning models, as well as other related functionality."
+    category: "User Control"
+
+  # User Experience
+  - file: "gecko-browser-fingerprinting-protection-overrides.patch"
+    name: "Browser Fingerprinting Protection (FPP) Overrides"
+    description: "Adds support for an internal list that disables specific fingerprinting protections as needed on a per-site basis."
+    reason: "To reduce website breakage for end-users. Setting the overrides this way specifically also avoids us needing to use the 'privacy.fingerprintingProtection.granularOverrides' preference like we have in the past, allowing users to easily set their own overrides (via that preference) if needed."
+    effect: "Provides users with a seamless browsing experience and allows them to benefit from our strong fingerprinting protection, minus the breakage and headaches."
+    category: "User Experience"
+
+  # User Interface
+  - file: "gecko-expose-aboutconfig.patch"
+    name: "Expose the `about:config`"
+    description: "Exposes the `about:config` at `about:about`, alongside other internal `about:` pages."
+    reason: "To provide users with easier access to advanced configuration options."
+    effect: "Users can access the `about:config` easier to customize advanced Firefox settings not available in the regular settings menu."
+    category: "User Interface"
+
+  - file: "geckoview-browser-settings.patch"
+    name: "Browser Settings (GeckoView)"
+    description: "Adds support to GeckoView for Browser-specific UI settings to control various functionality."
+    reason: |
+      To allow users to easily control their browsing experience.
+    effect: "Users can conveniently enable/disable these features as needed to meet their needs, without needing to dig into advanced settings or the `about:config`."
+    category: "User Interface"
+
+  - file: "geckoview-browser-settings-support-spoof-english.patch"
+    name: "Browser Settings Support (GeckoView) - Spoof English"
+    description: "Provides support to GeckoView for a UI toggle to spoof the locale to English (en-US)."
+    reason: "To allow users to benefit from extra fingerprinting protection by spoof their locale to English."
+    effect: "Users can spoof their preferred locale to English, and can benefit from stronger fingerprinting protection as a result."
+    category: "User Interface"

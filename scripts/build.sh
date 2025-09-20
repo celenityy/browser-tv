@@ -1,0 +1,134 @@
+#!/bin/bash
+#
+#    Fennec build scripts
+#    Copyright (C) 2020-2024  Matías Zúñiga, Andrew Nayenko, Tavi
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 apk|bundle" >&1
+    exit 1
+fi
+
+set -euo pipefail
+
+# Set platform
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PLATFORM=macos
+else
+    PLATFORM=linux
+fi
+
+build_type="$1"
+
+if [ "$build_type" != "apk" ] && [ "$build_type" != "bundle" ]; then
+    echo "Unknown build type: '$build_type'" >&1
+    echo "Usage: $0 apk|bundle" >&1
+    exit 1
+fi
+
+if [[ -n ${FDROID_BUILD+x} ]]; then
+    source "$(dirname "$0")/env_fdroid.sh"
+fi
+
+# shellcheck disable=SC2154
+if [[ "$env_source" != "true" ]]; then
+    echo "Use 'source scripts/env_local.sh' before calling prebuild or build"
+    exit 1
+fi
+
+source "$CARGO_HOME/env"
+
+# We publish the artifacts into a local Maven repository instead of using the
+# auto-publication workflow because the latter does not work for Gradle
+# plugins (Glean).
+
+if [[ -n ${FDROID_BUILD+x} ]]; then
+
+    # Build LLVM
+    # shellcheck disable=SC2154
+    pushd "$llvm"
+
+    pushd "$bundletool"
+    gradle assemble
+    popd
+
+    # shellcheck disable=SC2154
+    llvmtarget=$(cat "$builddir/targets_to_build")
+    echo "building llvm for $llvmtarget"
+    cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=out -DCMAKE_C_COMPILER=clang-16 \
+        -DCMAKE_CXX_COMPILER=clang++-16 -DLLVM_ENABLE_PROJECTS="clang" -DLLVM_TARGETS_TO_BUILD="$llvmtarget" \
+        -DLLVM_USE_LINKER=lld -DLLVM_BINUTILS_INCDIR=/usr/include -DLLVM_ENABLE_PLUGINS=FORCE_ON \
+        -DLLVM_DEFAULT_TARGET_TRIPLE="x86_64-unknown-linux-gnu"
+    cmake --build build -j"$(nproc)"
+    cmake --build build --target install -j"$(nproc)"
+    popd
+fi
+
+if [[ -n ${FDROID_BUILD+x} ]]; then
+    # Build WASI SDK
+    # shellcheck disable=SC2154
+    pushd "$wasi"
+
+    mkdir -vp build/install/wasi
+    touch build/compiler-rt.BUILT # fool the build system
+    $MAKE_LIB \
+        PREFIX=/wasi \
+        build/wasi-libc.BUILT \
+        build/libcxx.BUILT \
+        -j"$($NPROC_LIB)"
+    popd
+fi
+
+# Build microG libraries
+# shellcheck disable=SC2154
+pushd "$gmscore"
+if ! [[ -n ${FDROID_BUILD+x} ]]; then
+    export GRADLE_MICROG_VERSION_WITHOUT_GIT=1
+fi
+gradle -x javaDocReleaseGeneration \
+    :play-services-ads-identifier:publishToMavenLocal \
+    :play-services-base:publishToMavenLocal \
+    :play-services-basement:publishToMavenLocal \
+    :play-services-fido:publishToMavenLocal \
+    :play-services-tasks:publishToMavenLocal
+popd
+
+# shellcheck disable=SC2154
+pushd "$mozilla_release"
+
+# shellcheck disable=SC2086
+echo "Running ./mach build..."
+./mach build
+echo "Running ./mach package..."
+./mach package
+echo "Running ./mach package-multi-locale..."
+./mach package-multi-locale --locales ${BROWSER_LOCALES}
+
+MOZ_CHROME_MULTILOCALE="${BROWSER_LOCALES}"
+export MOZ_CHROME_MULTILOCALE
+
+echo "Running gradle -x javadocRelease :geckoview:publishReleasePublicationToMavenLocal..."
+gradle -x javadocRelease :geckoview:publishReleasePublicationToMavenLocal
+popd
+
+# shellcheck disable=SC2154
+pushd "$browser"
+if [[ "$build_type" == "apk" ]]; then
+    gradle :app:assembleFoss
+elif [[ "$build_type" == "bundle" ]]; then
+    gradle :app:bundleRelease -Paab
+fi
+popd

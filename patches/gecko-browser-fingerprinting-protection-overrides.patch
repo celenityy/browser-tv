@@ -1,0 +1,20 @@
+diff --git a/toolkit/components/resistfingerprinting/FingerprintingWebCompatService.sys.mjs b/toolkit/components/resistfingerprinting/FingerprintingWebCompatService.sys.mjs
+index cda12afb97..56aca55c79 100644
+--- a/toolkit/components/resistfingerprinting/FingerprintingWebCompatService.sys.mjs
++++ b/toolkit/components/resistfingerprinting/FingerprintingWebCompatService.sys.mjs
+@@ -47,6 +47,7 @@ const SCHEMA = `{
+ }`;
+ 
+ const COLLECTION_NAME = "fingerprinting-protection-overrides";
++const BROWSER_COLLECTION_NAME = "browser-fingerprinting-protection-overrides";
+ const PREF_GRANULAR_OVERRIDES =
+   "privacy.fingerprintingProtection.granularOverrides";
+ const PREF_GRANULAR_OVERRIDES_BASELINE =
+@@ -113,6 +114,7 @@ export class FingerprintingWebCompatService {
+     this.#granularOverrides = new Set();
+ 
+     this.#rs = lazy.RemoteSettings(COLLECTION_NAME);
++    this.#rs = lazy.RemoteSettings(BROWSER_COLLECTION_NAME);
+     this.#validator = new lazy.JsonSchema.Validator(SCHEMA);
+   }
+ 

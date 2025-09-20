@@ -1,0 +1,243 @@
+diff --git a/security/manager/ssl/StaticHPKPins.h b/security/manager/ssl/StaticHPKPins.h
+index fd1633b673..2e5ac1db31 100644
+--- a/security/manager/ssl/StaticHPKPins.h
++++ b/security/manager/ssl/StaticHPKPins.h
+@@ -203,6 +203,26 @@ static const char kUSERTrust_ECC_Certification_AuthorityFingerprint[] =
+ static const char kUSERTrust_RSA_Certification_AuthorityFingerprint[] =
+   "x4QzPSC810K5/cMjb05Qm4k3Bw5zBn4lTdO/nEW/Td4=";
+ 
++/* Amazon Root CA 1 */
++static const char kAmazon_Root_CA_1Fingerprint[] =
++  "++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=";
++
++/* Amazon Root CA 2 */
++static const char kAmazon_Root_CA_2Fingerprint[] =
++  "f0KW/FtqTjs108NpYj42SrGvOB2PpxIVM8nWxjPqJGE=";
++
++/* Amazon Root CA 3 */
++static const char kAmazon_Root_CA_3Fingerprint[] =
++  "NqvDJlas/GRcYbcWE8S/IceH9cq77kg0jVhZeAPXq8k=";
++
++/* Amazon Root CA 4 */
++static const char kAmazon_Root_CA_4Fingerprint[] =
++  "9+ze1cZgR9KO1kZrVDxA4HQ6voHRCSVNz4RdTCx4U8U=";
++
++/* GlobalSign Root E46 */
++static const char kGlobalSign_Root_E46Fingerprint[] =
++  "4EoCLOMvTM8sf2BGKHuCijKpCfXnUUR/g/0scfb9gXM=";
++
+ /* Pinsets are each an ordered list by the actual value of the fingerprint */
+ struct StaticFingerprints {
+   // See bug 1338873 about making these fields const.
+@@ -326,6 +346,45 @@ static const StaticFingerprints kPinset_facebook = {
+   kPinset_facebook_Data
+ };
+ 
++static const char* const kPinset_ironfox_Data[] = {
++  kGlobalSign_Root_CAFingerprint,
++  kGTS_Root_R4Fingerprint,
++  kISRG_Root_X1Fingerprint,
++};
++static const StaticFingerprints kPinset_ironfox = {
++  sizeof(kPinset_ironfox_Data) / sizeof(const char*),
++  kPinset_ironfox_Data
++};
++
++/* Taken from https://github.com/brave/brave-core/blob/master/chromium_src/net/tools/transport_security_state_generator/input_file_parsers.cc */
++static const char* const kPinset_brave_Data[] = {
++  kAmazon_Root_CA_1Fingerprint,
++  kAmazon_Root_CA_2Fingerprint,
++  kAmazon_Root_CA_3Fingerprint,
++  kAmazon_Root_CA_4Fingerprint,
++  kGlobalSign_ECC_Root_CA___R5Fingerprint,
++  kGlobalSign_Root_CAFingerprint,
++  kGlobalSign_Root_CA___R3Fingerprint,
++  kGlobalSign_Root_CA___R6Fingerprint,
++  kGlobalSign_Root_E46Fingerprint,
++  kGlobalSign_Root_R46Fingerprint,
++  kISRG_Root_X1Fingerprint,
++  kISRG_Root_X2Fingerprint,
++  kStarfield_Root_Certificate_Authority___G2Fingerprint,
++};
++static const StaticFingerprints kPinset_brave = {
++  sizeof(kPinset_brave_Data) / sizeof(const char*),
++  kPinset_brave_Data
++};
++
++static const char* const kPinset_celenity_Data[] = {
++  kISRG_Root_X1Fingerprint,
++};
++static const StaticFingerprints kPinset_celenity = {
++  sizeof(kPinset_celenity_Data) / sizeof(const char*),
++  kPinset_celenity_Data
++};
++
+ /* Domainlist */
+ struct TransportSecurityPreload {
+   // See bug 1338873 about making these fields const.
+@@ -351,8 +410,8 @@ static const TransportSecurityPreload kPublicKeyPinningPreloadList[] = {
+   { "appengine.google.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "apps.facebook.com", true, false, false, -1, &kPinset_facebook },
+   { "appspot.com", true, false, false, -1, &kPinset_google_root_pems },
+-  { "aus4.mozilla.org", true, true, true, 3, &kPinset_mozilla_services },
+-  { "aus5.mozilla.org", true, true, true, 7, &kPinset_mozilla_services },
++  { "aus4.mozilla.org", true, false, true, 3, &kPinset_mozilla_services },
++  { "aus5.mozilla.org", true, false, true, 7, &kPinset_mozilla_services },
+   { "blogger.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "blogspot.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "bugs.chromium.org", true, false, false, -1, &kPinset_google_root_pems },
+@@ -388,7 +447,7 @@ static const TransportSecurityPreload kPublicKeyPinningPreloadList[] = {
+   { "developer.android.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "developers.facebook.com", true, false, false, -1, &kPinset_facebook },
+   { "dl.google.com", true, false, false, -1, &kPinset_google_root_pems },
+-  { "dns.google.com", true, false, false, -1, &kPinset_google_root_pems },
++//  { "dns.google.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "docs.google.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "domains.google.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "doubleclick.net", true, false, false, -1, &kPinset_google_root_pems },
+@@ -400,7 +459,7 @@ static const TransportSecurityPreload kPublicKeyPinningPreloadList[] = {
+   { "facebook.com", true, false, false, -1, &kPinset_facebook },
+   { "fi.google.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "firebaseio.com", true, false, false, -1, &kPinset_google_root_pems },
+-  { "firefox.com", true, true, true, 15, &kPinset_mozilla_services },
++  { "firefox.com", true, false, true, 15, &kPinset_mozilla_services },
+   { "g.co", false, false, false, -1, &kPinset_google_root_pems },
+   { "g4w.co", true, false, false, -1, &kPinset_google_root_pems },
+   { "ggpht.com", true, false, false, -1, &kPinset_google_root_pems },
+@@ -701,7 +760,7 @@ static const TransportSecurityPreload kPublicKeyPinningPreloadList[] = {
+   { "tablet.facebook.com", true, false, false, -1, &kPinset_facebook },
+   { "talk.google.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "talkgadget.google.com", true, false, false, -1, &kPinset_google_root_pems },
+-  { "telemetry.mozilla.org", true, true, true, 8, &kPinset_mozilla_services },
++  { "telemetry.mozilla.org", true, false, true, 8, &kPinset_mozilla_services },
+   { "test-mode.pinning.example.com", true, true, false, -1, &kPinset_mozilla_test },
+   { "testpilot.firefox.com", false, false, true, 9, &kPinset_mozilla_services },
+   { "touch.facebook.com", true, false, false, -1, &kPinset_facebook },
+@@ -740,9 +799,96 @@ static const TransportSecurityPreload kPublicKeyPinningPreloadList[] = {
+   { "youtube-nocookie.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "youtube.com", true, false, false, -1, &kPinset_google_root_pems },
+   { "ytimg.com", true, false, false, -1, &kPinset_google_root_pems },
++  { "account.brave.com", true, false, false, -1, &kPinset_brave },
++  { "account.brave.software", true, false, false, -1, &kPinset_brave },
++  { "account.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "adblock-data.s3.brave.com", true, false, false, -1, &kPinset_brave },
++  { "ai-chat.bsg.brave.com", true, false, false, -1, &kPinset_brave },
++  { "altstore.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "anonymous.ads.brave.com", true, false, false, -1, &kPinset_brave },
++  { "anonymous.ads.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "api.rewards.brave.com", true, false, false, -1, &kPinset_brave },
++  { "api.rewards.brave.software", true, false, false, -1, &kPinset_brave },
++  { "api.rewards.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "apple.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "apple-hardening.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "badblock.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "bb.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "brave-core-ext.s3.brave.com", true, false, false, -1, &kPinset_brave },
++  { "brave-today-cdn.brave.com", true, false, false, -1, &kPinset_brave },
++  { "cdn.search.brave.com", true, false, false, -1, &kPinset_brave },
++  { "celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "clients4.brave.com", true, false, false, -1, &kPinset_brave },
++  { "collector.bsg.brave.com", true, false, false, -1, &kPinset_brave },
++  { "collector.wdp.brave.com", true, false, false, -1, &kPinset_brave },
++  { "componentupdater.brave.com", true, false, false, -1, &kPinset_brave },
++  { "configs.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "creators.basicattentiontoken.org", true, false, false, -1, &kPinset_brave },
++  { "creators.brave.com", true, false, false, -1, &kPinset_brave },
++  { "crxdownload.brave.com", true, false, false, -1, &kPinset_brave },
++  { "devtools.brave.com", true, false, false, -1, &kPinset_brave },
++  { "dict.brave.com", true, false, false, -1, &kPinset_brave },
++  { "dove.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "extensionupdater.brave.com", true, false, false, -1, &kPinset_brave },
++  { "feedback.brave.com", true, false, false, -1, &kPinset_brave },
++  { "fg.search.brave.com", true, false, false, -1, &kPinset_brave },
++  { "gaia.brave.com", true, false, false, -1, &kPinset_brave },
++  { "geo.ads.brave.com", true, false, false, -1, &kPinset_brave },
++  { "geo.ads.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "go-updater.brave.com", true, false, false, -1, &kPinset_brave },
++  { "goerli-infura.brave.com", true, false, false, -1, &kPinset_brave },
++  { "grant.rewards.brave.com", true, false, false, -1, &kPinset_brave },
++  { "grant.rewards.brave.software", true, false, false, -1, &kPinset_brave },
++  { "grant.rewards.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "imgs.search.brave.com", true, false, false, -1, &kPinset_brave },
++  { "ironfoxoss.org", true, false, false, -1, &kPinset_ironfox },
++  { "mainnet-beta-solana.brave.com", true, false, false, -1, &kPinset_brave },
++  { "mainnet-infura.brave.com", true, false, false, -1, &kPinset_brave },
++  { "mainnet-polygon.brave.com", true, false, false, -1, &kPinset_brave },
++  { "mta-sts.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "mywallet.ads.brave.com", true, false, false, -1, &kPinset_brave },
++  { "mywallet.ads.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "patterns.wdp.brave.com", true, false, false, -1, &kPinset_brave },
++  { "payment.rewards.brave.com", true, false, false, -1, &kPinset_brave },
++  { "payment.rewards.brave.software", true, false, false, -1, &kPinset_brave },
++  { "payment.rewards.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "pcdn.brave.com", true, false, false, -1, &kPinset_brave },
++  { "phoenix.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "publishers.basicattentiontoken.org", true, false, false, -1, &kPinset_brave },
++  { "publishers.brave.com", true, false, false, -1, &kPinset_brave },
++  { "quorum.wdp.brave.com", true, false, false, -1, &kPinset_brave },
++  { "redirector.brave.com", true, false, false, -1, &kPinset_brave },
++  { "rewards.brave.com", true, false, false, -1, &kPinset_brave },
++  { "safebrowsing.brave.com", true, false, false, -1, &kPinset_brave },
++  { "safebrowsing2.brave.com", true, false, false, -1, &kPinset_brave },
++  { "safebrowsing.ironfoxoss.org", true, false, false, -1, &kPinset_ironfox },
++  { "sb-ssl.brave.com", true, false, false, -1, &kPinset_brave },
++  { "search.anonymous.brave.com", true, false, false, -1, &kPinset_brave },
++  { "search.anonymous.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "search.brave.com", true, false, false, -1, &kPinset_brave },
++  { "sepolia-infura.brave.com", true, false, false, -1, &kPinset_brave },
++  { "slingshot.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "ssl-pinning.someblog.org", true, false, false, -1, &kPinset_brave },
++  { "star.wdp.brave.com", true, false, false, -1, &kPinset_brave },
++  { "star-randsrv.bsg.brave.com", true, false, false, -1, &kPinset_brave },
++  { "static.ads.brave.com", true, false, false, -1, &kPinset_brave },
++  { "static.ads.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "static.brave.com", true, false, false, -1, &kPinset_brave },
++  { "static1.brave.com", true, false, false, -1, &kPinset_brave },
++  { "sync-v2.brave.com", true, false, false, -1, &kPinset_brave },
++  { "sync-v2.brave.software", true, false, false, -1, &kPinset_brave },
++  { "sync-v2.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "tiles.search.brave.com", true, false, false, -1, &kPinset_brave },
++  { "titanium.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "tor.bravesoftware.com", true, false, false, -1, &kPinset_brave },
++  { "translate.brave.com", true, false, false, -1, &kPinset_brave },
++  { "translate-static.brave.com", true, false, false, -1, &kPinset_brave },
++  { "variations.brave.com", true, false, false, -1, &kPinset_brave },
++  { "www.celenity.dev", true, false, false, -1, &kPinset_celenity },
++  { "www.ironfoxoss.org", true, false, false, -1, &kPinset_ironfox },
+ };
+ 
+-// Pinning Preload List Length = 401;
++// Pinning Preload List Length = 490;
+ 
+ static const int32_t kUnknownId = -1;
+ 
+diff --git a/security/manager/tools/PreloadedHPKPins.json b/security/manager/tools/PreloadedHPKPins.json
+index e5c10e2975..63722cda85 100644
+--- a/security/manager/tools/PreloadedHPKPins.json
++++ b/security/manager/tools/PreloadedHPKPins.json
+@@ -127,13 +127,13 @@
+     // AUS servers MUST remain in test mode
+     // see: https://bugzilla.mozilla.org/show_bug.cgi?id=1301956#c23
+     { "name": "aus4.mozilla.org", "include_subdomains": true,
+-      "pins": "mozilla_services", "test_mode": true, "id": 3 },
++      "pins": "mozilla_services", "test_mode": false, "id": 3 },
+     { "name": "aus5.mozilla.org", "include_subdomains": true,
+-      "pins": "mozilla_services", "test_mode": true, "id": 7 },
++      "pins": "mozilla_services", "test_mode": false, "id": 7 },
+     // Catchall for applications hosted under firefox.com
+     // see https://bugzilla.mozilla.org/show_bug.cgi?id=1494431
+     { "name": "firefox.com", "include_subdomains": true,
+-      "pins": "mozilla_services", "test_mode": true, "id": 15 },
++      "pins": "mozilla_services", "test_mode": false, "id": 15 },
+     // Firefox Accounts & sync
+     // superseded by catchall for firefox.com, but leaving for tracking
+     { "name": "accounts.firefox.com", "include_subdomains": true,
+@@ -156,7 +156,7 @@
+     // Catch-all for everything hosted under telemetry.mozilla.org
+     // MUST remain in test mode in order to receive telemetry on broken pins
+     { "name": "telemetry.mozilla.org", "include_subdomains": true,
+-      "pins": "mozilla_services", "test_mode": true, "id": 8 },
++      "pins": "mozilla_services", "test_mode": false, "id": 8 },
+     // Test Pilot
+     // superseded by catchall for firefox.com, but leaving for tracking
+     { "name": "testpilot.firefox.com", "include_subdomains": false,

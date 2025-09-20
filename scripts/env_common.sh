@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Caution: Should not be sourced directly!
+# Use 'env_local.sh' or 'env_fdroid.sh' instead.
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PLATFORM=darwin
+else
+    PLATFORM=linux
+fi
+
+# Set architecture
+PLATFORM_ARCH=$(uname -m)
+if [[ "$PLATFORM_ARCH" == "arm64" ]]; then
+    PLATFORM_ARCHITECTURE=aarch64
+else
+    PLATFORM_ARCHITECTURE=x86-64
+fi
+
+# Set locations for GNU make + nproc
+if [[ "$PLATFORM" == "darwin" ]]; then
+    export MAKE_LIB="gmake"
+    export NPROC_LIB="sysctl -n hw.logicalcpu"
+else
+    export MAKE_LIB="make"
+    export NPROC_LIB="nproc"
+fi
+
+# Configure Mach
+## https://firefox-source-docs.mozilla.org/mach/usage.html#user-settings
+## https://searchfox.org/mozilla-central/rev/f008b9aa/python/mach/mach/telemetry.py#95
+## https://searchfox.org/mozilla-central/rev/f008b9aa/python/mach/mach/telemetry.py#284
+export DISABLE_TELEMETRY=1
+export MACHRC="$patches/machrc"
+
+BROWSER_LOCALES=$(<"$patches/locales")
+export BROWSER_LOCALES
+
+export NSS_STATIC=1
+
+export ARTIFACTS="$rootdir/artifacts"
+export APK_ARTIFACTS=$ARTIFACTS/apk
+export APKS_ARTIFACTS=$ARTIFACTS/apks
+export AAR_ARTIFACTS=$ARTIFACTS/aar
+
+mkdir -vp "$APK_ARTIFACTS"
+mkdir -vp "$APKS_ARTIFACTS"
+mkdir -vp "$AAR_ARTIFACTS"
+
+export env_source="true"
+
+if [[ -z ${CARGO_HOME+x} ]]; then
+    export CARGO_HOME=$HOME/.cargo
+fi
+
+if [[ -z ${GRADLE_USER_HOME+x} ]]; then
+    export GRADLE_USER_HOME=$HOME/.gradle
+fi
+
+if [[ -z ${BROWSER_UBO_ASSETS_URL+x} ]]; then
+    # Default to development assets
+    # shellcheck disable=SC2059
+    BROWSER_UBO_ASSETS_URL="https://gitlab.com/ironfox-oss/assets/-/raw/main/uBlock/assets.dev.json"
+    export BROWSER_UBO_ASSETS_URL
+
+    echo "Using uBO Assets: ${BROWSER_UBO_ASSETS_URL}"
+fi

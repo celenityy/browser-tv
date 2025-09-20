@@ -1,0 +1,475 @@
+diff --git a/mobile/android/geckoview/api.txt b/mobile/android/geckoview/api.txt
+index aea35cbd34..6197be20a4 100644
+--- a/mobile/android/geckoview/api.txt
++++ b/mobile/android/geckoview/api.txt
+@@ -1028,6 +1028,27 @@ package org.mozilla.geckoview {
+     method @Nullable public Integer getWebContentIsolationStrategy();
+     method public boolean getWebFontsEnabled();
+     method public boolean getWebManifestEnabled();
++    method public boolean getAccessibilityEnabled();
++    method public boolean getCacheEnabled();
++    method public boolean getEmeEnabled();
++    method public boolean getIpv6Enabled();
++    method public boolean getJavaScriptJitBaselineEnabled();
++    method public boolean getJavaScriptJitHintsEnabled();
++    method public boolean getJavaScriptJitIonEnabled();
++    method public boolean getJavaScriptJitIonWasmEnabled();
++    method public boolean getJavaScriptJitMainProcessEnabled();
++    method public boolean getJavaScriptJitNativeRegexpEnabled();
++    method public boolean getJavaScriptJitTrustedPrincipalsEnabled();
++    method public boolean getPdfjsDisabled();
++    method public boolean getPrintEnabled();
++    method public int getRefererXOriginPolicy();
++    method public boolean getSpoofEnglish();
++    method public boolean getSvgEnabled();
++    method public boolean getWasmEnabled();
++    method public boolean getWebglEnabled();
++    method public boolean getWebrtcEnabled();
++    method public boolean getWidevineEnabled();
++    method public boolean getXpinstallEnabled();
+     method @NonNull public GeckoRuntimeSettings setAboutConfigEnabled(boolean);
+     method @NonNull public GeckoRuntimeSettings setAllowInsecureConnections(int);
+     method @NonNull public GeckoRuntimeSettings setAutomaticFontSizeAdjustment(boolean);
+@@ -1078,6 +1099,27 @@ package org.mozilla.geckoview {
+     method @NonNull public GeckoRuntimeSettings setWebContentIsolationStrategy(@NonNull Integer);
+     method @NonNull public GeckoRuntimeSettings setWebFontsEnabled(boolean);
+     method @NonNull public GeckoRuntimeSettings setWebManifestEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setAccessibilityEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setCacheEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setEmeEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setIpv6Enabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitBaselineEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitHintsEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitIonEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitIonWasmEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitMainProcessEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitNativeRegexpEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setJavaScriptJitTrustedPrincipalsEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setPdfjsDisabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setPrintEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setRefererXOriginPolicy(int);
++    method @NonNull public GeckoRuntimeSettings setSpoofEnglish(boolean);
++    method @NonNull public GeckoRuntimeSettings setSvgEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setWasmEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setWebglEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setWebrtcEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setWidevineEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings setXpinstallEnabled(boolean);
+     field public static final int ALLOW_ALL = 0;
+     field public static final int COLOR_SCHEME_DARK = 1;
+     field public static final int COLOR_SCHEME_LIGHT = 0;
+@@ -1092,6 +1134,9 @@ package org.mozilla.geckoview {
+     field public static final int TRR_MODE_FIRST = 2;
+     field public static final int TRR_MODE_OFF = 0;
+     field public static final int TRR_MODE_ONLY = 3;
++    field public static final int REFERER_XORIGIN_ALWAYS = 0;
++    field public static final int REFERER_XORIGIN_IF_BASE_DOMAINS_MATCH = 1;
++    field public static final int REFERER_XORIGIN_IF_HOSTS_MATCH = 2;
+   }
+ 
+   @AnyThread public static final class GeckoRuntimeSettings.Builder extends RuntimeSettings.Builder<GeckoRuntimeSettings> {
+@@ -1143,6 +1188,27 @@ package org.mozilla.geckoview {
+     method @NonNull public GeckoRuntimeSettings.Builder useMaxScreenDepth(boolean);
+     method @NonNull public GeckoRuntimeSettings.Builder webFontsEnabled(boolean);
+     method @NonNull public GeckoRuntimeSettings.Builder webManifest(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder accessibilityEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder cacheEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder emeEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder ipv6Enabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitBaselineEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitHintsEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitIonEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitIonWasmEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitMainProcessEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitNativeRegexpEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder javaScriptJitTrustedPrincipalsEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder pdfjsDisabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder printEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder refererXOriginPolicy(int);
++    method @NonNull public GeckoRuntimeSettings.Builder spoofEnglish(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder svgEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder wasmEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder webglEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder webrtcEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder widevineEnabled(boolean);
++    method @NonNull public GeckoRuntimeSettings.Builder xpinstallEnabled(boolean);
+     method @NonNull protected GeckoRuntimeSettings newSettings(@Nullable GeckoRuntimeSettings);
+   }
+ 
+@@ -1158,6 +1224,9 @@ package org.mozilla.geckoview {
+   @Retention(value=RetentionPolicy.SOURCE) public static interface GeckoRuntimeSettings.WebContentIsolationStrategy {
+   }
+ 
++  @Retention(value=RetentionPolicy.SOURCE) public static interface GeckoRuntimeSettings.RefererXOriginPolicy {
++  }
++
+   public class GeckoSession {
+     ctor public GeckoSession();
+     ctor public GeckoSession(@Nullable GeckoSessionSettings);
+diff --git a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntimeSettings.java b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntimeSettings.java
+index 1aeae7c828..0e94be3024 100644
+--- a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntimeSettings.java
++++ b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntimeSettings.java
+@@ -663,6 +663,111 @@ public final class GeckoRuntimeSettings extends RuntimeSettings {
+       getSettings().setSameDocumentNavigationOverridesLoadTypeForceDisable(uri);
+       return this;
+     }
++
++    public @NonNull Builder accessibilityEnabled(final boolean flag) {
++      getSettings().mAccessibilityEnabled.set(flag ? 0 : 1);
++      return this;
++    }
++
++    public @NonNull Builder cacheEnabled(final boolean flag) {
++      getSettings().mCacheEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder emeEnabled(final boolean flag) {
++      getSettings().mEmeEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder ipv6Enabled(final boolean flag) {
++      getSettings().mIpv6Enabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitBaselineEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitBaselineEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitHintsEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitHintsEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitIonEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitIonEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitIonWasmEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitIonWasmEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitMainProcessEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitMainProcessEnabled.set(!flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitNativeRegexpEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitNativeRegexpEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder javaScriptJitTrustedPrincipalsEnabled(final boolean flag) {
++      getSettings().mJavaScriptJitTrustedPrincipalsEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder pdfjsDisabled(final boolean flag) {
++      getSettings().mPdfjsDisabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder printEnabled(final boolean flag) {
++      getSettings().mPrintEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder refererXOriginPolicy(final @RefererXOriginPolicy int level) {
++      getSettings().setRefererXOriginPolicy(level);
++      return this;
++    }
++
++    public @NonNull Builder spoofEnglish(final boolean flag) {
++      getSettings().mSpoofEnglish.set(flag ? 2 : 1);
++      return this;
++    }
++
++    public @NonNull Builder svgEnabled(final boolean flag) {
++      getSettings().mSvgEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder wasmEnabled(final boolean flag) {
++      getSettings().mWasmEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder webglEnabled(final boolean flag) {
++      getSettings().mWebglEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder webrtcEnabled(final boolean flag) {
++      getSettings().mWebrtcEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder widevineEnabled(final boolean flag) {
++      getSettings().mWidevineEnabled.set(flag);
++      return this;
++    }
++
++    public @NonNull Builder xpinstallEnabled(final boolean flag) {
++      getSettings().mXpinstallEnabled.set(flag);
++      return this;
++    }
+   }
+ 
+   private GeckoRuntime mRuntime;
+@@ -798,6 +903,28 @@ public final class GeckoRuntimeSettings extends RuntimeSettings {
+   /* package */ String[] mRequestedLocales;
+   /* package */ ExperimentDelegate mExperimentDelegate;
+ 
++  /* package */ final Pref<Integer> mAccessibilityEnabled = new Pref<Integer>("accessibility.force_disabled", 1);
++  /* package */ final Pref<Boolean> mCacheEnabled = new Pref<Boolean>("browser.cache.disk.enable", false);
++  /* package */ final Pref<Boolean> mEmeEnabled = new Pref<Boolean>("media.eme.enabled", false);
++  /* package */ final Pref<Boolean> mIpv6Enabled = new Pref<Boolean>("network.dns.disableIPv6", false);
++  /* package */ final Pref<Boolean> mJavaScriptJitBaselineEnabled = new Pref<Boolean>("javascript.options.baselinejit", false);
++  /* package */ final Pref<Boolean> mJavaScriptJitHintsEnabled = new Pref<Boolean>("javascript.options.jithints", false);
++  /* package */ final Pref<Boolean> mJavaScriptJitIonEnabled = new Pref<Boolean>("javascript.options.ion", false);
++  /* package */ final Pref<Boolean> mJavaScriptJitIonWasmEnabled = new Pref<Boolean>("javascript.options.wasm_optimizingjit", false);
++  /* package */ final Pref<Boolean> mJavaScriptJitMainProcessEnabled = new Pref<Boolean>("javascript.options.main_process_disable_jit", true);
++  /* package */ final Pref<Boolean> mJavaScriptJitNativeRegexpEnabled = new Pref<Boolean>("javascript.options.native_regexp", false);
++  /* package */ final Pref<Boolean> mJavaScriptJitTrustedPrincipalsEnabled = new Pref<Boolean>("javascript.options.jit_trustedprincipals", false);
++  /* package */ final Pref<Boolean> mPdfjsDisabled = new Pref<Boolean>("pdfjs.disabled", false);
++  /* package */ final Pref<Boolean> mPrintEnabled = new Pref<Boolean>("print.enabled", true);
++  /* package */ final Pref<Integer> mRefererXOriginPolicy = new Pref<Integer>("network.http.referer.XOriginPolicy", 0);
++  /* package */ final Pref<Integer> mSpoofEnglish = new Pref<Integer>("privacy.spoof_english", 2);
++  /* package */ final Pref<Boolean> mSvgEnabled = new Pref<Boolean>("svg.disabled", false);
++  /* package */ final Pref<Boolean> mWasmEnabled = new Pref<Boolean>("javascript.options.wasm", true);
++  /* package */ final Pref<Boolean> mWebglEnabled = new Pref<Boolean>("webgl.disabled", false);
++  /* package */ final Pref<Boolean> mWebrtcEnabled = new Pref<Boolean>("media.peerconnection.enabled", true);
++  /* package */ final Pref<Boolean> mWidevineEnabled = new Pref<Boolean>("media.mediadrm-widevinecdm.visible", false);
++  /* package */ final Pref<Boolean> mXpinstallEnabled = new Pref<Boolean>("xpinstall.enabled", false);
++
+   /**
+    * Attach and commit the settings to the given runtime.
+    *
+@@ -2317,6 +2444,221 @@ public final class GeckoRuntimeSettings extends RuntimeSettings {
+     return mSameDocumentNavigationOverridesLoadTypeForceDisable.get();
+   }
+ 
++  public boolean getAccessibilityEnabled() {
++    return mAccessibilityEnabled.get() == 0;
++  }
++
++  public @NonNull GeckoRuntimeSettings setAccessibilityEnabled(final boolean flag) {
++    mAccessibilityEnabled.commit(flag ? 0 : 1);
++    return this;
++  }
++
++  public boolean getCacheEnabled() {
++    return mCacheEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setCacheEnabled(final boolean flag) {
++    mCacheEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getEmeEnabled() {
++    return mEmeEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setEmeEnabled(final boolean flag) {
++    mEmeEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getIpv6Enabled() {
++    return !mIpv6Enabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setIpv6Enabled(final boolean flag) {
++    mIpv6Enabled.commit(!flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitBaselineEnabled() {
++    return mJavaScriptJitBaselineEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitBaselineEnabled(final boolean flag) {
++    mJavaScriptJitBaselineEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitIonWasmEnabled() {
++    return mJavaScriptJitIonWasmEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitIonWasmEnabled(final boolean flag) {
++    mJavaScriptJitIonWasmEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitHintsEnabled() {
++    return mJavaScriptJitHintsEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitHintsEnabled(final boolean flag) {
++    mJavaScriptJitHintsEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitIonEnabled() {
++    return mJavaScriptJitIonEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitIonEnabled(final boolean flag) {
++    mJavaScriptJitIonEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitMainProcessEnabled() {
++    return !mJavaScriptJitMainProcessEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitMainProcessEnabled(final boolean flag) {
++    mJavaScriptJitMainProcessEnabled.commit(!flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitNativeRegexpEnabled() {
++    return mJavaScriptJitNativeRegexpEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitNativeRegexpEnabled(final boolean flag) {
++    mJavaScriptJitNativeRegexpEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getJavaScriptJitTrustedPrincipalsEnabled() {
++    return mJavaScriptJitTrustedPrincipalsEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setJavaScriptJitTrustedPrincipalsEnabled(final boolean flag) {
++    mJavaScriptJitTrustedPrincipalsEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getPdfjsDisabled() {
++    return mPdfjsDisabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setPdfjsDisabled(final boolean flag) {
++    mPdfjsDisabled.commit(flag);
++    return this;
++  }
++
++  public boolean getPrintEnabled() {
++    return mPrintEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setPrintEnabled(final boolean flag) {
++    mPrintEnabled.commit(flag);
++    return this;
++  }
++
++  @Retention(RetentionPolicy.SOURCE)
++  @IntDef({REFERER_XORIGIN_ALWAYS, REFERER_XORIGIN_IF_BASE_DOMAINS_MATCH, REFERER_XORIGIN_IF_HOSTS_MATCH})
++  public @interface RefererXOriginPolicy {}
++
++  public static final int REFERER_XORIGIN_ALWAYS = 0;
++  public static final int REFERER_XORIGIN_IF_BASE_DOMAINS_MATCH = 1;
++  public static final int REFERER_XORIGIN_IF_HOSTS_MATCH = 2;
++
++  public @RefererXOriginPolicy int getRefererXOriginPolicy() {
++    final int level = mRefererXOriginPolicy.get();
++    switch (level) {
++      case 1:
++        return REFERER_XORIGIN_IF_BASE_DOMAINS_MATCH;
++      case 2:
++        return REFERER_XORIGIN_IF_HOSTS_MATCH;
++      default:
++      case 0:
++        return REFERER_XORIGIN_ALWAYS;
++    }
++  }
++
++  public @NonNull GeckoRuntimeSettings setRefererXOriginPolicy(
++      final @RefererXOriginPolicy int level) {
++    switch (level) {
++      case REFERER_XORIGIN_ALWAYS:
++      case REFERER_XORIGIN_IF_BASE_DOMAINS_MATCH:
++      case REFERER_XORIGIN_IF_HOSTS_MATCH:
++        mRefererXOriginPolicy.commit(level);
++        break;
++      default:
++        throw new IllegalArgumentException("Invalid setting for setRefererXOriginPolicy");
++    }
++    return this;
++  }
++
++  public boolean getSpoofEnglish() {
++    return mSpoofEnglish.get() == 2;
++  }
++
++  public @NonNull GeckoRuntimeSettings setSpoofEnglish(final boolean flag) {
++    mSpoofEnglish.commit(flag ? 2 : 1);
++    return this;
++  }
++
++  public boolean getSvgEnabled() {
++    return !mSvgEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setSvgEnabled(final boolean flag) {
++    mSvgEnabled.commit(!flag);
++    return this;
++  }
++
++  public boolean getWasmEnabled() {
++    return mWasmEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setWasmEnabled(final boolean flag) {
++    mWasmEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getWebglEnabled() {
++    return !mWebglEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setWebglEnabled(final boolean flag) {
++    mWebglEnabled.commit(!flag);
++    return this;
++  }
++
++  public boolean getWebrtcEnabled() {
++    return mWebrtcEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setWebrtcEnabled(final boolean flag) {
++    mWebrtcEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getWidevineEnabled() {
++    return mWidevineEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setWidevineEnabled(final boolean flag) {
++    mWidevineEnabled.commit(flag);
++    return this;
++  }
++
++  public boolean getXpinstallEnabled() {
++    return mXpinstallEnabled.get();
++  }
++
++  public @NonNull GeckoRuntimeSettings setXpinstallEnabled(final boolean flag) {
++    mXpinstallEnabled.commit(flag);
++    return this;
++  }
++
+   @Override // Parcelable
+   public void writeToParcel(final Parcel out, final int flags) {
+     super.writeToParcel(out, flags);
