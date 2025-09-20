@@ -38,11 +38,9 @@ class Config(val prefs: SharedPreferences) {
         const val ENGINE_GECKO_VIEW = "GeckoView"
 
         const val DEFAULT_ADBLOCK_LIST_URL = "https://easylist.to/easylist/easylist.txt"
-        val SearchEnginesTitles = arrayOf("Google", "Bing", "Yahoo!", "DuckDuckGo", "Yandex", "Startpage", "Custom")
-        val SearchEnginesNames = arrayOf("google", "bing", "yahoo", "ddg", "yandex", "startpage", "custom")
-        val SearchEnginesURLs = listOf("https://www.google.com/search?q=[query]", "https://www.bing.com/search?q=[query]",
-            "https://search.yahoo.com/search?p=[query]", "https://duckduckgo.com/?q=[query]",
-            "https://yandex.com/search/?text=[query]", "https://www.startpage.com/sp/search?query=[query]", "")
+        val SearchEnginesTitles = arrayOf("DuckDuckGo", "DuckDuckGo (No AI)", "DuckDuckGo (HTML)", "DuckDuckGo (Lite)", "Mojeek", "Mullvad Leta (Brave)", "Mullvad Leta (Google)", "Startpage", "Startpage (EU)", "Wikipedia", "Custom")
+        val SearchEnginesNames = arrayOf("ddg", "ddgnoai", "ddghtml", "ddglite", "mojeek", "leta-brave", "leta-google", "startpage", "startpage-eu", "wikipedia", "custom")
+        val SearchEnginesURLs = listOf("https://duckduckgo.com/?q=[query]", "https://noai.duckduckgo.com/?q=[query]", "https://html.duckduckgo.com/html/?q=[query]", "https://lite.duckduckgo.com/lite/?q=[query]", "https://www.mojeek.com/search?q=[query]", "https://leta.mullvad.net/?q=[query]&engine=brave", "https://leta.mullvad.net/?q=[query]&engine=google", "https://www.startpage.com/sp/search?query=[query]", "https://eu.startpage.com/sp/search?query=[query]", "https://wikipedia.org/wiki/Special:Search?search=[query]", "")
         val SupportedWebEngines = arrayOf(ENGINE_GECKO_VIEW)
         const val HOME_PAGE_URL = "https://tvbro.phlox.dev/appcontent/home/"
     }
