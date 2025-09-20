@@ -5,15 +5,15 @@ import android.content.Context
 import androidx.annotation.UiThread
 import com.phlox.tvwebbrowser.Config
 import com.phlox.tvwebbrowser.TVBro
+import com.phlox.tvwebbrowser.activity.main.view.CursorLayout
 import com.phlox.tvwebbrowser.model.WebTabState
 import com.phlox.tvwebbrowser.utils.AndroidBug5497Workaround
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
-import com.phlox.tvwebbrowser.webengine.gecko.GeckoViewWithVirtualCursor
 import com.phlox.tvwebbrowser.webengine.gecko.HomePageHelper
 
 object WebEngineFactory {
     @UiThread
-    suspend fun initialize(context: Context, webViewContainer: GeckoViewWithVirtualCursor) {
+    suspend fun initialize(context: Context, webViewContainer: CursorLayout) {
         if (TVBro.config.isWebEngineGecko()) {
             GeckoWebEngine.initialize(context, webViewContainer)
             HomePageHelper.prepareHomePageFiles()
