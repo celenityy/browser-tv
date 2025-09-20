@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Browser TV</string>
     <string name="error">錯誤</string>
     <string name="ok">OK</string>
     <string name="loading">載入中...</string>
@@ -81,7 +80,6 @@
     <string name="auto_check_for_updates">自動檢查更新</string>
     <string name="update">更新</string>
     <string name="new_version_available_s">有可用的新版本：%s</string>
-    <string name="web_browser_optimized_for_tvs">針對電視強化的網頁瀏覽器</string>
     <string name="warning">警告</string>
     <string name="unprotected_connection">未保護的連線</string>
     <string name="new_tab_title">[新分頁]</string>
@@ -112,7 +110,6 @@
     <string name="incognito_mode">無痕模式</string>
     <string name="incognito_mode_hint">您現在可以私密瀏覽，其他使用此裝置的人無法看到您的活動。Browser TV 不會儲存您的歷史紀錄、Cookies、網站資料，以及輸入表單的資訊。\n\n然而，下載和書籤仍會被儲存。您的活動仍可能會被您造訪的網站、您的組織，或是網路服務供應商看到。</string>
     <string name="don_t_show_again">不再顯示</string>
-    <string name="why_icon_changed">為什麼圖示變了？</string>
     <string name="clear_web_cache">清除網路快取</string>
     <string name="block_popups">阻擋彈出式視窗</string>
     <string name="block_popups_s">阻擋彈出式視窗 (%s)</string>

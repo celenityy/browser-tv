@@ -9,22 +9,30 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name_short"
+        android:text="@string/app_name"
         android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/tvBanner"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/banner"
+        android:layout_toEndOf="@+id/tvTitle" />
 
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:text="@string/web_browser_optimized_for_tvs" />
+        android:layout_below="@+id/tvBanner"
+        android:text="@string/app_about" />
 
     <TextView
         android:id="@+id/tvLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDescription"
-        tools:text="https://test.com"
+        tools:text="https://github.com/celenityy/browser-tv"
         android:lines="1"
         android:ellipsize="end"
         android:background="@drawable/text_link_background_selector"
@@ -46,31 +54,23 @@
         tools:text="WebView Version: 10.0.1" />
 
     <TextView
-        android:id="@+id/tvUkraine"
+        android:id="@+id/tvBroLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/tvWebViewVersion"
-        android:text="@string/why_icon_changed"
+        android:text="@string/tv_bro"
         android:lines="1"
         android:ellipsize="end"
         android:background="@drawable/text_link_background_selector"
         android:focusable="true"
         android:clickable="true"/>
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/banner"
-        android:layout_below="@+id/tvWebViewVersion"
-        android:layout_toEndOf="@+id/tvUkraine" />
-
     <CheckBox
         android:id="@+id/chkAutoCheckUpdates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUkraine"
+        android:layout_below="@+id/tvBroLink"
         android:layout_marginTop="30dp"
         android:text="@string/auto_check_for_updates"/>
 

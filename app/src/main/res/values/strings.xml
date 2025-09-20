@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Browser TV</string>
-    <string name="app_name_short" translatable="false">Browser TV</string>
+    <string name="app_name" translatable="false">Browser TV</string>
+    <string name="app_about">Private, secure, user first web browser for Android TV</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
     <string name="loading">Loading&#8230;</string>
@@ -82,7 +82,6 @@
     <string name="auto_check_for_updates">Auto check for updates</string>
     <string name="update">Update</string>
     <string name="new_version_available_s">New version available: %s</string>
-    <string name="web_browser_optimized_for_tvs">Web browser optimized for TVs</string>
     <string name="warning">Warning</string>
     <string name="unprotected_connection">Unprotected connection</string>
     <string name="new_tab_title">[NEW TAB]</string>
@@ -125,7 +124,7 @@
     <string name="incognito_mode">Incognito mode</string>
     <string name="incognito_mode_hint">Now you can browse privately, and other people who use this device won’t see your activity. Browser TV won’t save your browsing history, cookies and site data, information entered in forms.\n\nHowever, downloads and bookmarks will be saved. Your activity might still be visible to websites you visit, your organization or internet service provider.</string>
     <string name="don_t_show_again">Don\'t show again</string>
-    <string name="why_icon_changed">Why icon changed?</string>
+    <string name="tv_bro">Forked from TV Bro</string>
     <string name="clear_web_cache">Clear web cache</string>
     <string name="block_popups">Popups blocking</string>
     <string name="block_popups_s">Popups blocking (%s)</string>

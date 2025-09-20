@@ -36,7 +36,7 @@ class AutoUpdateModel: ActiveModel() {
         if (updateChecker.versionCheckResult == null || force) {
             launch(Dispatchers.IO) {
                 try {
-                    updateChecker.check("https://raw.githubusercontent.com/truefedex/tv-bro/master/latest_version.json",
+                    updateChecker.check("https://raw.githubusercontent.com/celenityy/browser-tv/master/latest_version.json",
                         arrayOf(config.updateChannel))
                 } catch (e: Exception) {
                     e.printStackTrace()

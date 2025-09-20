@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-  <string name="app_name">Browser TV</string>
   <string name="error">"خطا"</string>
   <string name="ok">"خوب"</string>
   <string name="loading">"بارگذاری…"</string>
@@ -102,7 +101,6 @@
   <string name="close_application">"بستن برنامه"</string>
   <string name="close_tab">"بستن برگه"</string>
   <string name="navigate_forward">"حرکت به جلو"</string>
-  <string name="web_browser_optimized_for_tvs">"مرورگر وب برای تلویزیون بهینه شده است"</string>
   <string name="never">هرگز</string>
   <string name="last_update">اخرین بروزرسانی  Mo</string>
   <string name="update_ad_blocker_list">لیست مسدودکننده تبلیغات را به روز کنید</string>
@@ -119,7 +117,6 @@
   <string name="incognito_mode">حالت ناشناس</string>
   <string name="incognito_mode_hint">اکنون می توانید به صورت خصوصی مرور کنید و سایر افرادی که از این دستگاه استفاده می کنند فعالیت شما را نخواهند دید. Browser TV تاریخچه مرور، کوکی ها و داده های سایت، اطلاعات وارد شده در فرم ها را ذخیره نمی کند.  با این حال، دانلودها و نشانک ها ذخیره خواهند شد. ممکن است فعالیت شما همچنان برای وب‌سایت‌هایی که بازدید می‌کنید، سازمان یا ارائه‌دهنده خدمات اینترنتی شما قابل مشاهده باشد.</string>
   <string name="don_t_show_again">دیگر نشان نده</string>
-  <string name="why_icon_changed">چرا نماد تغییر کرد؟</string>
   <string name="clear_web_cache">کش وب را پاک کنید</string>
   <string-array name="tabs_options">
     <item>ورودی جدید</item>

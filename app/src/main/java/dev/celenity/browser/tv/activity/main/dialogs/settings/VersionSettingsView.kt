@@ -39,23 +39,20 @@ class VersionSettingsView @JvmOverloads constructor(
     init {
         vb.tvVersion.text = context.getString(R.string.version_s, BuildConfig.VERSION_NAME)
 
-        val engineVersion = "Engine: " + if (settingsModel.config.isWebEngineGecko()) {
-            org.mozilla.geckoview.BuildConfig.LIBRARY_PACKAGE_NAME + ":" +
-                    org.mozilla.geckoview.BuildConfig.MOZ_APP_VERSION + "." +
-                    org.mozilla.geckoview.BuildConfig.MOZ_APP_BUILDID + " - " +
-                    org.mozilla.geckoview.BuildConfig.MOZ_UPDATE_CHANNEL
+        val engineVersion = if (settingsModel.config.isWebEngineGecko()) {"GeckoView: " + 
+            org.mozilla.geckoview.BuildConfig.MOZ_APP_VERSION
         } else {
             "unknown"
         }
         vb.tvWebViewVersion.text = engineVersion
 
-        vb.tvLink.text = Html.fromHtml("<p><u>https://github.com/truefedex/tv-bro</u></p>")
+        vb.tvLink.text = Html.fromHtml("<p><u>https://github.com/celenityy/browser-tv</u></p>")
         vb.tvLink.setOnClickListener {
             loadUrl(vb.tvLink.text.toString())
         }
 
-        vb.tvUkraine.setOnClickListener {
-            loadUrl("https://tv-bro-3546c.web.app/msg001.html")
+        vb.tvBroLink.setOnClickListener {
+            loadUrl("https://github.com/truefedex/tv-bro")
         }
 
         if (BuildConfig.BUILT_IN_AUTO_UPDATE) {

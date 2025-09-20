@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-  <string name="app_name">Browser TV</string>
   <string name="error">错误</string>
   <string name="ok">OK</string>
   <string name="loading">载入中…</string>
@@ -78,7 +77,6 @@
   <string name="auto_check_for_updates">自动检查更新</string>
   <string name="update">更新资料</string>
   <string name="new_version_available_s">新版本可用: %s</string>
-  <string name="web_browser_optimized_for_tvs">针对电视进行了优化的网络浏览器</string>
   <string name="warning">警告</string>
   <string name="unprotected_connection">未保护的连接</string>
   <string name="new_tab_title">[新标签页]</string>
@@ -122,7 +120,6 @@
   <string name="incognito_mode">隐身模式</string>
   <string name="incognito_mode_hint">现在您可以浏览隐私内容，其他使用此设备的人将看不到您的活动。 Browser TV 不会保存您的浏览历史记录、cookie 和网站数据以及在表格中输入的信息。\n\n但是，下载和书签将被保存。 您访问的网站、您的组织或互联网服务提供商可能仍然可以看到您的活动。</string>
   <string name="don_t_show_again">不再显示</string>
-  <string name="why_icon_changed">为什么图标变了？</string>
   <string name="clear_web_cache">清除网络缓存</string>
   <string name="no_bookmarks_yet">还没有书签</string>
   <string name="done">完成</string>

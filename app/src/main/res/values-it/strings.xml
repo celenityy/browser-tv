@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-  <string name="app_name">Browser TV</string>
   <string name="error">Errore</string>
   <string name="ok">OK</string>
   <string name="loading">Caricamento…</string>
@@ -81,7 +80,6 @@
   <string name="auto_check_for_updates">Verifica aggiornamenti</string>
   <string name="update">Aggiorna</string>
   <string name="new_version_available_s">Nuova versione disponibile: %s</string>
-  <string name="web_browser_optimized_for_tvs">Web browser ottimizzato per le TV</string>
   <string name="warning">Attenzione!</string>
   <string name="unprotected_connection">Connessione non protetta</string>
   <string name="new_tab_title">[NUOVA SCHEDA]</string>
@@ -124,7 +122,6 @@
   <string name="incognito_mode">Modalità Incognito</string>
   <string name="incognito_mode_hint">Ora puoi navigare in privato e altri utilizzatori di questo dispositivo non vedranno la tua attività. Browser TV non salverà la cronologia di navigazione, i cookie e i dati del sito, le informazioni inserite nei moduli.\n\nTuttavia, i download e i segnalibri verranno salvati. La tua attività potrebbe essere comunque visibile ai siti Web che visiti, alla tua organizzazione o al provider di servizi Internet.</string>
   <string name="don_t_show_again">Non mostrare più</string>
-  <string name="why_icon_changed">Perché l\'icona è cambiata?</string>
   <string name="clear_web_cache">Pulisci la cache</string>
   <string name="block_popups">Blocco dei popup</string>
   <string name="block_popups_s">Blocco popup (%s)</string>
