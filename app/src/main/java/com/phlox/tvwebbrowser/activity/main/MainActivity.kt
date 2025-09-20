@@ -719,6 +719,8 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
                 text = "https://$text"
             }
             navigate(text)
+        } else if (trimmedLowercased.startsWith("about:")) {
+            navigate(text)
         } else {
             var query: String? = null
             try {
