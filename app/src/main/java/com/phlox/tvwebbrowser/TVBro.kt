@@ -41,12 +41,6 @@ class TVBro : Application(), Application.ActivityLifecycleCallbacks {
         Log.i(TAG, "onCreate")
         super.onCreate()
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            //we need this since when targetSdkVersion >= 33 then
-            //deprecated WebSettingsCompat.setForceDark stops working on android 9 and below
-            applicationInfo.targetSdkVersion = 32
-        }
-
         instance = this
 
         _config = Config(getSharedPreferences(MAIN_PREFS_NAME, MODE_MULTI_PROCESS))
