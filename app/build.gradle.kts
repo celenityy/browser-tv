@@ -16,14 +16,14 @@ if (localPropertiesFile.exists()) {
 android {
     compileSdk = 36
     buildToolsVersion = "36.0.0"
-    namespace = "com.phlox.tvwebbrowser"
+    namespace = "dev.celenity.browser.tv"
 
     defaultConfig {
-        applicationId = "com.phlox.tvwebbrowser"
+        applicationId = "dev.celenity.browser.tv"
         minSdk = 26
         targetSdk = 36
-        versionCode = 61
-        versionName = "2.0.1"
+        versionCode = 1
+        versionName = "0.0.1"
         buildConfigField("Boolean", "BUILT_IN_AUTO_UPDATE", "true")
 
         javaCompileOptions {

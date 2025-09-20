@@ -1,4 +1,4 @@
-console.log("TV Bro home content extension loaded");
+console.log("Browser TV home content extension loaded");
 
 const homeExtPort = browser.runtime.connectNative("tvbro");
 function postMessageToHomePagePort(action, data) {
@@ -6,7 +6,7 @@ function postMessageToHomePagePort(action, data) {
     homeExtPort.postMessage({ action: action, data: data });
 }
 
-let TVBro = {
+let BrowserTV = {
     startVoiceSearch: function () {
         postMessageToHomePagePort("startVoiceSearch");
     },
@@ -23,8 +23,8 @@ let TVBro = {
         postMessageToHomePagePort("requestFavicon", url);
     }
 }
-window.wrappedJSObject.TVBro = cloneInto(
-    TVBro,
+window.wrappedJSObject.BrowserTV = cloneInto(
+    BrowserTV,
     window,
     { cloneFunctions: true });
 

@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "tvbro-generic",
+  "name": "browsertv-generic",
   "version": "1.0",
-  "description": "TV Bro Generic Addon",
+  "description": "Browser TV Generic Addon",
   "browser_specific_settings": {
     "gecko": {
-      "id": "tvbro@mock.com"
+      "id": "browsertv-generic@celenity.dev"
     }
   },
   "content_scripts": [
@@ -20,7 +20,7 @@
     },
     {
       "matches": [
-        "file:///data/user/0/com.phlox.tvwebbrowser/files/home_page/index.html"
+        "file:///data/user/0/dev.celenity.browser.tv/files/home_page/index.html"
       ],
       "js": [
         "home.js"

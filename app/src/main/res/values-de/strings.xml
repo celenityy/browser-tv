@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-  <string name="app_name">TV Bro: Webbrowser für TVs</string>
+  <string name="app_name">Browser TV</string>
   <string name="error">Fehler</string>
   <string name="ok">OK</string>
   <string name="loading">Lade…</string>
@@ -64,7 +64,7 @@
   <string name="clear">Löschen</string>
   <string name="install">Installieren</string>
   <string name="turn_on_unknown_sources">Bitte \"Unbekannte Quellen\" erlauben</string>
-  <string name="turn_on_unknown_sources_for_app">Bitte erlaube TV Bro die Installation von Apps aus \"Unbekannten Quellen\" in den Systemeinstellungen</string>
+  <string name="turn_on_unknown_sources_for_app">Bitte erlaube Browser TV die Installation von Apps aus \"Unbekannten Quellen\" in den Systemeinstellungen</string>
   <string name="storage_not_mounted">Speicher nicht verfügbar</string>
   <string name="can_not_create_downloads">Kann Downloadordner nicht erstellen</string>
   <string name="voice_search_not_found">Sprachsuche nicht gefunden</string>
@@ -120,7 +120,7 @@
   </array>
   <string name="toggle_keep_screen_on">Bildschirm eingeschaltet lassen</string>
   <string name="incognito_mode">Inkognito-Modus</string>
-  <string name="incognito_mode_hint">Jetzt können Sie privat surfen und andere Personen, die dieses Gerät verwenden, können Ihre Aktivitäten nicht sehen. TV Bro speichert Ihren Browserverlauf, Cookies und Websitedaten sowie in Formulare eingegebene Informationen nicht.\n\nDownloads und Lesezeichen werden jedoch gespeichert. Ihre Aktivitäten sind möglicherweise weiterhin für von Ihnen besuchte Websites, Ihre Organisation oder Ihren Internetdienstanbieter sichtbar.</string>
+  <string name="incognito_mode_hint">Jetzt können Sie privat surfen und andere Personen, die dieses Gerät verwenden, können Ihre Aktivitäten nicht sehen. Browser TV speichert Ihren Browserverlauf, Cookies und Websitedaten sowie in Formulare eingegebene Informationen nicht.\n\nDownloads und Lesezeichen werden jedoch gespeichert. Ihre Aktivitäten sind möglicherweise weiterhin für von Ihnen besuchte Websites, Ihre Organisation oder Ihren Internetdienstanbieter sichtbar.</string>
   <string name="don_t_show_again">Nicht mehr anzeigen</string>
   <string name="why_icon_changed">Warum Symbol geändert?</string>
   <string name="clear_web_cache">Webcache löschen</string>
@@ -144,7 +144,7 @@
   <string name="home_page">Startseite</string>
   <string name="custom_home_page_url">Benutzerdefinierte Startseiten-URL</string>
   <string-array name="home_page_modes">
-    <item>TV Bro Home</item>
+    <item>Browser TV Home</item>
     <item>Suchmaschine</item>
     <item>Brauch</item>
     <item>Leer</item>
@@ -154,7 +154,7 @@
     <item>Neueste Geschichte</item>
     <item>Meist besuchte</item>
   </string-array>
-  <string name="repost_confirm_message">Um diese Seite anzuzeigen, muss TV Bro Informationen senden, die alle zuvor ausgeführten Aktionen (z. B. eine Suche oder Bestellbestätigung) wiederholen.</string>
+  <string name="repost_confirm_message">Um diese Seite anzuzeigen, muss Browser TV Informationen senden, die alle zuvor ausgeführten Aktionen (z. B. eine Suche oder Bestellbestätigung) wiederholen.</string>
   <string name="repost_confirm_title">Bist du dir sicher?</string>
   <string name="repost_confirm_resend">Erneut senden</string>
   <string name="before_unload_message">Diese Seite fordert Sie auf, zu bestätigen, dass Sie die Seite verlassen möchten - die von Ihnen eingegebenen Daten werden möglicherweise nicht gespeichert</string>

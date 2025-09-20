@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/day_night_background_color"
-    tools:context="com.phlox.tvwebbrowser.activity.downloads.DownloadsActivity">
+    tools:context="dev.celenity.browser.tv.activity.downloads.DownloadsActivity">
 
     <de.halfbit.pinnedsection.PinnedSectionListView
         android:id="@+id/listView"

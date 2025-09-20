@@ -149,18 +149,6 @@
             display: none;
         }
 
-        .logo {
-            width: 10vw;
-            height: 7.5vw;
-            margin-top: 5vh;
-            background-image: url("logo.png");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            position: absolute;
-            color-scheme: only light;
-        }
-
         .wrapper {
             position: relative;
             top: 15vh;
@@ -356,7 +344,6 @@
 
 <body>
     <div style="height: 100%; width: 100%; position: fixed; left: 0; top: 0; overflow-x: hidden;">
-        <div class="logo"></div>
         <div class="wrapper">
             <div class="search_box">
                 <div class="dropdown">
@@ -502,7 +489,7 @@
 
         function onSuggestionClicked(index) {
             var bookmark = null;
-            if (homePageLinksMode === "BOOKMARKS" && window.hasOwnProperty("TVBro")) {
+            if (homePageLinksMode === "BOOKMARKS" && window.hasOwnProperty("BrowserTV")) {
                 bookmark = recommendationsToDisplay.find(function (b) {
                     return b.order === index;
                 });
@@ -528,10 +515,10 @@
                         var url = new URL(urlStr);
                         c.favicon = url.origin + "/favicon.ico";
 
-                        if (window.hasOwnProperty("TVBro")) {
-                            if (TVBro.requestFavicon) {
+                        if (window.hasOwnProperty("BrowserTV")) {
+                            if (BrowserTV.requestFavicon) {
                                 //GeckoView
-                                TVBro.requestFavicon(urlStr);
+                                BrowserTV.requestFavicon(urlStr);
                             } else {
                                 //WebView
                                 c.favicon = "favicon://" + url.host;
@@ -550,7 +537,7 @@
                 var suggElement = document.getElementById("sugg" + i);
                 if (suggElement) {
                     var link;
-                    if (homePageLinksMode == "BOOKMARKS" && window.hasOwnProperty("TVBro")) {
+                    if (homePageLinksMode == "BOOKMARKS" && window.hasOwnProperty("BrowserTV")) {
                         link = recommendationsToDisplay.find(function (c) {
                             return c.order == i;
                         });
@@ -580,12 +567,12 @@
                     titleElement.classList.toggle("empty", !link);
                     descriptionElement.classList.toggle("empty", !link);
 
-                    if (homePageLinksMode == "BOOKMARKS" && window.hasOwnProperty("TVBro")) {
+                    if (homePageLinksMode == "BOOKMARKS" && window.hasOwnProperty("BrowserTV")) {
                         var moreElement = suggElement.getElementsByClassName("more")[0];
                         moreElement.style.display = "block";
                         moreElement.onclick = function (e) {
                             var index = parseInt(e.target.parentElement.id.substring(4));
-                            TVBro.onEditBookmark(index);
+                            BrowserTV.onEditBookmark(index);
                             e.stopPropagation();
                         };
                     }
@@ -605,7 +592,7 @@
             return prompt("Enter search engine URL (with [query] as placeholder)", searchEngineUrl);
         }
 
-        function applySearchEngine(engine, searchEngineUrl, notifyTVBro) {
+        function applySearchEngine(engine, searchEngineUrl, notifyBrowserTV) {
             document.getElementById("search-engines-list").classList.remove("active");
 
             searchEngineUrl = searchEngineUrl ? searchEngineUrl : searchEngineUrlMap[engine];
@@ -621,8 +608,8 @@
             }
             document.getElementsByClassName("default_option")[0].style.backgroundImage = "url('" + iconUrl + "')";
 
-            if (window.hasOwnProperty("TVBro") && notifyTVBro) {
-                TVBro.setSearchEngine(engine, searchEngineUrl ? searchEngineUrl : searchEngineUrlMap[engine]);
+            if (window.hasOwnProperty("BrowserTV") && notifyBrowserTV) {
+                BrowserTV.setSearchEngine(engine, searchEngineUrl ? searchEngineUrl : searchEngineUrlMap[engine]);
             }
         }
 
@@ -632,7 +619,7 @@
             window.open(url, "_self");
         }
 
-        //callback called from TVBro/GeckoView
+        //callback called from Browser TV/GeckoView
         function onFaviconLoaded(url, data) {
             let imgElements = document.getElementsByTagName("img");
             for (let i = 0; i < imgElements.length; i++) {
@@ -669,20 +656,19 @@
             if (document.getElementsByClassName("mic")[0].style.display == "none") {
                 performSearch(document.getElementById("search-input").value);
             } else {
-                if (window.hasOwnProperty("TVBro")) {
-                    TVBro.startVoiceSearch();
+                if (window.hasOwnProperty("BrowserTV")) {
+                    BrowserTV.startVoiceSearch();
                 }
             }
         };
 
-        //there are three modes this page can run in:
-        //1. Running inside ordinary web page - TVBro variable is not installed - no bookmarks, no voice search
-        //2. Running inside TVBro WebView - TVBro variable is installed - bookmarks, voice search
-        //3. Running inside TVBro GeckoView - TVBro variable is installed - bookmarks, voice search, but url starts with "file://"
+        //there are two modes this page can run in:
+        //1. Running inside ordinary web page - BrowserTV variable is not installed - no bookmarks, no voice search
+        //2. Running inside Browser TV GeckoView - BrowserTV variable is installed - bookmarks, voice search, but url starts with "file://"
 
-        if (window.hasOwnProperty("TVBro")) {
-            console.log("Running inside TVBro");
-            TVBro.onHomePageLoaded();
+        if (window.hasOwnProperty("BrowserTV")) {
+            console.log("Running inside Browser TV");
+            BrowserTV.onHomePageLoaded();
         } else {
             hideVoiceSearchUI();
             applySearchEngine(searchEngine, searchEngineUrl, false);

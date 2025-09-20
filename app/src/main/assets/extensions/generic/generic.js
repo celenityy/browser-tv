@@ -1,1 +1,1 @@
-console.log("TV Bro generic content extension loaded");
+console.log("Browser TV generic content extension loaded");

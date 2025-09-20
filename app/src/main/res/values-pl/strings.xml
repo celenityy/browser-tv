@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-  <string name="app_name">TV Bro: Przęglądarka internetowa dla TV</string>
+  <string name="app_name">Browser TV</string>
   <string name="error">Błąd</string>
   <string name="ok">OK</string>
   <string name="loading">Wczytywanie…</string>
@@ -64,7 +64,7 @@
   <string name="clear">Wyczyść</string>
   <string name="install">Zainstaluj</string>
   <string name="turn_on_unknown_sources">Proszę włączyć \"Unknown sources\" ustawienie w systemie</string>
-  <string name="turn_on_unknown_sources_for_app">Proszę pozwolić TV Bro na instalację aplikacji z \"Unknown sources\" w ustawieniach systemu</string>
+  <string name="turn_on_unknown_sources_for_app">Proszę pozwolić Browser TV na instalację aplikacji z \"Unknown sources\" w ustawieniach systemu</string>
   <string name="storage_not_mounted">Nie zamontowano nośnika</string>
   <string name="can_not_create_downloads">Nie mogę stworzyć folderu Pobrane dir</string>
   <string name="voice_search_not_found">Nie znaleziono wyszukiwania głosowego</string>
@@ -120,7 +120,7 @@
     <item>Mroczny</item>
   </array>
   <string name="incognito_mode">Tryb incognito</string>
-  <string name="incognito_mode_hint">Teraz możesz przeglądać internet prywatnie, i pozostali ludzie którzy używają tego urządzenia nie zobaczą twojej aktywności. Aplikacja TV Bro nie będzie zapisywać twojej historii przeglądania, ciasteczek oraz danych stron, nformacji dodanych w formularzach.\n\nJednakże, zapisane zostaną pobrane piliki i zakładki. Twoja aktywność może nadal być widoczna dla stron które odwiedzasz, twojej organizacji lub dostawcy internetu.</string>
+  <string name="incognito_mode_hint">Teraz możesz przeglądać internet prywatnie, i pozostali ludzie którzy używają tego urządzenia nie zobaczą twojej aktywności. Aplikacja Browser TV nie będzie zapisywać twojej historii przeglądania, ciasteczek oraz danych stron, nformacji dodanych w formularzach.\n\nJednakże, zapisane zostaną pobrane piliki i zakładki. Twoja aktywność może nadal być widoczna dla stron które odwiedzasz, twojej organizacji lub dostawcy internetu.</string>
   <string name="don_t_show_again">Nie pokazuj ponownie</string>
   <string name="why_icon_changed">Czemu ikona się zmieniła?</string>
   <string name="clear_web_cache">Wyczyść pamięć podręczną</string>
@@ -144,7 +144,7 @@
   <string name="home_page">Strona główna</string>
   <string name="custom_home_page_url">Niestandardowy adres URL strony głównej</string>
   <string-array name="home_page_modes">
-    <item>TV Bro Home</item>
+    <item>Browser TV Home</item>
     <item>Wyszukiwarka</item>
     <item>Zwyczaj</item>
     <item>Pusty</item>
@@ -154,7 +154,7 @@
     <item>Najnowsza historia</item>
     <item>Najczęściej odwiedzany</item>
   </string-array>
-  <string name="repost_confirm_message">Aby wyświetlić tę stronę, TV Bro musi wysłać informacje, które powtórzą wszelkie działania (takie jak wyszukiwanie lub potwierdzenie zamówienia), które zostały wykonane wcześniej.</string>
+  <string name="repost_confirm_message">Aby wyświetlić tę stronę, Browser TV musi wysłać informacje, które powtórzą wszelkie działania (takie jak wyszukiwanie lub potwierdzenie zamówienia), które zostały wykonane wcześniej.</string>
   <string name="repost_confirm_title">Jesteś pewny?</string>
   <string name="repost_confirm_resend">Wysłać ponownie</string>
   <string name="before_unload_message">Ta strona prosi o potwierdzenie, że chcesz wyjść - wprowadzone dane mogą nie zostać zapisane</string>

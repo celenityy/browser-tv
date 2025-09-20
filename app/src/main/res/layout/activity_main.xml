@@ -10,7 +10,7 @@
     tools:ignore="MergeRootFrame"
     android:clipChildren="false">
 
-    <com.phlox.tvwebbrowser.activity.main.view.CursorLayout
+    <dev.celenity.browser.tv.activity.main.view.CursorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/flWebViewContainer" />
@@ -32,12 +32,12 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <com.phlox.tvwebbrowser.activity.main.view.ActionBar
+        <dev.celenity.browser.tv.activity.main.view.ActionBar
             android:id="@+id/vActionBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.phlox.tvwebbrowser.activity.main.view.tabs.TabsView
+        <dev.celenity.browser.tv.activity.main.view.tabs.TabsView
             android:id="@+id/vTabs"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -251,7 +251,7 @@
             tools:text="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.phlox.tvwebbrowser.activity.main.view.CursorLayout
+    <dev.celenity.browser.tv.activity.main.view.CursorLayout
         android:id="@+id/flFullscreenContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

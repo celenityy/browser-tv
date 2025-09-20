@@ -1,5 +1,5 @@
-if (!window.tvBroClicksListener) {
-    window.tvBroClicksListener = function(e) {
+if (!window.browserTvClicksListener) {
+    window.browserTvClicksListener = function(e) {
         if (e.target.tagName.toUpperCase() == "A" && e.target.attributes.href.value.toLowerCase().startsWith("blob:")) {
             var fileName = e.target.download;
             var url = e.target.attributes.href.value;
@@ -13,7 +13,7 @@ if (!window.tvBroClicksListener) {
                     reader.readAsDataURL(blob);
                     reader.onloadend = function() {
                         base64data = reader.result;
-                        TVBro.takeBlobDownloadData(base64data, fileName, url, blob.type);
+                        BrowserTV.takeBlobDownloadData(base64data, fileName, url, blob.type);
                     }
                 }
             };
@@ -22,7 +22,7 @@ if (!window.tvBroClicksListener) {
             e.preventDefault();
         }
     };
-    document.addEventListener("click", window.tvBroClicksListener);
+    document.addEventListener("click", window.browserTvClicksListener);
 }
 
 Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
@@ -31,7 +31,7 @@ Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
     }
 })
 
-window.tvBroTogglePlayback = function() {
+window.browserTvTogglePlayback = function() {
   var video = document.querySelector('video');
   var audio = document.querySelector('audio');
   if (video) {
