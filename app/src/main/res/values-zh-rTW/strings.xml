@@ -84,7 +84,6 @@
     <string name="web_browser_optimized_for_tvs">針對電視強化的網頁瀏覽器</string>
     <string name="warning">警告</string>
     <string name="unprotected_connection">未保護的連線</string>
-    <string name="err_webview_can_not_link">無法連結至 WebView 套件。請先嘗試安裝 Android System WebView 套件。</string>
     <string name="new_tab_title">[新分頁]</string>
     <string name="open_a_new_tab_here">在此開啟新分頁</string>
     <string name="tabs">分頁</string>

@@ -8,8 +8,6 @@ import android.webkit.WebResourceResponse
 import com.phlox.tvwebbrowser.TVBro
 import com.phlox.tvwebbrowser.singleton.FaviconsPool
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
-import com.phlox.tvwebbrowser.webengine.webview.HomePageHelper
-import com.phlox.tvwebbrowser.webengine.webview.WebViewEx
 import kotlinx.coroutines.runBlocking
 import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.GeckoResult

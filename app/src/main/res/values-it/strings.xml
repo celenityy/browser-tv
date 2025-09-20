@@ -84,7 +84,6 @@
   <string name="web_browser_optimized_for_tvs">Web browser ottimizzato per le TV</string>
   <string name="warning">Attenzione!</string>
   <string name="unprotected_connection">Connessione non protetta</string>
-  <string name="err_webview_can_not_link">Impossibile collegarsi a WebView. Installare Android System WebView.</string>
   <string name="new_tab_title">[NUOVA SCHEDA]</string>
   <string name="open_a_new_tab_here">Apri una nuova scheda qui</string>
   <string name="tabs">Schede</string>

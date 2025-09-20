@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.util.LruCache
-import android.webkit.WebChromeClient
-import android.webkit.WebView
 import com.phlox.tvwebbrowser.TVBro
 import com.phlox.tvwebbrowser.model.HostConfig
 import com.phlox.tvwebbrowser.utils.FaviconExtractor
@@ -101,24 +99,6 @@ object FaviconsPool {
                         Log.d(TAG, "get: favicon download failed for ${icon.src}")
                     }
                     favicons.remove(icon)
-                }
-                //try to get favicon from webview
-                withContext(Dispatchers.Main) {
-                    WebView(TVBro.instance).apply {
-                        webChromeClient = object : WebChromeClient() {
-                            override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
-                                super.onReceivedIcon(view, icon)
-                                if (icon != null) {
-                                    Log.d(TAG, "get: favicon received from webview for $host")
-                                    cache.put(host, icon)
-                                    runBlocking {
-                                        saveFavicon(host, icon, hostConfig)
-                                    }
-                                }
-                            }
-                        }
-                        loadUrl(urlOrHost)
-                    }
                 }
             }
         } catch (e: Exception) {

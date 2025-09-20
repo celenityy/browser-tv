@@ -85,7 +85,6 @@
     <string name="web_browser_optimized_for_tvs">Web browser optimized for TVs</string>
     <string name="warning">Warning</string>
     <string name="unprotected_connection">Unprotected connection</string>
-    <string name="err_webview_can_not_link">Can not link to WebView component. Try to install Android System WebView component first.</string>
     <string name="new_tab_title">[NEW TAB]</string>
     <string name="open_a_new_tab_here">Open a new tab here</string>
     <string name="tabs">Tabs</string>

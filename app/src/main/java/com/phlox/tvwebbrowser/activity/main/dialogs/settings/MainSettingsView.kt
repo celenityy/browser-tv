@@ -7,11 +7,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.webkit.WebView
 import android.widget.*
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.webkit.WebViewFeature
 import com.phlox.tvwebbrowser.Config
 import com.phlox.tvwebbrowser.R
 import com.phlox.tvwebbrowser.TVBro
@@ -67,33 +65,6 @@ class MainSettingsView @JvmOverloads constructor(
         vb.spWebEngine.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 if (config.webEngine == Config.SupportedWebEngines[position]) return
-                if (Config.SupportedWebEngines[position] == Config.ENGINE_GECKO_VIEW && !Config.canRecommendGeckoView()) {
-                    AlertDialog.Builder(context)
-                        .setTitle(R.string.warning)
-                        .setMessage(R.string.settings_engine_change_gecko_msg)
-                        .setPositiveButton(R.string.ok) { _, _ ->
-                            config.webEngine = Config.SupportedWebEngines[position]
-                            showRestartDialog()
-                        }
-                        .setNegativeButton(R.string.cancel) { _, _ ->
-                            vb.spWebEngine.setSelection(Config.SupportedWebEngines.indexOf(config.webEngine), false)
-                        }
-                        .show()
-                    return
-                } else if (Config.SupportedWebEngines[position] == Config.ENGINE_WEB_VIEW) {
-                    AlertDialog.Builder(context)
-                        .setTitle(R.string.warning)
-                        .setMessage(R.string.settings_engine_change_webview_msg)
-                        .setPositiveButton(R.string.ok) { _, _ ->
-                            config.webEngine = Config.SupportedWebEngines[position]
-                            showRestartDialog()
-                        }
-                        .setNegativeButton(R.string.cancel) { _, _ ->
-                            vb.spWebEngine.setSelection(Config.SupportedWebEngines.indexOf(config.webEngine), false)
-                        }
-                        .show()
-                    return
-                }
                 config.webEngine = Config.SupportedWebEngines[position]
                 showRestartDialog()
             }
@@ -116,17 +87,6 @@ class MainSettingsView @JvmOverloads constructor(
     }
 
     private fun initThemeSettingsUI() {
-        val webViewSupportsDarkening = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)
-        } else {
-            WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
-        }
-
-        if (!webViewSupportsDarkening) {
-            vb.llThemeSettings.visibility = View.GONE
-            return
-        }
-
         val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, context.resources.getStringArray(R.array.themes))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 

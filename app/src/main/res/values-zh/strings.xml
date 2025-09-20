@@ -81,7 +81,6 @@
   <string name="web_browser_optimized_for_tvs">针对电视进行了优化的网络浏览器</string>
   <string name="warning">警告</string>
   <string name="unprotected_connection">未保护的连接</string>
-  <string name="err_webview_can_not_link">无法链接到 WebView 组件。尝试先安装 Android 系统 WebView 组件。</string>
   <string name="new_tab_title">[新标签页]</string>
   <string name="open_a_new_tab_here">在这里打开一个新标签</string>
   <string name="tabs">标签页</string>

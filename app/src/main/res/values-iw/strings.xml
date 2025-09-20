@@ -83,7 +83,6 @@
   <string name="new_version_available_s">"גרסא חדשה זמינה: %s"</string>
   <string name="warning">"אזהרה"</string>
   <string name="unprotected_connection">"חיבור לא מוגן"</string>
-  <string name="err_webview_can_not_link">"לא ניתן לקשר לרכיב WebView. נסה להתקין את רכיב WebView של מערכת Android קודם."</string>
   <string name="new_tab_title">"[כרטיסיה חדשה]"</string>
   <string name="open_a_new_tab_here">"פתח כרטיסיה חדשה כאן"</string>
   <string name="tabs">"כרטיסיות"</string>

@@ -15,7 +15,6 @@ import com.phlox.tvwebbrowser.BuildConfig
 import com.phlox.tvwebbrowser.Config
 import com.phlox.tvwebbrowser.R
 import com.phlox.tvwebbrowser.TVBro
-import com.phlox.tvwebbrowser.activity.main.view.CursorLayout
 import com.phlox.tvwebbrowser.model.WebTabState
 import com.phlox.tvwebbrowser.utils.observable.ObservableValue
 import com.phlox.tvwebbrowser.webengine.WebEngine
@@ -41,7 +40,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
         val uiHandler = Handler(Looper.getMainLooper())
 
         @UiThread
-        fun initialize(context: Context, webViewContainer: CursorLayout) {
+        fun initialize(context: Context, webViewContainer: GeckoViewWithVirtualCursor) {
             if (!this::runtime.isInitialized) {
                 val builder = GeckoRuntimeSettings.Builder()
                 if (BuildConfig.DEBUG) {

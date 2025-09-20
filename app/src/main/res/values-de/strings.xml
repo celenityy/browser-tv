@@ -82,7 +82,6 @@
   <string name="web_browser_optimized_for_tvs">Webbrowser optimiert für TVs</string>
   <string name="warning">Warnung</string>
   <string name="unprotected_connection">Ungeschützte Verbindung</string>
-  <string name="err_webview_can_not_link">Keine Verbindung zur WebView-Komponente. Ist "Android System WebView" installiert?</string>
   <string name="new_tab_title">[NEUER TAB]</string>
   <string name="open_a_new_tab_here">Neuen Tab hier öffnen</string>
   <string name="tabs">Tabs</string>

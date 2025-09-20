@@ -82,7 +82,6 @@
   <string name="web_browser_optimized_for_tvs">Przęglądatka zaoptymalizowana dla telewizorów</string>
   <string name="warning">Ostrzeżenie</string>
   <string name="unprotected_connection">Połączenie nie jest chronione</string>
-  <string name="err_webview_can_not_link">Nie można podlinkować składnika WebView. Spróbuj najpierw zainstalować składnik Android System WebView.</string>
   <string name="new_tab_title">[Nowa karta]</string>
   <string name="open_a_new_tab_here">Otwórz nową kartę tutaj</string>
   <string name="tabs">Karty</string>

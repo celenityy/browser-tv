@@ -16,7 +16,6 @@ import com.phlox.tvwebbrowser.utils.LogUtils
 import com.phlox.tvwebbrowser.utils.Utils
 import com.phlox.tvwebbrowser.webengine.WebEngineFactory
 import com.phlox.tvwebbrowser.webengine.gecko.GeckoWebEngine
-import com.phlox.tvwebbrowser.webengine.webview.WebViewWebEngine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -191,8 +190,7 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
         val state = savedState
         var stateFileName = wvStateFileName
         if (stateFileName != null && (
-                    (webEngine is GeckoWebEngine && !stateFileName.startsWith(GECKO_SESSION_STATE_HASH_PREFIX)) ||
-                            (webEngine is WebViewWebEngine && stateFileName.startsWith(GECKO_SESSION_STATE_HASH_PREFIX))
+                    (webEngine is GeckoWebEngine && !stateFileName.startsWith(GECKO_SESSION_STATE_HASH_PREFIX))
                     )) {
             File(getWVStatePath(stateFileName)).delete()
             stateFileName = null

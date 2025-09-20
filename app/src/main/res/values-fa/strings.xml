@@ -84,7 +84,6 @@
   <string name="new_version_available_s">"نسخه جدید موجود است: %s"</string>
   <string name="warning">"هشدار"</string>
   <string name="unprotected_connection">"اتصال محافظت نشده"</string>
-  <string name="err_webview_can_not_link">"نمی توان به وب نما متصل شد.ابتدا وب نما سیستم Android را نصب کنید."</string>
   <string name="new_tab_title">"[زبانه جدید]"</string>
   <string name="open_a_new_tab_here">"یک برگه جدید در اینجا باز کنید"</string>
   <string name="tabs">"برگه ها"</string>

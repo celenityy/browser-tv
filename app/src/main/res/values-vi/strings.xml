@@ -81,7 +81,6 @@
   <string name="web_browser_optimized_for_tvs">Trình duyệt web được tối ưu hóa cho TV</string>
   <string name="warning">Cảnh báo</string>
   <string name="unprotected_connection">Kết nối không được bảo vệ</string>
-  <string name="err_webview_can_not_link">Không thể liên kết với thành phần WebView. Trước tiên, hãy thử cài đặt thành phần WebView của hệ thống Android.</string>
   <string name="new_tab_title">[TAB MỚI]</string>
   <string name="open_a_new_tab_here">Mở tab mới tại đây</string>
   <string name="tabs">Các tab</string>

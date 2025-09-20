@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ScrollView
-import androidx.webkit.WebViewCompat
 import com.phlox.tvwebbrowser.BuildConfig
 import com.phlox.tvwebbrowser.R
 import com.phlox.tvwebbrowser.TVBro
@@ -46,8 +45,7 @@ class VersionSettingsView @JvmOverloads constructor(
                     org.mozilla.geckoview.BuildConfig.MOZ_APP_BUILDID + " - " +
                     org.mozilla.geckoview.BuildConfig.MOZ_UPDATE_CHANNEL
         } else {
-            val webViewPackage = WebViewCompat.getCurrentWebViewPackage(context)
-            (webViewPackage?.packageName ?: "unknown") + ":" + (webViewPackage?.versionName ?: "unknown")
+            "unknown"
         }
         vb.tvWebViewVersion.text = engineVersion
 

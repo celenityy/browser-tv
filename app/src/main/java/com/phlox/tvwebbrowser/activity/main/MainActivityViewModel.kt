@@ -2,7 +2,6 @@ package com.phlox.tvwebbrowser.activity.main
 
 import android.os.Build
 import android.util.Log
-import android.webkit.WebView
 import com.phlox.tvwebbrowser.BuildConfig
 import com.phlox.tvwebbrowser.Config
 import com.phlox.tvwebbrowser.TVBro
@@ -239,7 +238,6 @@ class MainActivityViewModel: ActiveModel() {
                 Log.i(TAG, "Looks like we already in incognito mode")
                 return
             }
-            WebView.setDataDirectorySuffix(INCOGNITO_DATA_DIRECTORY_SUFFIX)
         } else {
             val webViewData = File(
                 TVBro.instance.filesDir.parentFile!!.absolutePath +

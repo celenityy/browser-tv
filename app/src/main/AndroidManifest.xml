@@ -116,10 +116,6 @@
             android:launchMode="singleTask"
             android:configChanges="uiMode"/>
 
-        <meta-data
-            android:name="android.webkit.WebView.MetricsOptOut"
-            android:value="true" />
-
         <service
             android:name=".service.downloads.DownloadService"
             android:foregroundServiceType="dataSync"
