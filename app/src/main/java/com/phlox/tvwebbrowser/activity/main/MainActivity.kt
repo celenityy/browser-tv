@@ -65,7 +65,6 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.system.exitProcess
 
-
 open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     companion object {
         private val TAG = MainActivity::class.java.simpleName
@@ -84,7 +83,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var tabsModel: TabsModel
     private lateinit var settingsModel: SettingsModel
-    private lateinit var adblockModel: AdblockModel
     private lateinit var autoUpdateModel: AutoUpdateModel
     private lateinit var uiHandler: Handler
     private var running: Boolean = false
@@ -119,7 +117,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
             viewModel.prepareSwitchToIncognito()
         }
         settingsModel = ActiveModelsRepository.get(SettingsModel::class, this)
-        adblockModel = ActiveModelsRepository.get(AdblockModel::class, this)
         tabsModel = ActiveModelsRepository.get(TabsModel::class, this)
         autoUpdateModel = ActiveModelsRepository.get(AutoUpdateModel::class, this)
         uiHandler = Handler()
@@ -1171,7 +1168,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         }
 
         override fun isAd(url: Uri, acceptHeader: String?, baseUri: Uri): Boolean? {
-            return adblockModel.isAd(url, acceptHeader, baseUri)
+            return null
         }
 
         override fun isAdBlockingEnabled(): Boolean {

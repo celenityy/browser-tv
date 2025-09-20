@@ -29,15 +29,12 @@ class Config(val prefs: SharedPreferences) {
         const val HOME_PAGE_VERSION_EXTRACTED = "home_page_version_extracted"
         const val INITIAL_BOOKMARKS_SUGGESTIONS_LOADED = "initial_bookmarks_suggestions_loaded"
         const val ADBLOCK_ENABLED_PREF_KEY = "adblock_enabled"
-        const val ADBLOCK_LAST_UPDATE_LIST_KEY = "adblock_last_update"
-        const val ADBLOCK_LIST_URL_KEY = "adblock_list_url"
         const val APP_WEB_EXTENSION_VERSION_KEY = "app_web_extension_version"
         const val NOTIFICATION_ABOUT_ENGINE_CHANGE_SHOWN_KEY = "notification_about_engine_change_shown"
         const val APP_VERSION_CODE_MARK_KEY = "app_version_code_mark"
 
         const val ENGINE_GECKO_VIEW = "GeckoView"
 
-        const val DEFAULT_ADBLOCK_LIST_URL = "https://easylist.to/easylist/easylist.txt"
         val SearchEnginesTitles = arrayOf("DuckDuckGo", "DuckDuckGo (No AI)", "DuckDuckGo (HTML)", "DuckDuckGo (Lite)", "Mojeek", "Mullvad Leta (Brave)", "Mullvad Leta (Google)", "Startpage", "Startpage (EU)", "Wikipedia", "Custom")
         val SearchEnginesNames = arrayOf("ddg", "ddgnoai", "ddghtml", "ddglite", "mojeek", "leta-brave", "leta-google", "startpage", "startpage-eu", "wikipedia", "custom")
         val SearchEnginesURLs = listOf("https://duckduckgo.com/?q=[query]", "https://noai.duckduckgo.com/?q=[query]", "https://html.duckduckgo.com/html/?q=[query]", "https://lite.duckduckgo.com/lite/?q=[query]", "https://www.mojeek.com/search?q=[query]", "https://leta.mullvad.net/?q=[query]&engine=brave", "https://leta.mullvad.net/?q=[query]&engine=google", "https://www.startpage.com/sp/search?query=[query]", "https://eu.startpage.com/sp/search?query=[query]", "https://wikipedia.org/wiki/Special:Search?search=[query]", "")
@@ -159,14 +156,6 @@ class Config(val prefs: SharedPreferences) {
         set(value) {
             field = value
             prefs.edit().putBoolean(ADBLOCK_ENABLED_PREF_KEY, field).apply()
-        }
-
-    var adBlockListURL = ObservableStringPreference(DEFAULT_ADBLOCK_LIST_URL, ADBLOCK_LIST_URL_KEY)
-
-    var adBlockListLastUpdate: Long
-        get() = prefs.getLong(ADBLOCK_LAST_UPDATE_LIST_KEY, 0)
-        set(value) {
-            prefs.edit().putLong(ADBLOCK_LAST_UPDATE_LIST_KEY, value).apply()
         }
 
     var appWebExtensionVersion: Int

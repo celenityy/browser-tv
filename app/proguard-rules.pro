@@ -15,10 +15,6 @@
 -keepclassmembers class com.phlox.tvwebbrowser.model.** {
    public *;
 }
--keepclassmembers class com.brave.adblock.AdBlockClient {
-   public *;
-   private *;
-}
 
 #-keepclasseswithmembers class com.phlox.tvwebbrowser.model.** {
 #    <fields>;

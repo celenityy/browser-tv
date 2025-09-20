@@ -132,7 +132,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
             .usePrivateMode(TVBro.config.incognitoMode)
             .viewportMode(GeckoSessionSettings.VIEWPORT_MODE_MOBILE)
             .userAgentMode(GeckoSessionSettings.USER_AGENT_MODE_MOBILE)
-            .useTrackingProtection(tab.adblock ?: TVBro.config.adBlockEnabled)
+            .useTrackingProtection(true)
             .build()
         )
         session.navigationDelegate = navigationDelegate
@@ -186,7 +186,7 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                     port.setDelegate(it)
                 }
             }
-        }, "tvbro_bg")
+        }, "tvbro_bg")            
     }
 
     override fun saveState(): Any? {
@@ -307,10 +307,6 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
     }
 
     override fun reload() {
-        val adblockEnabled = tab.adblock ?: TVBro.config.adBlockEnabled
-        if (session.settings.useTrackingProtection != adblockEnabled) {
-            session.settings.useTrackingProtection = adblockEnabled
-        }
         session.reload()
     }
 
