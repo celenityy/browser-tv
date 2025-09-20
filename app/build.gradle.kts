@@ -24,6 +24,7 @@ android {
         targetSdk = 36
         versionCode = 61
         versionName = "2.0.1"
+        buildConfigField("Boolean", "BUILT_IN_AUTO_UPDATE", "true")
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -70,31 +71,12 @@ android {
         variant.outputs
             .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
-                val flavour = variant.flavorName
                 //val builtType = variant.buildType.name
                 val versionName = variant.versionName
                 val arch = output.filters.first().identifier
                 output.outputFileName =
-                    "tvbro-${flavour}-${versionName}(${arch}).apk"
+                    "tvbro-${versionName}(${arch}).apk"
             }
-    }
-
-    flavorDimensions += listOf("appstore")
-    productFlavors {
-        create("generic") {
-            dimension = "appstore"
-            buildConfigField("Boolean", "BUILT_IN_AUTO_UPDATE", "true")
-        }
-        create("google") {
-            dimension = "appstore"
-            //now auto-update violates Google Play policies
-            buildConfigField("Boolean", "BUILT_IN_AUTO_UPDATE", "false")
-        }
-        create("foss") {
-            dimension = "appstore"
-            applicationIdSuffix = ".foss"
-            buildConfigField("Boolean", "BUILT_IN_AUTO_UPDATE", "false")
-        }
     }
 
     buildFeatures {

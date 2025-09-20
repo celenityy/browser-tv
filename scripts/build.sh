@@ -127,7 +127,7 @@ popd
 # shellcheck disable=SC2154
 pushd "$browser"
 if [[ "$build_type" == "apk" ]]; then
-    gradle :app:assembleFoss
+    gradle :app:assembleRelease
 elif [[ "$build_type" == "bundle" ]]; then
     gradle :app:bundleRelease -Paab
 fi
