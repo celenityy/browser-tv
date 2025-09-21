@@ -3,14 +3,17 @@ package dev.celenity.browser.tv.activity.main.dialogs.favorites
 import android.app.Dialog
 import android.content.Context
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.ListView
+import android.widget.ProgressBar
+import android.widget.TextView
 import dev.celenity.browser.tv.R
 import dev.celenity.browser.tv.model.FavoriteItem
 import dev.celenity.browser.tv.singleton.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * Created by PDT on 09.09.2016.

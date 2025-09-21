@@ -6,7 +6,11 @@ import android.app.Service
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.os.*
+import android.os.Build
+import android.os.Environment
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
 import android.provider.Settings
 import android.text.format.Formatter
 import android.util.Log
@@ -21,7 +25,7 @@ import dev.celenity.browser.tv.model.Download
 import dev.celenity.browser.tv.singleton.AppDatabase
 import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
 import java.io.File
-import java.util.*
+import java.util.Date
 import java.util.concurrent.Executors
 
 /**

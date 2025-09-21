@@ -7,8 +7,16 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.celenity.browser.tv.BrowserTV
-import dev.celenity.browser.tv.model.*
-import dev.celenity.browser.tv.model.dao.*
+import dev.celenity.browser.tv.model.Download
+import dev.celenity.browser.tv.model.FavoriteItem
+import dev.celenity.browser.tv.model.HistoryItem
+import dev.celenity.browser.tv.model.HostConfig
+import dev.celenity.browser.tv.model.WebTabState
+import dev.celenity.browser.tv.model.dao.DownloadDao
+import dev.celenity.browser.tv.model.dao.FavoritesDao
+import dev.celenity.browser.tv.model.dao.HistoryDao
+import dev.celenity.browser.tv.model.dao.HostsDao
+import dev.celenity.browser.tv.model.dao.TabsDao
 import dev.celenity.browser.tv.model.util.Converters
 
 @Database(entities = [

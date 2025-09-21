@@ -2,7 +2,6 @@ package dev.celenity.browser.tv.utils.observable
 
 import android.os.Build.VERSION_CODES
 import androidx.annotation.RequiresApi
-import java.util.*
 import java.util.function.Predicate
 import java.util.function.UnaryOperator
 import kotlin.collections.ArrayList

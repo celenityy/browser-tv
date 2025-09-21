@@ -1,7 +1,6 @@
 package dev.celenity.browser.tv.model
 
 import org.json.JSONObject
-import java.util.*
 
 class HomePageLink(
     val title: String,

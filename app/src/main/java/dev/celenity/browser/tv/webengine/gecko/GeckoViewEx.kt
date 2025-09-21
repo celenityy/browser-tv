@@ -13,7 +13,6 @@ import org.mozilla.geckoview.GeckoView
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-
 open class GeckoViewEx @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     GeckoView(context, attrs) {
 

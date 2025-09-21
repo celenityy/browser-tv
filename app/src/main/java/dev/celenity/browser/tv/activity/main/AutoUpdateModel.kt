@@ -13,9 +13,9 @@ import dev.celenity.browser.tv.R
 import dev.celenity.browser.tv.utils.UpdateChecker
 import dev.celenity.browser.tv.utils.activemodel.ActiveModel
 import dev.celenity.browser.tv.utils.sameDay
+import java.util.Calendar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 class AutoUpdateModel: ActiveModel() {
     val config = BrowserTV.config

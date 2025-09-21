@@ -15,13 +15,19 @@ import dev.celenity.browser.tv.utils.activemodel.ActiveModel
 import dev.celenity.browser.tv.utils.deleteDirectory
 import dev.celenity.browser.tv.utils.observable.ObservableList
 import dev.celenity.browser.tv.webengine.gecko.HomePageHelper
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.net.URL
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class MainActivityViewModel: ActiveModel() {
     companion object {

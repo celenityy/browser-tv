@@ -7,7 +7,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ScrollView
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import dev.celenity.browser.tv.BrowserTV
@@ -20,7 +23,6 @@ import dev.celenity.browser.tv.utils.activemodel.ActiveModelsRepository
 import dev.celenity.browser.tv.utils.activity
 import dev.celenity.browser.tv.webengine.WebEngineFactory
 import kotlinx.coroutines.launch
-import java.util.*
 import kotlin.system.exitProcess
 
 class MainSettingsView @JvmOverloads constructor(

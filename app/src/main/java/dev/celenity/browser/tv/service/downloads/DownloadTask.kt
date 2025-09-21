@@ -13,7 +13,11 @@ import dev.celenity.browser.tv.BrowserTV
 import dev.celenity.browser.tv.model.Download
 import dev.celenity.browser.tv.singleton.AppDatabase
 import dev.celenity.browser.tv.utils.DownloadUtils
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 

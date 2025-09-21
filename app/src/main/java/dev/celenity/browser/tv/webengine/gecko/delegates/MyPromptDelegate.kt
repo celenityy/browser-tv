@@ -16,8 +16,19 @@ import android.view.InflateException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AbsListView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
+import android.widget.CheckedTextView
+import android.widget.DatePicker
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.ScrollView
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.TimePicker
 import dev.celenity.browser.tv.R
 import dev.celenity.browser.tv.webengine.gecko.GeckoWebEngine
 import kotlinx.coroutines.runBlocking
@@ -47,7 +58,9 @@ import org.mozilla.geckoview.GeckoSession.PromptDelegate.TextPrompt
 import org.mozilla.geckoview.SlowScriptResponse
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class MyPromptDelegate(private val webEngine: GeckoWebEngine): GeckoSession.PromptDelegate {
     private var filePrompt: FilePrompt? = null
