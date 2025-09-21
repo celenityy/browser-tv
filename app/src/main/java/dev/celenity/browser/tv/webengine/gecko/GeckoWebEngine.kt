@@ -290,10 +290,6 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
         session.loadUri("javascript:$script")
     }
 
-    override fun setNetworkAvailable(connected: Boolean) {
-        //nop
-    }
-
     override fun getView(): View? {
         return webView
     }

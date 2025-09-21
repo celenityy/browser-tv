@@ -23,7 +23,6 @@ interface WebEngine {
     fun zoomOut()
     fun zoomBy(zoomBy: Float)
     fun evaluateJavascript(script: String)
-    fun setNetworkAvailable(connected: Boolean)
     fun getView(): View?
     @Throws(Exception::class)
     fun getOrCreateView(activityContext: Context): View

@@ -131,6 +131,5 @@ class TabsModel : ActiveModel() {
         if (needReloadUrl) {
             newTab.webEngine.loadUrl(newTab.url)
         }
-        newTab.webEngine.setNetworkAvailable(Utils.isNetworkConnected(BrowserTV.instance))
     }
 }

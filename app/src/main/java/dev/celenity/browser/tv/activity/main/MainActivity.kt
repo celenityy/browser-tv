@@ -11,14 +11,12 @@ import android.content.ClipboardManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -275,16 +273,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
             }
         })
         vb.progressBar.startAnimation(anim)
-    }
-
-    private val mConnectivityChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val activeNetwork = cm.activeNetworkInfo
-            val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
-            val tab = tabsModel.currentTab.value ?: return
-            tab.webEngine.setNetworkAvailable(isConnected)
-        }
     }
 
     private val displayThumbnailRunnable = object : Runnable {
@@ -681,13 +669,10 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     override fun onResume() {
         running = true
         super.onResume()
-        val intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
-        registerReceiver(mConnectivityChangeReceiver, intentFilter)
         tabsModel.currentTab.value?.webEngine?.onResume()
     }
 
     override fun onPause() {
-        unregisterReceiver(mConnectivityChangeReceiver)
         tabsModel.currentTab.value?.apply {
             webEngine.onPause()
             onPause()

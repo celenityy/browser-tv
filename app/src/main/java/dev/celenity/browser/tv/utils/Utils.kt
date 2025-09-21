@@ -6,7 +6,6 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Point
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcel
 import android.view.WindowManager
@@ -98,12 +97,6 @@ object Utils {
         }
 
         return null
-    }
-
-    fun isNetworkConnected(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = cm.activeNetworkInfo
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
 
     fun isSameDate(date: Long, other: Long): Boolean {
