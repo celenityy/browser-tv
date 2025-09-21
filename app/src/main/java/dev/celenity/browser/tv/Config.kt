@@ -26,6 +26,19 @@ class Config(val prefs: SharedPreferences) {
         const val HOME_PAGE_SUGGESTIONS_MODE = "home_page_suggestions_mode"
         const val WEB_ENGINE = "web_engine"
         const val ALLOW_AUTOPLAY_MEDIA = "allow_autoplay_media"
+        const val DISABLE_PDFJS = "disable_pdfjs"
+        const val ENABLE_DISK_CACHE = "enable_disk_cache"
+        const val ENABLE_ACCESSIBILITY = "enable_accessibility"
+        const val ENABLE_HTTPS_ONLY = "enable_https_only"
+        const val ENABLE_IPV6 = "enable_ipv6"
+        const val ENABLE_JAVASCRIPT = "enable_javascript"
+        const val ENABLE_JIT = "enable_jit"
+        const val ENABLE_SAFE_BROWSING = "enable_safe_browsing"
+        const val ENABLE_SVG = "enable_svg"
+        const val ENABLE_WASM = "enable_wasm"
+        const val ENABLE_WEBGL = "enable_webgl"
+        const val ENABLE_WEBRTC = "enable_webrtc"
+        const val ENABLE_XPINSTALL = "enable_xpinstall"
         const val HOME_PAGE_VERSION_EXTRACTED = "home_page_version_extracted"
         const val INITIAL_BOOKMARKS_SUGGESTIONS_LOADED = "initial_bookmarks_suggestions_loaded"
         const val ADBLOCK_ENABLED_PREF_KEY = "adblock_enabled"
@@ -132,10 +145,88 @@ class Config(val prefs: SharedPreferences) {
             prefs.edit().putString(WEB_ENGINE, value).apply()
         }
 
+    var accessibilityEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_ACCESSIBILITY, false)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_ACCESSIBILITY, value).apply()
+        }
+
     var allowAutoplayMedia: Boolean
         get() = prefs.getBoolean(ALLOW_AUTOPLAY_MEDIA, false)
         set(value) {
             prefs.edit().putBoolean(ALLOW_AUTOPLAY_MEDIA, value).apply()
+        }
+
+    var cacheEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_DISK_CACHE, false)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_DISK_CACHE, value).apply()
+        }
+
+    var ipv6Enabled: Boolean
+        get() = prefs.getBoolean(ENABLE_IPV6, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_IPV6, value).apply()
+        }
+
+    var javaScriptEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_JAVASCRIPT, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_JAVASCRIPT, value).apply()
+        }
+
+    var javascriptJitEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_JIT, false)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_JIT, value).apply()
+        }
+
+    var pdfjsDisabled: Boolean
+        get() = prefs.getBoolean(DISABLE_PDFJS, false)
+        set(value) {
+            prefs.edit().putBoolean(DISABLE_PDFJS, value).apply()
+        }
+
+    var safeBrowsingEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_SAFE_BROWSING, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_SAFE_BROWSING, value).apply()
+        }
+
+    var shouldUseHttpsOnly: Boolean
+        get() = prefs.getBoolean(ENABLE_HTTPS_ONLY, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_HTTPS_ONLY, value).apply()
+        }
+
+    var svgEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_SVG, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_SVG, value).apply()
+        }
+
+    var wasmEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_WASM, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_WASM, value).apply()
+        }
+
+    var webglEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_WEBGL, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_WEBGL, value).apply()
+        }
+
+    var webrtcEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_WEBRTC, true)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_WEBRTC, value).apply()
+        }
+
+    var xpinstallEnabled: Boolean
+        get() = prefs.getBoolean(ENABLE_XPINSTALL, false)
+        set(value) {
+            prefs.edit().putBoolean(ENABLE_XPINSTALL, value).apply()
         }
 
     var homePageVersionExtracted: Int
