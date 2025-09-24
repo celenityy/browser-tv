@@ -77,13 +77,6 @@ patches:
     effect: "Reduces build-time, and reduces the complexity of the overall build process."
     category: "Build System"
 
-  - file: "gecko-remove-unwanted-gradle-plugins.patch"
-    name: "Remove Unwanted Gradle Plug-ins"
-    description: "Prevents building and configuring unnecessary/unwanted Gradle plug-ins."
-    reason: "Allows for faster builds, with less overhead."
-    effect: "Reduces build-time, and reduces the complexity of the overall build process."
-    category: "Build System"
-
   - file: "geckoview-unbreak-fido.patch"
     name: "Fix FIDO-related Compile Error"
     description: "Fixes a compilation issue introduced in Firefox v143, related to FIDO."
@@ -155,6 +148,13 @@ patches:
     description: "Prevents Firefox from generating an internal network ID that could potentially be used to track users (https://gitlab.torproject.org/tpo/applications/tor-browser/-/commit/4c548fa04b668a310c90c0e783ec404420f06257)."
     reason: "To prevent the browser from generating an ID that could be used for tracking/fingerprinting."
     effect: "Protects users against tracking/fingerprinting."
+    category: "Privacy"
+
+  - file: "geckoview-disable-speculative-connections.patch"
+    name: "Disable Speculative Connections"
+    description: "Prevents GeckoView from generating speculative/predictive connections."
+    reason: "To prevent unwanted/unsolicited network traffic (In Fenix, this is currently used for certain URL bar suggestions)."
+    effect: "Prevents the browser from connecting to third parties without explicit user consent, and provides users with more control over their network activity."
     category: "Privacy"
 
   - file: "gecko-stub-beacon.patch"

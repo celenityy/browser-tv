@@ -222,6 +222,9 @@ $SED -i \
     -e 's/max_wait_seconds=600/max_wait_seconds=1800/' \
     mobile/android/gradle.py
 
+# Ensure we're using our mozconfig
+echo "mozilla-central.mozconfig=$mozilla_release/mozconfig" >>local.properties
+
 # Break the dependency on older Rust
 $SED -i -e "s|rust-version = .*|rust-version = \""${RUST_VERSION}\""|g" Cargo.toml
 $SED -i -e "s|rust-version = .*|rust-version = \""${RUST_MAJOR_VERSION}\""|g" intl/icu_capi/Cargo.toml
@@ -288,6 +291,9 @@ $SED -i -e 's/REMOTE_SETTINGS_CRASH_COLLECTION = ".*"/REMOTE_SETTINGS_CRASH_COLL
 $SED -i -e 's/REMOTE_SETTINGS_COLLECTION = ".*"/REMOTE_SETTINGS_COLLECTION = ""/' toolkit/components/normandy/lib/RecipeRunner.sys.mjs
 $SED -i 's|normandy-recipes-capabilities||g' toolkit/components/normandy/lib/RecipeRunner.sys.mjs
 
+# No-op Nimbus (Experimentation)
+$SED -i 's|classpath "${ApplicationServicesConfig.groupId}:tooling-nimbus-gradle|// "${ApplicationServicesConfig.groupId}:tooling-nimbus-gradle|g' build.gradle
+
 # No-op telemetry (Gecko)
 $SED -i -e '/enable_internal_pings:/s/true/false/' toolkit/components/glean/src/init/mod.rs
 $SED -i -e '/upload_enabled =/s/true/false/' toolkit/components/glean/src/init/mod.rs
@@ -297,6 +303,7 @@ $SED -i 's|localhost||g' toolkit/components/telemetry/pingsender/pingsender.cpp
 $SED -i -e 's/usageDeletionRequest.setEnabled(.*)/usageDeletionRequest.setEnabled(false)/' toolkit/components/telemetry/app/UsageReporting.sys.mjs
 $SED -i -e 's|useTelemetry = .*|useTelemetry = false;|g' toolkit/components/telemetry/core/Telemetry.cpp
 $SED -i '/# This must remain last./i gkrust_features += ["glean_disable_upload"]\n' toolkit/library/rust/gkrust-features.mozbuild
+$SED -i 's|classpath libs.glean.gradle.plugin|// classpath libs.glean.gradle.plugin|g' build.gradle
 
 $SED -i -e 's|include_client_id: .*|include_client_id: false|g' toolkit/components/glean/pings.yaml
 $SED -i -e 's|send_if_empty: .*|send_if_empty: false|g' toolkit/components/glean/pings.yaml

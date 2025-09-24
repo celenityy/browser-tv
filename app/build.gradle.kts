@@ -118,7 +118,7 @@ dependencies {
     implementation("de.halfbit:pinned-section-listview:1.0.0")
 
     // https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/
-    val geckoviewVersion = "143.0.20250920172911"
+    val geckoviewVersion = "143.0.20250923200700"
     implementation("org.mozilla.geckoview:geckoview-arm64-v8a:$geckoviewVersion")
 
     testImplementation("junit:junit:4.13.2")
