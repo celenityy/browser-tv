@@ -22,6 +22,7 @@ import dev.celenity.browser.tv.webengine.WebEngine
 import dev.celenity.browser.tv.webengine.WebEngineWindowProviderCallback
 import dev.celenity.browser.tv.webengine.gecko.delegates.AppWebExtensionBackgroundPortDelegate
 import dev.celenity.browser.tv.webengine.gecko.delegates.AppWebExtensionPortDelegate
+import dev.celenity.browser.tv.webengine.gecko.delegates.ExtensionInstallDelegate
 import dev.celenity.browser.tv.webengine.gecko.delegates.MyContentBlockingDelegate
 import dev.celenity.browser.tv.webengine.gecko.delegates.MyContentDelegate
 import dev.celenity.browser.tv.webengine.gecko.delegates.MyHistoryDelegate
@@ -60,9 +61,9 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
             if (!this::runtime.isInitialized) {
                 val builder = GeckoRuntimeSettings.Builder()
                 builder.aboutConfigEnabled(true)
-                    .accessibilityEnabled(BrowserTV.config.accessibilityEnabled)
-                    .allowInsecureConnections(if (BrowserTV.config.shouldUseHttpsOnly) GeckoRuntimeSettings.HTTPS_ONLY else GeckoRuntimeSettings.ALLOW_ALL)
-                    .cacheEnabled(BrowserTV.config.cacheEnabled)
+                    .accessibilityEnabled(false)
+                    .allowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY)
+                    .cacheEnabled(false)
                     .configFilePath("")
                     .crashPullNeverShowAgain(true)
                     .disableShip(false)
@@ -72,39 +73,40 @@ class GeckoWebEngine(val tab: WebTabState): WebEngine {
                     .fissionEnabled(true)
                     .forceUserScalableEnabled(true)
                     .globalPrivacyControlEnabled(true)
-                    .ipv6Enabled(BrowserTV.config.ipv6Enabled)
-                    .javaScriptEnabled(BrowserTV.config.javaScriptEnabled)
-                    .javaScriptJitBaselineEnabled(BrowserTV.config.javascriptJitEnabled)
-                    .javaScriptJitHintsEnabled(BrowserTV.config.javascriptJitEnabled)
-                    .javaScriptJitIonEnabled(BrowserTV.config.javascriptJitEnabled)
-                    .javaScriptJitIonWasmEnabled(BrowserTV.config.javascriptJitEnabled)
-                    .javaScriptJitMainProcessEnabled(BrowserTV.config.javascriptJitEnabled)
-                    .javaScriptJitNativeRegexpEnabled(BrowserTV.config.javascriptJitEnabled)
-                    .javaScriptJitTrustedPrincipalsEnabled(BrowserTV.config.javascriptJitEnabled)
+                    .ipv6Enabled(true)
+                    .javaScriptEnabled(true)
+                    .javaScriptJitBaselineEnabled(false)
+                    .javaScriptJitHintsEnabled(false)
+                    .javaScriptJitIonEnabled(false)
+                    .javaScriptJitIonWasmEnabled(false)
+                    .javaScriptJitMainProcessEnabled(false)
+                    .javaScriptJitNativeRegexpEnabled(false)
+                    .javaScriptJitTrustedPrincipalsEnabled(false)
                     .loginAutofillEnabled(false)
-                    .pdfjsDisabled(BrowserTV.config.pdfjsDisabled)
+                    .pdfjsDisabled(false)
                     .preferredColorScheme(BrowserTV.config.theme.value.toGeckoPreferredColorScheme())
                     .printEnabled(false)
                     .remoteDebuggingEnabled(if (BuildConfig.DEBUG) true else false)
                     .setLnaBlockingEnabled(true)
-                    .svgEnabled(BrowserTV.config.svgEnabled)
+                    .svgEnabled(true)
                     .translationsOfferPopup(true)
-                    .wasmEnabled(BrowserTV.config.wasmEnabled)
-                    .webglEnabled(BrowserTV.config.webglEnabled)
-                    .webrtcEnabled(BrowserTV.config.webrtcEnabled)
+                    .wasmEnabled(false)
+                    .webglEnabled(false)
+                    .webrtcEnabled(false)
                     .webFontsEnabled(true)
                     .webManifest(false)
-                    .xpinstallEnabled(BrowserTV.config.xpinstallEnabled)
+                    .xpinstallEnabled(true)
                 builder.contentBlocking(
                         ContentBlocking.Settings.Builder()
                             .antiTracking(
                                 ContentBlocking.AntiTracking.STRICT or ContentBlocking.AntiTracking.STP)
-                    .safeBrowsing(if (BrowserTV.config.safeBrowsingEnabled) ContentBlocking.SafeBrowsing.DEFAULT else ContentBlocking.SafeBrowsing.NONE)
+                    .safeBrowsing(ContentBlocking.SafeBrowsing.DEFAULT)
                     .cookieBehavior(ContentBlocking.CookieBehavior.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS)
                     .cookieBehaviorPrivateMode(ContentBlocking.CookieBehavior.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS)
                     .enhancedTrackingProtectionLevel(ContentBlocking.EtpLevel.STRICT)
                     .build())
                 runtime = GeckoRuntime.create(context, builder.build())
+                runtime.webExtensionController.setPromptDelegate(ExtensionInstallDelegate())
 
                 val webExtInstallResult = if (APP_WEB_EXTENSION_VERSION == BrowserTV.config.appWebExtensionVersion) {
                     Log.d(TAG, "appWebExtension already installed")
