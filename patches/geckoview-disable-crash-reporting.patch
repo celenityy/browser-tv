@@ -1,8 +1,8 @@
 diff --git a/mobile/android/geckoview/src/main/AndroidManifest.xml b/mobile/android/geckoview/src/main/AndroidManifest.xml
-index d0c8bde278..ed0cc42222 100644
+index f3ac290795d1a..5ee63c28fd72d 100644
 --- a/mobile/android/geckoview/src/main/AndroidManifest.xml
 +++ b/mobile/android/geckoview/src/main/AndroidManifest.xml
-@@ -94,14 +94,14 @@
+@@ -103,14 +103,14 @@
                  android:isolatedProcess="false"
                  android:process=":ipdlunittest">
          </service>
@@ -20,10 +20,10 @@ index d0c8bde278..ed0cc42222 100644
  
  </manifest>
 diff --git a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
-index 3eaf228e93..7cb6a695b2 100644
+index 20e44673a3348..14f9b805ad845 100644
 --- a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
 +++ b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
-@@ -52,7 +52,7 @@ import org.mozilla.gecko.GeckoScreenOrientation.ScreenOrientation;
+@@ -51,7 +51,7 @@ import org.mozilla.gecko.GeckoScreenOrientation.ScreenOrientation;
  import org.mozilla.gecko.GeckoSystemStateListener;
  import org.mozilla.gecko.GeckoThread;
  import org.mozilla.gecko.annotation.WrapForJNI;
@@ -32,7 +32,7 @@ index 3eaf228e93..7cb6a695b2 100644
  import org.mozilla.gecko.process.MemoryController;
  import org.mozilla.gecko.util.BundleEventListener;
  import org.mozilla.gecko.util.DebugConfig;
-@@ -423,7 +423,7 @@ public final class GeckoRuntime implements Parcelable {
+@@ -415,7 +415,7 @@ public final class GeckoRuntime implements Parcelable {
    }
  
    private int[] startCrashHelper() {
@@ -41,12 +41,12 @@ index 3eaf228e93..7cb6a695b2 100644
      final CrashHelper.Pipes pipes = CrashHelper.createCrashHelperPipes(context);
  
      if (pipes == null) {
-@@ -444,9 +444,9 @@ public final class GeckoRuntime implements Parcelable {
+@@ -435,9 +435,9 @@ public final class GeckoRuntime implements Parcelable {
            Context.BIND_AUTO_CREATE);
      } catch (final ClassNotFoundException e) {
        Log.w(LOGTAG, "Couldn't find the crash helper class");
 -    }
-+    }*/
++    } */
  
 -    return new int[] {pipes.mBreakpadClient.detachFd(), pipes.mClient.detachFd()};
 +    return new int[] {-1, -1};

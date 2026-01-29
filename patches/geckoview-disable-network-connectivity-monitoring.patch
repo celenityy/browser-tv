@@ -1,8 +1,21 @@
+diff --git a/mobile/android/geckoview/src/main/AndroidManifest.xml b/mobile/android/geckoview/src/main/AndroidManifest.xml
+index f3ac290795d1a..358b29dfe8160 100644
+--- a/mobile/android/geckoview/src/main/AndroidManifest.xml
++++ b/mobile/android/geckoview/src/main/AndroidManifest.xml
+@@ -6,7 +6,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools">
+ 
+-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
++    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> -->
+     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"
+             tools:ignore="HighSamplingRate" />
+     <uses-permission android:name="android.permission.INTERNET"/>
 diff --git a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
-index 3eaf228e93..579506c0db 100644
+index 20e44673a3348..d5c68c139a707 100644
 --- a/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
 +++ b/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntime.java
-@@ -45,7 +45,7 @@ import java.util.Map;
+@@ -44,7 +44,7 @@ import java.util.Map;
  import org.mozilla.gecko.Clipboard;
  import org.mozilla.gecko.EventDispatcher;
  import org.mozilla.gecko.GeckoAppShell;
@@ -11,21 +24,21 @@ index 3eaf228e93..579506c0db 100644
  import org.mozilla.gecko.GeckoScreenChangeListener;
  import org.mozilla.gecko.GeckoScreenOrientation;
  import org.mozilla.gecko.GeckoScreenOrientation.ScreenOrientation;
-@@ -190,7 +190,7 @@ public final class GeckoRuntime implements Parcelable {
+@@ -191,7 +191,7 @@ public final class GeckoRuntime implements Parcelable {
        GeckoAppShell.resumeLocation();
        // Monitor network status and send change notifications to Gecko
        // while active.
 -      GeckoNetworkManager.getInstance().start(GeckoAppShell.getApplicationContext());
-+      // GeckoNetworkManager.getInstance().start(GeckoAppShell.getApplicationContext());
++//      GeckoNetworkManager.getInstance().start(GeckoAppShell.getApplicationContext());
  
        // Set settings that may have changed between last app opening
        GeckoAppShell.setIs24HourFormat(
-@@ -212,7 +212,7 @@ public final class GeckoRuntime implements Parcelable {
+@@ -215,7 +215,7 @@ public final class GeckoRuntime implements Parcelable {
        // Pause listening for locations when in background
        GeckoAppShell.pauseLocation();
        // Stop monitoring network status while inactive.
 -      GeckoNetworkManager.getInstance().stop();
-+      // GeckoNetworkManager.getInstance().stop();
++//      GeckoNetworkManager.getInstance().stop();
        GeckoThread.onPause();
-       Clipboard.onPause();
      }
+   }

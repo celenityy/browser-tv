@@ -1,0 +1,10 @@
+
+. "$topsrcdir/browser-tv/mozconfigs/branding/common.mozconfig"
+
+ac_add_options --enable-browser-tv-release
+ac_add_options --with-app-basename='Browser TV'
+ac_add_options --with-app-name='browser-tv'
+ac_add_options --with-branding='browser-tv/branding/browser-tv'
+export MOZ_APP_BASENAME='Browser TV'
+export MOZ_APP_NAME='browser-tv'
+export MOZ_APP_REMOTINGNAME='browser-tv'

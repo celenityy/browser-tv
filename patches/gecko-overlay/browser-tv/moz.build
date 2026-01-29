@@ -1,0 +1,8 @@
+
+DIRS += [
+    "about",
+    "dumps",
+    "enterprisepolicies",
+    "locales",
+    "prefs",
+]

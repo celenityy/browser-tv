@@ -1,0 +1,12 @@
+
+DIRS += [
+    "browser",
+]
+
+EXTRA_JS_MODULES += [
+    "BrowserTVAboutPages.sys.mjs",
+]
+
+XPCOM_MANIFESTS += [
+    "components.conf",
+]

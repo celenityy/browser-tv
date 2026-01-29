@@ -1,0 +1,3 @@
+
+MOZ_APP_DISPLAYNAME='Browser TV'
+MOZ_APP_REMOTINGNAME='browser-tv'

@@ -1,122 +1,134 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -euo pipefail
 
-source "$(dirname $0)/versions.sh"
+# Set-up our environment
+bash -x $(dirname $0)/env.sh
+source $(dirname $0)/env.sh
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    PLATFORM=macos
+# Include version info
+source "${BROWSER_TV_VERSIONS}"
+
+if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
+    ANDROID_SDK_PLATFORM='mac'
+    PLATFORM='macos'
+    PREBUILT_PLATFORM='osx'
 else
-    PLATFORM=linux
+    ANDROID_SDK_PLATFORM='linux'
+    PLATFORM='linux'
+    PREBUILT_PLATFORM='linux'
 fi
 
 clone_repo() {
     url="$1"
     path="$2"
-    tag="$3"
+    revision="$3"
 
-    if [[ "$url" == "" ]]; then
+    if [[ "${url}" == "" ]]; then
         echo "URL missing for clone"
         exit 1
     fi
 
-    if [[ "$path" == "" ]]; then
-        echo "Path is required for cloning '$url'"
+    if [[ "${path}" == "" ]]; then
+        echo "Path is required for cloning '${url}'"
         exit 1
     fi
 
-    if [[ "$tag" == "" ]]; then
-        echo "Tag name is required for cloning '$url'"
+    if [[ "${revision}" == "" ]]; then
+        echo "Revision is required for cloning '${url}'"
         exit 1
     fi
 
-    if [[ -f "$path" ]]; then
-        echo "'$path' exists and is not a directory"
+    if [[ -f "${path}" ]]; then
+        echo "'${path}' exists and is not a directory"
         exit 1
     fi
 
-    if [[ -d "$path" ]]; then
-        echo "'$path' already exists"
+    if [[ -d "${path}" ]]; then
+        echo "'${path}' already exists"
         read -p "Do you want to re-clone this repository? [y/N] " -n 1 -r
         echo
-        if [[ $REPLY =~ ^[Nn]$ ]]; then
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            echo "Removing ${path}..."
+            rm -rf "${path}"
+        else
             return 0
         fi
     fi
 
-    echo "Cloning $url::$tag"
-    git clone --branch "$tag" --depth=1 "$url" "$path"
+    echo "Cloning ${url}::${revision}"
+    git clone --revision="${revision}" --depth=1 "${url}" "${path}"
 }
 
 download() {
     local url="$1"
     local filepath="$2"
 
-    if [[ "$url" == "" ]]; then
-        echo "URL is required (file: '$filepath')"
+    if [[ "${url}" == "" ]]; then
+        echo "URL is required (file: '${filepath}')"
         exit 1
     fi
 
-    if [ -f "$filepath" ]; then
-        echo "$filepath already exists."
+    if [ -f "${filepath}" ]; then
+        echo "${filepath} already exists."
         read -p "Do you want to re-download? [y/N] " -n 1 -r
         echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            echo "Removing $filepath..."
-            rm -f "$filepath"
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            echo "Removing ${filepath}..."
+            rm -f "${filepath}"
         else
             return 0
         fi
     fi
 
-    mkdir -vp "$(dirname "$filepath")"
+    mkdir -vp "$(dirname "${filepath}")"
 
-    echo "Downloading $url"
-    wget --https-only --no-cache --secure-protocol=TLSv1_3 --show-progress --verbose "$url" -O "$filepath"
+    echo "Downloading ${url}"
+    curl ${BROWSER_TV_CURL_FLAGS} -sSL "${url}" -o "${filepath}"
 }
 
 # Extract zip removing top level directory
 extract_rmtoplevel() {
     local archive_path="$1"
     local to_name="$2"
-    local extract_to="${ROOTDIR}/$to_name"
+    local extract_to="${BROWSER_TV_EXTERNAL}/${to_name}"
 
-    if ! [[ -f "$archive_path" ]]; then
-        echo "Archive '$archive_path' does not exist!"
+    if ! [[ -f "${archive_path}" ]]; then
+        echo "Archive '${archive_path}' does not exist!"
     fi
 
     # Create temporary directory for extraction
     local temp_dir=$(mktemp -d)
 
     # Extract based on file extension
-    case "$archive_path" in
+    case "${archive_path}" in
         *.zip)
-            unzip -q "$archive_path" -d "$temp_dir"
+            unzip -q "${archive_path}" -d "${temp_dir}"
             ;;
         *.tar.gz)
-            tar xzf "$archive_path" -C "$temp_dir"
+            "${IRONFOX_TAR}" xzf "${archive_path}" -C "${temp_dir}"
             ;;
         *.tar.xz)
-            tar xJf "$archive_path" -C "$temp_dir"
+            "${IRONFOX_TAR}" xJf "${archive_path}" -C "${temp_dir}"
             ;;
         *.tar.zst)
-            tar --zstd -xvf "$archive_path" -C "$temp_dir"
+            "${IRONFOX_TAR}" --zstd -xvf "${archive_path}" -C "${temp_dir}"
             ;;
         *)
-            echo "Unsupported archive format: $archive_path"
-            rm -rf "$temp_dir"
+            echo "Unsupported archive format: ${archive_path}"
+            rm -rf "${temp_dir}"
             exit 1
             ;;
     esac
 
-    local top_dir=$(ls "$temp_dir")
-    local to_parent=$(dirname "$extract_to")
+    local top_dir=$(ls "${temp_dir}")
+    local to_parent=$(dirname "${extract_to}")
 
-    rm -rf "$extract_to"
-    mkdir -vp "$to_parent"
-    mv "$temp_dir/$top_dir" "$to_parent/$to_name"
+    rm -rf "${extract_to}"
+    mkdir -vp "${to_parent}"
+    mv "${temp_dir}/${top_dir}" "${to_parent}/${to_name}"
 
-    rm -rf "$temp_dir"
+    rm -rf "${temp_dir}"
 }
 
 download_and_extract() {
@@ -124,87 +136,104 @@ download_and_extract() {
     local url="$2"
 
     local extension
-    if [[ "$url" =~ \.tar\.xz$ ]]; then
+    if [[ "${url}" =~ \.tar\.xz$ ]]; then
         extension=".tar.xz"
-    elif [[ "$url" =~ \.tar\.gz$ ]]; then
+    elif [[ "${url}" =~ \.tar\.gz$ ]]; then
         extension=".tar.gz"
-    elif [[ "$url" =~ \.tar\.zst$ ]]; then
+    elif [[ "${url}" =~ \.tar\.zst$ ]]; then
         extension=".tar.zst"
     else
         extension=".zip"
     fi
 
-    local repo_archive="${BUILDDIR}/${repo_name}${extension}"
+    local repo_archive="${BROWSER_TV_DOWNLOADS}/${repo_name}${extension}"
 
-    download "$url" "$repo_archive"
+    download "${url}" "${repo_archive}"
 
-    if [ ! -f "$repo_archive" ]; then
-        echo "Source archive for $repo_name does not exist."
+    if [ ! -f "${repo_archive}" ]; then
+        echo "Source archive for ${repo_name} does not exist."
         exit 1
     fi
 
-    echo "Extracting $repo_archive"
-    extract_rmtoplevel "$repo_archive" "$repo_name"
+    echo "Extracting ${repo_archive}"
+    extract_rmtoplevel "${repo_archive}" "${repo_name}"
     echo
 }
 
-mkdir -vp "$BUILDDIR"
+echo "Downloading the Android SDK..."
+download_and_extract "android-cmdline-tools" "https://dl.google.com/android/repository/commandlinetools-${ANDROID_SDK_PLATFORM}-${ANDROID_SDK_REVISION}_latest.zip"
+mkdir -vp "${BROWSER_TV_ANDROID_SDK}/cmdline-tools"
+mv -v "${BROWSER_TV_EXTERNAL}/android-cmdline-tools" "${BROWSER_TV_ANDROID_SDK}/cmdline-tools/latest"
 
-if ! [[ -f "$BUILDDIR/bundletool.jar" ]]; then
-    echo "Downloading bundletool..."
-    download "https://github.com/google/bundletool/releases/download/${BUNDLETOOL_TAG}/bundletool-all-${BUNDLETOOL_TAG}.jar" "$BUILDDIR/bundletool.jar"
-fi
+# Accept Android SDK licenses
+{ yes || true; } | ${BROWSER_TV_ANDROID_SDKMANAGER} --sdk_root="${BROWSER_TV_ANDROID_SDK}" --licenses
 
-if ! [[ -f "$BUILDDIR/bundletool" ]]; then
+${BROWSER_TV_ANDROID_SDKMANAGER} "build-tools;${ANDROID_BUILDTOOLS_VERSION}"
+${BROWSER_TV_ANDROID_SDKMANAGER} "ndk;${ANDROID_NDK_REVISION}"
+${BROWSER_TV_ANDROID_SDKMANAGER} "platforms;android-${ANDROID_PLATFORM_VERSION}"
+
+echo "Downloading Bundletool..."
+download "https://github.com/google/bundletool/releases/download/${BUNDLETOOL_VERSION}/bundletool-all-${BUNDLETOOL_VERSION}.jar" "${BROWSER_TV_BUNDLETOOL_JAR}"
+
+if ! [[ -f "${BROWSER_TV_BUNDLETOOL}" ]]; then
     echo "Creating bundletool script..."
     {
         echo '#!/bin/bash'
-        echo "exec java -jar ${BUILDDIR}/bundletool.jar \"\$@\""
-    } > "$BUILDDIR/bundletool"
-    chmod +x "$BUILDDIR/bundletool"
+        echo "exec java -jar ${BROWSER_TV_BUNDLETOOL_JAR} \"\$@\""
+    } > "${BROWSER_TV_BUNDLETOOL}"
+    chmod +x "${BROWSER_TV_BUNDLETOOL}"
 fi
 
-echo "'bundletool' is set up at $BUILDDIR/bundletool"
+echo "Bundletool is set-up at ${BROWSER_TV_BUNDLETOOL}"
 
-# Clone MicroG
+echo "Downloading F-Droid's Gradle script..."
+download "https://gitlab.com/fdroid/gradlew-fdroid/-/raw/${GRADLE_COMMIT}/gradlew.py" "${BROWSER_TV_GRADLE_DIR}/gradlew.py"
+
+if ! [[ -f "${BROWSER_TV_GRADLE}" ]]; then
+    echo "Creating Gradle script..."
+    {
+        echo '#!/bin/bash'
+        echo "exec python3 ${BROWSER_TV_GRADLE_DIR}/gradlew.py \"\$@\""
+    } > "${BROWSER_TV_GRADLE}"
+    chmod +x "${BROWSER_TV_GRADLE}"
+fi
+
+echo "Gradle is set-up at ${BROWSER_TV_GRADLE}"
+
+# Clone microG
 echo "Cloning microG..."
-clone_repo "https://github.com/microg/GmsCore" "$GMSCOREDIR" "$GMSCORE_TAG"
+clone_repo "https://github.com/microg/GmsCore.git" "${BROWSER_TV_GMSCORE}" "${GMSCORE_COMMIT}"
 
 # Download Phoenix
 echo "Downloading Phoenix..."
-download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/android/phoenix.js" "$PATCHDIR/preferences/phoenix.js"
-download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/android/phoenix-extended.js" "$PATCHDIR/preferences/phoenix-extended.js"
+download "https://gitlab.com/celenityy/Phoenix/-/raw/${PHOENIX_COMMIT}/android/phoenix.js" "${BROWSER_TV_GECKO_OVERLAY}/ironfox/prefs/000-phoenix.js"
+download "https://gitlab.com/celenityy/Phoenix/-/raw/${PHOENIX_COMMIT}/android/phoenix-extended.js" "${BROWSER_TV_GECKO_OVERLAY}/ironfox/prefs/001-phoenix-extended.js"
 
-# Get WebAssembly SDK
-if [[ -n ${FDROID_BUILD+x} ]]; then
-    echo "Cloning wasi-sdk..."
-    clone_repo "https://github.com/WebAssembly/wasi-sdk" "$WASISDKDIR" "$WASI_TAG"
-    (cd "$WASISDKDIR" && git submodule update --init --depth=64)
-elif [[ "$PLATFORM" == "macos" ]]; then
-    echo "Downloading prebuilt wasi-sdk..."
-    download "https://github.com/celenityy/wasi-sdk/releases/download/$WASI_TAG/$WASI_TAG-firefox-osx.tar.xz" "$BUILDDIR/wasi-sdk.tar.xz"
-    mkdir -vp "$WASISDKDIR"
-    tar xJf "$BUILDDIR/wasi-sdk.tar.xz" -C "$WASISDKDIR"
-else
-    echo "Downloading prebuilt wasi-sdk..."
-    download_and_extract "wasi-sdk" "https://github.com/itsaky/ironfox/releases/download/$WASI_TAG/$WASI_TAG-firefox.tar.xz"
-fi
+# Clone firefox-l10n
+echo "Cloning firefox-l10n..."
+clone_repo "https://github.com/mozilla-l10n/firefox-l10n.git" "${BROWSER_TV_L10N_CENTRAL}" "${L10N_COMMIT}"
 
 # Clone Firefox
 echo "Cloning Firefox..."
-clone_repo "https://github.com/mozilla-firefox/firefox" "$GECKODIR" "${FIREFOX_RELEASE_TAG}"
+clone_repo "https://github.com/mozilla-firefox/firefox.git" "${BROWSER_TV_GECKO}" "${FIREFOX_COMMIT}"
 
-# Write env_local.sh
-echo "Writing ${ENV_SH}..."
-cat > "$ENV_SH" << EOF
-export patches=${PATCHDIR}
-export rootdir=${ROOTDIR}
-export builddir="${BUILDDIR}"
-export bundletool=${BUNDLETOOLDIR}
-export browser=${BROWSER}
-export mozilla_release=${GECKODIR}
-export gmscore=${GMSCOREDIR}
-export wasi=${WASISDKDIR}
+# Prebuilds
+if [[ "${BROWSER_TV_NO_PREBUILDS}" == "1" ]]; then
+    echo "Cloning the prebuilds build repository..."
+    clone_repo "https://gitlab.com/ironfox-oss/prebuilds.git" "${BROWSER_TV_IRONFOX_PREBUILDS}" "${IRONFOX_PREBUILDS_COMMIT}"
 
-source "\$rootdir/scripts/env_common.sh"
-EOF
+    pushd "${BROWSER_TV_IRONFOX_PREBUILDS}"
+    echo "Downloading prebuild sources..."
+    bash "${BROWSER_TV_IRONFOX_PREBUILDS}/scripts/get_sources.sh"
+    popd
+
+    WASISDKDIR="${BROWSER_TV_IRONFOX_PREBUILDS}/build/outputs/wasi-sdk/wasi"
+else
+    # Get WebAssembly SDK
+    echo "Downloading prebuilt wasi-sdk..."
+    if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
+        download_and_extract "wasi-sdk" "https://gitlab.com/ironfox-oss/prebuilds/-/raw/${WASI_OSX_IRONFOX_COMMIT}/wasi-sdk/${WASI_VERSION}/${PREBUILT_PLATFORM}/wasi-sdk-${WASI_VERSION}-${WASI_OSX_IRONFOX_REVISION}-${PREBUILT_PLATFORM}.tar.xz"
+    else
+        download_and_extract "wasi-sdk" "https://gitlab.com/ironfox-oss/prebuilds/-/raw/${WASI_LINUX_IRONFOX_COMMIT}/wasi-sdk/${WASI_VERSION}/${PREBUILT_PLATFORM}/wasi-sdk-${WASI_VERSION}-${WASI_LINUX_IRONFOX_REVISION}-${PREBUILT_PLATFORM}.tar.xz"
+    fi
+fi

@@ -1,0 +1,9 @@
+
+. "$topsrcdir/browser-tv/mozconfigs/core.mozconfig"
+. "$topsrcdir/browser-tv/mozconfigs/branding/browser-tv-nightly.mozconfig"
+. "$topsrcdir/browser-tv/mozconfigs/targets/arm.mozconfig"
+
+## Set the destination object (output) directory
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj/browser-tv-nightly-arm
+mk_add_options OBJDIR=@TOPSRCDIR@/obj/browser-tv-nightly-arm
+export MOZ_OBJDIR="$topsrcdir/obj/browser-tv-nightly-arm"

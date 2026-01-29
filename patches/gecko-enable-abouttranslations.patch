@@ -1,0 +1,26 @@
+diff --git a/docshell/build/components.conf b/docshell/build/components.conf
+index 5c1543ab806f..29eb4a27cf2f 100644
+--- a/docshell/build/components.conf
++++ b/docshell/build/components.conf
+@@ -41,7 +41,7 @@ if defined('MOZ_CRASHREPORTER'):
+     about_pages.append('crashes')
+ if buildconfig.substs['MOZ_WIDGET_TOOLKIT'] != 'android':
+     about_pages.append('profiles')
+-if buildconfig.substs['MOZ_WIDGET_TOOLKIT'] != 'android':
++if defined('BROWSER_TV'):
+     about_pages.append('translations')
+ if buildconfig.substs['MOZ_WIDGET_TOOLKIT'] == 'android':
+     about_pages.append('crashcontentjava')
+diff --git a/toolkit/modules/ActorManagerParent.sys.mjs b/toolkit/modules/ActorManagerParent.sys.mjs
+index dc976a7e8b11..0ec25692cff3 100644
+--- a/toolkit/modules/ActorManagerParent.sys.mjs
++++ b/toolkit/modules/ActorManagerParent.sys.mjs
+@@ -752,7 +752,7 @@ if (AppConstants.platform != "android") {
+     messageManagerGroups: ["browsers"],
+     allFrames: true,
+   };
+-
++} else {
+   JSWINDOWACTORS.AboutTranslations = {
+     parent: {
+       esModuleURI: "resource://gre/actors/AboutTranslationsParent.sys.mjs",

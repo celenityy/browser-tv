@@ -1,0 +1,5 @@
+
+geckoview.jar:
+% content branding %content/branding/ contentaccessible=yes
+  content/branding/icon32.png                 (icon32.png)
+  content/branding/icon64.png                 (icon64.png)

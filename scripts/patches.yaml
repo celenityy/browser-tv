@@ -49,18 +49,11 @@ categories:
 
 patches:
   # Build System
-  - file: "gecko-fix-125-compile.patch"
-    name: "Fix v125 Compile Error"
-    description: "Fixes a compilation issue introduced in Firefox v125."
-    reason: "Addresses technical bug in the build process."
-    effect: "Ensures successful compilation of the browser."
-    category: "Build System"
-
-  - file: "gecko-localize-maven.patch"
-    name: "Remove Mozilla Maven Repositories (Gecko)"
-    description: "Removes Mozilla repositories substitution and replaces them with local maven repositories."
-    reason: "Reduces dependency on Mozilla infrastructure and improves build reproducibility."
-    effect: "Provides more control over build dependencies with fewer connections to Mozilla servers."
+  - file: "gecko-ensure-builds-reflect-changes.patch"
+    name: "Ensure builds always reflect our (latest) changes"
+    description: "Ensures that builds of GeckoView binaries always reflect our (latest) changes."
+    reason: "To ensure that our GeckoView binaries are always packaged as intended."
+    effect: "Ensures that our GeckoView binaries are always packaged as intended."
     category: "Build System"
 
   - file: "gecko-remove-example-dependencies.patch"
@@ -70,21 +63,28 @@ patches:
     effect: "Reduces build-time, and reduces the complexity of the overall build process."
     category: "Build System"
 
-  - file: "gecko-remove-subprojects.patch"
-    name: "Remove Unwanted Subprojects"
-    description: "Prevents building and configuring unnecessary/unwanted subprojects."
-    reason: "Allows for faster builds, with less overhead."
-    effect: "Reduces build-time, and reduces the complexity of the overall build process."
+  - file: "gecko-support-policies.patch"
+    name: "Support Enterprise Policies"
+    description: "Adds support for, and configures a set of, enterprise policies for GeckoView."
+    reason: "Allows for additional control/configuration of the browsing behavior."
+    effect: "Allows users to take advantage of additional customizations, and helps to provide a superior browsing experience."
     category: "Build System"
 
-  - file: "geckoview-unbreak-fido.patch"
-    name: "Fix FIDO-related Compile Error"
-    description: "Fixes a compilation issue introduced in Firefox v143, related to FIDO."
-    reason: "Addresses technical bug in the build process."
-    effect: "Ensures successful compilation of the browser."
+  - file: "gecko-support-autoconfig.patch"
+    name: "Support AutoConfig"
+    description: "Adds support for Firefox's AutoConfig functionality to GeckoView, and leverages it for advanced configuration."
+    reason: "Allows for additional control/configuration of the browsing behavior."
+    effect: "Allows users to take advantage of additional customizations, and helps to provide a superior browsing experience."
     category: "Build System"
 
   # Dependency
+  - file: "geckoview-prioritize-cred-manager-over-gms.patch"
+    name: "Prioritize Credential Manager over microG/GMS"
+    description: "Prioritizes the use of Android's standard Credential Manager API, instead of first attempting to use microG/Google Play Services (if they're installed by the user)."
+    reason: "Avoids unnecessary/unwanted use of Google Play Services."
+    effect: "Improves privacy and freedom for users, by avoiding the use of Google Play Services."
+    category: "Dependency"
+
   - file: "gecko-remove-gmp-sources.patch"
     name: "Remove GMP (Gecko Media Plugins) Sources"
     description: "Removes Firefox's default sources for installing Gecko Media Plugins (GMP: https://wiki.mozilla.org/GeckoMediaPlugins), such as OpenH264 and Widevine (the latter is proprietary)."
@@ -122,16 +122,30 @@ patches:
     category: "Mozilla"
 
   - file: "gecko-support-addon-installation-without-mozaddonmanager.patch"
-    name: "Adds support for installing add-ons without the mozAddonManager API."
+    name: "Support add-on installation without mozAddonManager"
     description: "Adds support for installing add-ons from `addons.mozilla.org`, without allowing Mozilla to enable, uninstall, and query a list of the user's installed add-ons (via the privileged mozAddonManager API), in addition to websites specified with the `xpinstall.whitelist.add` series of prefs."
     reason: "To prevent fingerprinting, reduce attack surface, and to improve freedom by allowing users to install add-ons from sites other than AMO if desired (though installing add-ons outside of AMO is of course STRONGLY recommended against)."
     effect: "Allows users to install add-ons from addons.mozilla.org (via the mozAddonManager API) without compromising their privacy and security, and allows installation from other sites if desired by the user."
     category: "Mozilla"
 
+  - file: "gecko-remove-privileged-addon-signing-status.patch"
+    name: "Remove privileged add-on signing status"
+    description: "Prevents Mozilla add-ons from returning the 'PRIVILEGED' and 'SYSTEM' add-on signing states."
+    reason: "To improve privacy, security, and control for users, by preventing external add-ons developed By Mozilla from utilizing special privileged functionality."
+    effect: "Users have improved privacy, security, and control over their extensions."
+    category: "Mozilla"
+
+  - file: "gecko-remove-url-tracking-params.patch"
+    name: "Remove URL Tracking Parameters"
+    description: "Prevents the browser from appending URL tracking parameters to Mozilla support links."
+    reason: "To improve privacy."
+    effect: "Improves privacy by removing unnecessary URL tracking parameters from Mozilla support links."
+    category: "Mozilla"
+
   # Privacy
-  - file: "gecko-custom-ublock-origin-assets.patch"
-    name: "Enhanced uBlock Configuration"
-    description: "Sets uBlock Origin to use a custom/enhanced config by default."
+  - file: "gecko-configure-ublock-origin.patch"
+    name: "Configure uBlock Origin"
+    description: "Sets uBlock Origin to use a custom/enhanced config, and changes certain settings by default."
     reason: "To provide stronger out-of-box content blocking."
     effect: "Better ad and tracker blocking with optimized filter lists."
     category: "Privacy"
@@ -164,11 +178,15 @@ patches:
     effect: "Users are protected against tracking, and benefit from added attack surface reduction, without causing breakage and having to deal with the usual side effects that appear when the Beacon API is disabled."
     category: "Privacy"
 
-  - file: "gecko-prevent-pdfjs-fingerprinting.patch"
-    name: "Prevent fingerprinting based on whether PDF.js is enabled/disabled"
-    description: "Prevents aiding fingerprinting when Firefox's internal PDF viewer (PDF.js) is disabled."
-    reason: "To allow users to disable PDF.js if preferred (ex. in favor of an external viewer, like GrapheneOS's: https://github.com/GrapheneOS/PdfViewer), without increasing fingerprintability."
-    effect: "Users can safely disable PDF.js if preferred, without compromising their privacy."
+  - file: "gecko-prevent-exposing-name-and-vendor-to-extensions.patch"
+    name: "Prevent exposing the browser name and vendor to extensions"
+    description: |
+      Prevents exposing the browser name and vendor to extensions via getBrowserInfo
+      (https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/runtime/getBrowserInfo).
+    reason: | 
+      Improves privacy by preventing extensions from determining whether a user is on Browser TV,
+      and improves compatibility with certain older extensions (ex. https://codeberg.org/librewolf/issues/issues/2492).
+    effect: "Extensions work as expected, and users are protected against added fingerprinting opportunities."
     category: "Privacy"
 
   # Security
@@ -203,32 +221,74 @@ patches:
     category: "User Control"
 
   # User Experience
-  - file: "gecko-browser-fingerprinting-protection-overrides.patch"
-    name: "Browser Fingerprinting Protection (FPP) Overrides"
+  - file: "gecko-ironfox-fingerprinting-protection-overrides.patch"
+    name: "IronFox Fingerprinting Protection (FPP) Overrides"
     description: "Adds support for an internal list that disables specific fingerprinting protections as needed on a per-site basis."
     reason: "To reduce website breakage for end-users. Setting the overrides this way specifically also avoids us needing to use the 'privacy.fingerprintingProtection.granularOverrides' preference like we have in the past, allowing users to easily set their own overrides (via that preference) if needed."
     effect: "Provides users with a seamless browsing experience and allows them to benefit from our strong fingerprinting protection, minus the breakage and headaches."
     category: "User Experience"
 
+  - file: "geckoview-lock-runtime-settings-prefs.patch"
+    name: "Lock GeckoRuntimeSettings Preferences."
+    description: "Locks Gecko preferences controlled by GeckoRuntimeSettings to ensure they stay in sync with Fenix (Firefox for Android)'s UI settings."
+    reason: "To avoid bugs/unexpected behavior from UI settings not matching with related Gecko preferences, and to prevent from users from attempting to change these preferences directly from `about:config` (as doing so simply results in the pref resetting on the next browser launch)."
+    effect: "Gecko preferences remain in sync with their corresponding UI setting(s), users are provided with a more stable browsing experience, and users can avoid having their preferences unintentionally reset (when set from `about:config` directly)."
+    category: "User Experience"
+
   # User Interface
-  - file: "gecko-expose-aboutconfig.patch"
-    name: "Expose the `about:config`"
-    description: "Exposes the `about:config` at `about:about`, alongside other internal `about:` pages."
-    reason: "To provide users with easier access to advanced configuration options."
-    effect: "Users can access the `about:config` easier to customize advanced Firefox settings not available in the regular settings menu."
+  - file: "gecko-browser-tv-branding.patch"
+    name: "Browser TV Branding (Gecko)"
+    description: "Modifies the branding to Browser TV."
+    reason: "Creates distinct brand identity for the fork."
+    effect: "Users can identify the fork as Browser TV instead of Firefox."
     category: "User Interface"
 
-  - file: "geckoview-browser-settings.patch"
-    name: "Browser Settings (GeckoView)"
-    description: "Adds support to GeckoView for Browser-specific UI settings to control various functionality."
+  - file: "gecko-expose-hidden-aboutsupport-settings.patch"
+    name: "Expose hidden settings at `about:support`"
+    description: "Enables advanced options at `about:support`."
+    reason: "Allows users to clear the browser's startup cache, kill the GPU process, and reset GPU devices if necessary."
+    effect: "Users have more control over their web browser."
+    category: "User Interface"
+
+  - file: "gecko-expose-aboutsupport-prefs.patch"
+    name: "Expose additional preferences at `about:support`"
+    description: "Enables the display of certain important preferences at `about:support`."
+    reason: "Allows for easier troubleshooting and support."
+    effect: "Users can easily see if they have modified these important preferences."
+    category: "User Interface"
+
+  - file: "gecko-expose-about-pages.patch"
+    name: "Expose `about:` pages"
+    description: "Exposes `about:config` and `about:translations` at `about:about`, alongside other internal `about:` pages."
+    reason: "To provide users with easier access to advanced configuration options and local translations."
+    effect: "Users can access `about:config` easier to customize advanced Firefox settings not available in the regular settings menu, and can access `about:translations` easier for local translations."
+    category: "User Interface"
+
+  - file: "gecko-enable-abouttranslations.patch"
+    name: "Enable `about:translations`"
+    description: "Enables `about:translations`."
+    reason: "To provide users with direct access to the Firefox Translations feature."
+    effect: "Like on Desktop, users can access `about:translations` to translate text directly, without needing the text to be on an external webpage."
+    category: "User Interface"
+
+  - file: "gecko-browser-tv-settings.patch"
+    name: "Browser TV Settings (Gecko)"
+    description: "Adds support to Gecko for Browser TV-specific preferences/UI settings to control various functionality."
     reason: |
       To allow users to easily control their browsing experience.
-    effect: "Users can conveniently enable/disable these features as needed to meet their needs, without needing to dig into advanced settings or the `about:config`."
+    effect: "Users can conveniently enable/disable these features as needed to meet their needs."
     category: "User Interface"
 
-  - file: "geckoview-browser-settings-support-spoof-english.patch"
-    name: "Browser Settings Support (GeckoView) - Spoof English"
-    description: "Provides support to GeckoView for a UI toggle to spoof the locale to English (en-US)."
-    reason: "To allow users to benefit from extra fingerprinting protection by spoof their locale to English."
-    effect: "Users can spoof their preferred locale to English, and can benefit from stronger fingerprinting protection as a result."
+  - file: "gecko-browser-tv-settings-support-webgl.patch"
+    name: "Browser TV Settings Support (Gecko) - WebGL"
+    description: "Provides support for a UI toggle to enable/disable WebGL (including on a per-site basis)."
+    reason: "Users can enable or disable WebGL, globally or on a per-site basis."
+    effect: "Users can maximize privacy and security by disabling WebGL, without compromising usability, by allowing it to be re-enabled on a per-site basis."
+    category: "User Interface"
+
+  - file: "gecko-browser-tv-settings-support-xpinstall.patch"
+    name: "Browser TV Settings Support (Gecko) - XPInstall"
+    description: "Provides support for a UI toggle to enable/disable the installation of add-ons."
+    reason: "Leverages enterprise policies to enable/disable installation of add-ons."
+    effect: "Users can receive a prompt when add-on installation is disabled from the UI, and the installation of add-ons can be better controlled/fully disabled from policies."
     category: "User Interface"

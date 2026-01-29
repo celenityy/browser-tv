@@ -1,0 +1,27 @@
+diff --git a/dom/canvas/ClientWebGLContext.cpp b/dom/canvas/ClientWebGLContext.cpp
+index 11578f425f7c..68f29fff7470 100644
+--- a/dom/canvas/ClientWebGLContext.cpp
++++ b/dom/canvas/ClientWebGLContext.cpp
+@@ -879,7 +879,9 @@ bool ClientWebGLContext::CreateHostContext(const uvec2& requestedSize) {
+         .size = requestedSize,
+         .options = options,
+     };
+-
++    if (ShouldResistFingerprinting(RFPTarget::DisableWebGL)) {
++      return Err("WebGL is currently disabled.");
++    }
+     // -
+ 
+     auto useOop = IsWebglOutOfProcessEnabled();
+diff --git a/toolkit/components/resistfingerprinting/RFPTargets.inc b/toolkit/components/resistfingerprinting/RFPTargets.inc
+index 540313664e..21c4668b9a 100644
+--- a/toolkit/components/resistfingerprinting/RFPTargets.inc
++++ b/toolkit/components/resistfingerprinting/RFPTargets.inc
+@@ -109,6 +109,7 @@ ITEM_VALUE(MaxTouchPointsCollapse,      73)
+ ITEM_VALUE(NavigatorHWConcurrencyTiered,74)
+ ITEM_VALUE(WebGLRandomization,          75)
+ ITEM_VALUE(EfficientCanvasRandomization, 76)
++ITEM_VALUE(DisableWebGL,77)
+ 
+ // !!! Adding a new target? Rename PointerId and repurpose it.
+ 
