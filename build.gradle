@@ -1,26 +1,58 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    // Configure Maven repositories
     repositories {
         mavenLocal()
-        google()
-        mavenCentral()
+        google() {
+            content {
+                includeGroupAndSubgroups 'androidx'
+                includeGroupAndSubgroups 'com.android'
+                includeGroupAndSubgroups 'com.google'
+            }
+        }
+        mavenCentral() {
+            content {
+                excludeGroupAndSubgroups 'android'
+                excludeGroupAndSubgroups 'androidx'
+                excludeGroupAndSubgroups 'com.android'
+                excludeGroupAndSubgroups 'dev.celenity'
+                excludeGroupAndSubgroups 'org.ironfoxoss'
+                excludeGroupAndSubgroups 'org.mozilla'
+            }
+        }
     }
+
+    // Plug-in classes
     dependencies {
         classpath("com.android.tools.build:gradle:8.13.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.20")
         classpath("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.2.20-2.0.3")
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 allprojects {
+    // Configure Maven repositories
     repositories {
+        // We don't want to add Mozilla's maven repo here, because we always want to build Mozilla's dependencies from source
         mavenLocal()
-        google()
-        mavenCentral()
+        google() {
+            content {
+                includeGroupAndSubgroups 'androidx'
+                includeGroupAndSubgroups 'com.android'
+                includeGroupAndSubgroups 'com.google'
+            }
+        }
+        mavenCentral() {
+            content {
+                excludeGroupAndSubgroups 'android'
+                excludeGroupAndSubgroups 'androidx'
+                excludeGroupAndSubgroups 'com.android'
+                excludeGroupAndSubgroups 'dev.celenity'
+                excludeGroupAndSubgroups 'org.ironfoxoss'
+                excludeGroupAndSubgroups 'org.mozilla'
+            }
+        }
         maven { setUrl("https://jitpack.io") }
     }
 }
