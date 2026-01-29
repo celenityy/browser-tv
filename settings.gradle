@@ -1,0 +1,4 @@
+include(":app")
+rootProject.name = "browser-tv"
+
+apply from: file('./substitute-mozilla-deps.gradle')
