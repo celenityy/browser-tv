@@ -32,6 +32,18 @@ buildscript {
 }
 
 allprojects {
+    // Set versions
+    ext {
+        // Android SDK compile version
+        androidSDKCompileVersion = 36
+
+        // Minimum Android SDK version
+        minAndroidSDKVersion = 26
+
+        // Target Android SDK version
+        targetAndroidSDKVersion = 36
+    }
+
     // Configure Maven repositories
     repositories {
         // We don't want to add Mozilla's maven repo here, because we always want to build Mozilla's dependencies from source
