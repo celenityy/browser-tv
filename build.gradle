@@ -25,9 +25,9 @@ buildscript {
 
     // Plug-in classes
     dependencies {
-        classpath("com.android.tools.build:gradle:8.13.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.20")
-        classpath("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.2.20-2.0.3")
+        libs.android.gradle.plugin
+        libs.kotlin.gradle.plugin
+        libs.ksp.gradle.plugin
     }
 }
 

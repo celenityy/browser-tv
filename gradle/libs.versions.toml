@@ -1,0 +1,108 @@
+[versions]
+
+# Android Gradle Plugin
+android-gradle-plugin = "8.13.2"
+
+# AndroidX appcompat
+appcompat = "1.7.1"
+
+# AndroidX constraintlayout
+constraintlayout = "2.2.1"
+
+# AndroidX Lifecycle
+## https://developer.android.com/reference/androidx/lifecycle/package-summary
+androidx-lifecycle = "2.10.0"
+
+# AndroidX recyclerview
+recyclerview = "1.4.0"
+
+# AndroidX room
+room = "2.8.4"
+
+# junit
+junit = "4.13.2"
+
+# Kotlin
+kotlin = "2.3.0"
+
+# Kotlin coroutines
+## https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-coroutines = "1.10.2"
+
+# KSP
+ksp = "2.3.3"
+
+# Mozilla GeckoView
+## https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/
+geckoview = "147.0.20260126151322"
+
+# pinned-section-listview
+## https://github.com/sergejsha/pinned-section-listview
+pinnedsectionlistview = "1.0.0"
+
+# Robolectric
+## https://github.com/robolectric/robolectric
+robolectric = "4.16"
+
+# segmented-button
+## https://github.com/truefedex/segmented-button
+segmentedbutton = "v1.0.0"
+
+[libraries]
+
+# Android Gradle Plugin
+android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
+
+# AndroidX appcompat
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+# AndroidX constraintlayout
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+# AndroidX Lifecycle
+## https://developer.android.com/reference/androidx/lifecycle/package-summary
+androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+
+# AndroidX recyclerview
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+
+# AndroidX room
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+# junit
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+# Kotlin coroutines
+## https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+# Kotlin Gradle Plugin
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# kotlin-stdlib
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+# KSP
+ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+
+# Mozilla GeckoView
+## https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/
+geckoview = { group = "org.mozilla.geckoview", name = "geckoview-arm64-v8a", version.ref = "geckoview" }
+
+# pinned-section-listview
+## https://github.com/sergejsha/pinned-section-listview
+pinnedsectionlistview = { group = "de.halfbit", name = "pinned-section-listview", version.ref = "pinnedsectionlistview" }
+
+# Robolectric
+## https://github.com/robolectric/robolectric
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+
+# segmented-button
+## https://github.com/truefedex/segmented-button
+segmentedbutton = { group = "com.github.truefedex", name = "segmentedbutton", version.ref = "segmentedbutton" }
+
+[plugins]
+
+# Kotlin
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
