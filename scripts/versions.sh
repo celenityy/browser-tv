@@ -27,7 +27,6 @@ readonly PHOENIX_VERSION='2026.03.31.1'
 
 ## WASI SDK
 ### https://github.com/WebAssembly/wasi-sdk
-readonly WASI_COMMIT='935fe1acd2fcd7ea4aed2d5ee4527482862b6344'
 readonly WASI_VERSION='20'
 
 # Tools
