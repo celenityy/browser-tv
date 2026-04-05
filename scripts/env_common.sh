@@ -8,7 +8,7 @@
 
 # If variables are defined with a custom `env_override.sh` file (located at the root project directory), let's use those
 ## These need to be set first, to ensure that they don't interfere with certain variables
-readonly BROWSER_TV_ENV_OVERRIDE="${IRONFOX_ROOT}/env_override.sh"
+readonly BROWSER_TV_ENV_OVERRIDE="${BROWSER_TV_ROOT}/env_override.sh"
 if [[ -f "${BROWSER_TV_ENV_OVERRIDE}" ]]; then
     source "${BROWSER_TV_ENV_OVERRIDE}"
 fi
@@ -49,14 +49,13 @@ readonly BROWSER_TV_REVISION="$(git log -1 --format="%H" | tail -n 1)"
 export BROWSER_TV_REVISION
 
 # Set our platform, OS, and architecture
-readonly BROWSER_TV_ENV_HELPERS="${IRONFOX_SCRIPTS}/env_helpers.sh"
+readonly BROWSER_TV_ENV_HELPERS="${BROWSER_TV_SCRIPTS}/env_helpers.sh"
 export BROWSER_TV_ENV_HELPERS
 source "${BROWSER_TV_ENV_HELPERS}"
 
-# Include version info
-readonly BROWSER_TV_VERSIONS="${IRONFOX_SCRIPTS}/versions.sh"
+# Version info
+readonly BROWSER_TV_VERSIONS="${BROWSER_TV_SCRIPTS}/versions.sh"
 export BROWSER_TV_VERSIONS
-source "${BROWSER_TV_VERSIONS}"
 
 # Browser TV outputs directory
 readonly BROWSER_TV_OUTPUTS_DEFAULT="${BROWSER_TV_BUILD}/outputs"
@@ -113,6 +112,14 @@ fi
 readonly BROWSER_TV_LOG_DIR
 export BROWSER_TV_LOG_DIR
 
+# Android NDK
+readonly BROWSER_TV_ANDROID_NDK_DEFAULT="${BROWSER_TV_EXTERNAL}/android-ndk"
+if [[ -z "${BROWSER_TV_ANDROID_NDK+x}" ]]; then
+    BROWSER_TV_ANDROID_NDK="${BROWSER_TV_ANDROID_NDK_DEFAULT}"
+fi
+readonly BROWSER_TV_ANDROID_NDK
+export BROWSER_TV_ANDROID_NDK
+
 # Android SDK
 readonly BROWSER_TV_ANDROID_SDK_DEFAULT="${BROWSER_TV_EXTERNAL}/android-sdk"
 if [[ -z "${BROWSER_TV_ANDROID_SDK+x}" ]]; then
@@ -121,13 +128,25 @@ fi
 readonly BROWSER_TV_ANDROID_SDK
 export BROWSER_TV_ANDROID_SDK
 
-# Android NDK
-readonly BROWSER_TV_ANDROID_NDK_DEFAULT="${BROWSER_TV_ANDROID_SDK}/ndk/${ANDROID_NDK_REVISION}"
-if [[ -z "${BROWSER_TV_ANDROID_NDK+x}" ]]; then
-    BROWSER_TV_ANDROID_NDK="${BROWSER_TV_ANDROID_NDK_DEFAULT}"
+## sdkmanager
+readonly BROWSER_TV_ANDROID_SDKMANAGER="${BROWSER_TV_ANDROID_SDK}/cmdline-tools/latest/bin/sdkmanager"
+export BROWSER_TV_ANDROID_SDKMANAGER
+
+# Android SDK Build Tools
+readonly BROWSER_TV_ANDROID_SDK_BUILD_TOOLS_DEFAULT="${BROWSER_TV_EXTERNAL}/android-sdk-build-tools"
+if [[ -z "${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS+x}" ]]; then
+    BROWSER_TV_ANDROID_SDK_BUILD_TOOLS="${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS_DEFAULT}"
 fi
-readonly BROWSER_TV_ANDROID_NDK
-export BROWSER_TV_ANDROID_NDK
+readonly BROWSER_TV_ANDROID_SDK_BUILD_TOOLS
+export BROWSER_TV_ANDROID_SDK_BUILD_TOOLS
+
+## apksigner
+readonly BROWSER_TV_APKSIGNER_DEFAULT="${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS}/apksigner"
+if [[ -z "${BROWSER_TV_APKSIGNER+x}" ]]; then
+    BROWSER_TV_APKSIGNER="${BROWSER_TV_APKSIGNER_DEFAULT}"
+fi
+readonly BROWSER_TV_APKSIGNER
+export BROWSER_TV_APKSIGNER
 
 # Application Services
 readonly BROWSER_TV_AS_DEFAULT="${BROWSER_TV_EXTERNAL}/application-services"
@@ -139,10 +158,6 @@ export BROWSER_TV_AS
 ## Application Services overlay
 readonly BROWSER_TV_AS_OVERLAY="${BROWSER_TV_PATCHES}/a-s-overlay"
 export BROWSER_TV_AS_OVERLAY
-
-## sdkmanager
-readonly BROWSER_TV_ANDROID_SDKMANAGER="${BROWSER_TV_ANDROID_SDK}/cmdline-tools/latest/bin/sdkmanager"
-export BROWSER_TV_ANDROID_SDKMANAGER
 
 # Bundletool
 readonly BROWSER_TV_BUNDLETOOL_DIR_DEFAULT="${BROWSER_TV_EXTERNAL}/bundletool"
@@ -197,7 +212,7 @@ readonly BROWSER_TV_L10N_CENTRAL
 export BROWSER_TV_L10N_CENTRAL
 
 ## .mozbuild
-readonly BROWSER_TV_MOZBUILD_DEFAULT="${IRONFOX_BUILD}/.mozbuild"
+readonly BROWSER_TV_MOZBUILD_DEFAULT="${BROWSER_TV_BUILD}/.mozbuild"
 if [[ -z "${BROWSER_TV_MOZBUILD+x}" ]]; then
     BROWSER_TV_MOZBUILD="${BROWSER_TV_MOZBUILD_DEFAULT}"
 fi
@@ -211,7 +226,7 @@ else
     readonly BROWSER_TV_AWK_DEFAULT='awk'
 fi
 if [[ -z "${BROWSER_TV_AWK+x}" ]]; then
-    BROWSER_TV_AWK="${IRONFOX_AWK_DEFAULT}"
+    BROWSER_TV_AWK="${BROWSER_TV_AWK_DEFAULT}"
 fi
 readonly BROWSER_TV_AWK
 export BROWSER_TV_AWK
@@ -285,7 +300,7 @@ readonly BROWSER_TV_GRADLE_CACHE
 export BROWSER_TV_GRADLE_CACHE
 
 ## Gradle home
-readonly BROWSER_TV_GRADLE_HOME_DEFAULT="${IRONFOX_BUILD}/.gradle"
+readonly BROWSER_TV_GRADLE_HOME_DEFAULT="${BROWSER_TV_BUILD}/.gradle"
 if [[ -z "${BROWSER_TV_GRADLE_HOME+x}" ]]; then
     BROWSER_TV_GRADLE_HOME="${BROWSER_TV_GRADLE_HOME_DEFAULT}"
 fi
@@ -335,7 +350,7 @@ readonly BROWSER_TV_LLVM_PROFDATA
 export BROWSER_TV_LLVM_PROFDATA
 
 # microG
-readonly BROWSER_TV_GMSCORE_DEFAULT="${IRONFOX_EXTERNAL}/gmscore"
+readonly BROWSER_TV_GMSCORE_DEFAULT="${BROWSER_TV_EXTERNAL}/gmscore"
 if [[ -z "${BROWSER_TV_GMSCORE+x}" ]]; then
     BROWSER_TV_GMSCORE="${BROWSER_TV_GMSCORE_DEFAULT}"
 fi

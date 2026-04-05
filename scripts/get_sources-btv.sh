@@ -390,14 +390,13 @@ function download_and_extract() {
 
 # Get Android NDK
 function get_android_ndk() {
-    if  [ ! -d "${BROWSER_TV_ANDROID_SDK}" ]; then
-        echo_red_text "ERROR: You tried to download the Android NDK, but you don't have the Android SDK set-up yet."
-        exit 1
-    fi
-
     echo_red_text 'Downloading the Android NDK...'
 
-    ${BROWSER_TV_ANDROID_SDKMANAGER} "ndk;${ANDROID_NDK_REVISION}"
+    if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+        download_and_extract 'android-ndk' "https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-darwin.zip" "${BROWSER_TV_ANDROID_NDK}" "${ANDROID_NDK_SHA512SUM_OSX}"
+    else
+        download_and_extract 'android-ndk' "https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux.zip" "${BROWSER_TV_ANDROID_NDK}" "${ANDROID_NDK_SHA512SUM_LINUX}"
+    fi
 
     echo_green_text "SUCCESS: Set-up Android NDK at ${BROWSER_TV_ANDROID_NDK}"
 }
@@ -434,16 +433,15 @@ function get_android_sdk() {
 
 # Get Android SDK Build Tools
 function get_android_sdk_build_tools() {
-    if  [ ! -d "${BROWSER_TV_ANDROID_SDK}" ]; then
-        echo_red_text "ERROR: You tried to download Android SDK Build Tools, but you don't have the Android SDK set-up yet."
-        exit 1
-    fi
-
     echo_red_text 'Downloading Android SDK Build Tools...'
 
-    ${BROWSER_TV_ANDROID_SDKMANAGER} "build-tools;${ANDROID_SDK_BUILD_TOOLS_VERSION}"
+    if [ "${IRONFOX_PLATFORM}" == 'darwin' ]; then
+        download_and_extract 'android-sdk-build-tools' "https://dl.google.com/android/repository/build-tools_${ANDROID_SDK_BUILD_TOOLS_VERSION}_macosx.zip" "${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS}" "${ANDROID_SDK_BUILD_TOOLS_SHA512SUM_OSX}"
+    else
+        download_and_extract 'android-sdk-build-tools' "https://dl.google.com/android/repository/build-tools_${ANDROID_SDK_BUILD_TOOLS_VERSION}_linux.zip" "${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS}" "${ANDROID_SDK_BUILD_TOOLS_SHA512SUM_LINUX}"
+    fi
 
-    echo_green_text "SUCCESS: Set-up Android SDK Build Tools"
+    echo_green_text "SUCCESS: Set-up Android SDK Build Tools at ${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS}"
 }
 
 # Get Android SDK Platform
@@ -642,13 +640,12 @@ function get_rust() {
     echo_green_text "SUCCESS: Set-up Rust environment at ${BROWSER_TV_CARGO_HOME}"
 }
 
-# This needs to run before we get Android NDK
-if [ "${BROWSER_TV_GET_SOURCE_ANDROID_SDK}" == 1 ]; then
-    get_android_sdk
-fi
-
 if [ "${BROWSER_TV_GET_SOURCE_ANDROID_NDK}" == 1 ]; then
     get_android_ndk
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_ANDROID_SDK}" == 1 ]; then
+    get_android_sdk
 fi
 
 if [ "${BROWSER_TV_GET_SOURCE_ANDROID_SDK_BUILD_TOOLS}" == 1 ]; then

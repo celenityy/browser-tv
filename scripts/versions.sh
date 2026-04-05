@@ -37,7 +37,10 @@ readonly WASI_VERSION='20'
 
 ## Android NDK
 ### https://developer.android.com/ndk/downloads
-readonly ANDROID_NDK_REVISION='29.0.14206865' # r29
+readonly ANDROID_NDK_REVISION='29.0.14206865'
+readonly ANDROID_NDK_SHA512SUM_LINUX='b55819895a7fa3a0bc7ed411fb55ed15ad9e415b0122a81a4e026c9b696cd266cb4beebb2008cf1d6cac88d38187d52818734f87de793de303653eccb4ca68da'
+readonly ANDROID_NDK_SHA512SUM_OSX='4091bc97a03266b869380874cb2d67a35dc74f9bc5f1cde30a3545547355e4ec4f3ebd79a17a19f9228d045f7a176d1e987ce4f787d81a02a044aa909f5ef5cb'
+readonly ANDROID_NDK_VERSION='r29'
 
 ## Android SDK (Command-Line Tools)
 ### https://developer.android.com/tools/releases/cmdline-tools
@@ -48,7 +51,10 @@ readonly ANDROID_SDK_SHA512SUM_OSX='375e0594493ade7ab613bacdfbc751c5f004db213b02
 
 ## Android SDK Build Tools
 ### https://developer.android.com/tools/releases/build-tools
-readonly ANDROID_SDK_BUILD_TOOLS_VERSION='36.1.0'
+readonly ANDROID_SDK_BUILD_TOOLS_VERSION='r36.1'
+readonly ANDROID_SDK_BUILD_TOOLS_VERSION_STRING='36.1.0'
+readonly ANDROID_SDK_BUILD_TOOLS_SHA512SUM_LINUX='32a1eea273980a96745ae5e0b141720e5f91c6c6f83f42da4244fad36025d7750521fdf678a7d332afe5946057b498264343c2533ba524967d84347af9cd7ce5'
+readonly ANDROID_SDK_BUILD_TOOLS_SHA512SUM_OSX='07a78d5f4658c6809220012fc27560cfd8aefcbd29a6414aa309fc54d6df7751b7b1e59964e3942ff9b91030c2611639e2b7d7eb2f77aba1ab0933c015e7c802'
 
 ## Android SDK Platform
 ### https://developer.android.com/tools/releases/platforms

@@ -73,7 +73,7 @@ mkdir -p "${BROWSER_TV_OUTPUTS_AAB}"
 mkdir -p "${BROWSER_TV_OUTPUTS_AAR}"
 mkdir -p "${BROWSER_TV_OUTPUTS_APK}"
 mkdir -p "${BROWSER_TV_OUTPUTS_APKS}"
-mkdir -p "${BROWSER_TVBUILD}/tmp/gecko/browser-tv"
+mkdir -p "${BROWSER_TV_BUILD}/tmp/gecko/browser-tv"
 mkdir -p "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages"
 
 ## Copy machrc config
@@ -93,6 +93,18 @@ if ! check_patches; then
     exit 1
 fi
 popd
+
+# Create Android NDK symlink
+if [[ ! -d "${BROWSER_TV_ANDROID_SDK}/ndk/${ANDROID_NDK_REVISION}" ]]; then
+    mkdir -p "${BROWSER_TV_ANDROID_SDK}/ndk"
+    ln -s "${BROWSER_TV_ANDROID_NDK}" "${BROWSER_TV_ANDROID_SDK}/ndk/${ANDROID_NDK_REVISION}"
+fi
+
+# Create Android SDK Build Tools symlinks
+if [[ ! -d "${BROWSER_TV_ANDROID_SDK}/build-tools/${ANDROID_SDK_BUILD_TOOLS_VERSION_STRING}" ]]; then
+    mkdir -p "${BROWSER_TV_ANDROID_SDK}/build-tools"
+    ln -s "${BROWSER_TV_ANDROID_SDK_BUILD_TOOLS}" "${BROWSER_TV_ANDROID_SDK}/build-tools/${ANDROID_SDK_BUILD_TOOLS_VERSION_STRING}"
+fi
 
 # Gecko
 pushd "${BROWSER_TV_GECKO}"
@@ -434,7 +446,7 @@ pushd "${BROWSER_TV_GMSCORE}"
 localize_gradle
 
 # Bump Android build tools
-"${BROWSER_TV_SED}" -i -e "s|ext.androidBuildVersionTools = .*|ext.androidBuildVersionTools = '${ANDROID_SDK_BUILD_TOOLS_VERSION}'|g" build.gradle
+"${BROWSER_TV_SED}" -i -e "s|ext.androidBuildVersionTools = .*|ext.androidBuildVersionTools = '${ANDROID_SDK_BUILD_TOOLS_VERSION_STRING}'|g" build.gradle
 
 # Bump Android compile SDK
 "${BROWSER_TV_SED}" -i -e "s|ext.androidCompileSdk = .*|ext.androidCompileSdk = ${ANDROID_SDK_TARGET}|g" build.gradle
