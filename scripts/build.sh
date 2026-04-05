@@ -13,7 +13,7 @@ if [ -z "${1+x}" ]; then
     exit 1
 fi
 
-readonly target=$(echo "${1}" | awk '{print tolower($0)}')
+readonly target=$(echo "${1}" | "${BROWSER_TV_AWK}" '{print tolower($0)}')
 
 # Build Browser TV
 readonly BROWSER_TV_FROM_BUILD=1
