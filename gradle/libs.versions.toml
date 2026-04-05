@@ -1,40 +1,48 @@
 [versions]
 
 # Android Gradle Plugin
-android-gradle-plugin = "8.13.2"
+## https://mvnrepository.com/artifact/com.android.tools.build/gradle/versions?repo=google
+android-gradle-plugin = "9.1.0"
 
 # AndroidX appcompat
+## https://developer.android.com/jetpack/androidx/releases/appcompat
 appcompat = "1.7.1"
 
 # AndroidX constraintlayout
+## https://developer.android.com/jetpack/androidx/releases/constraintlayout
 constraintlayout = "2.2.1"
 
 # AndroidX Lifecycle
-## https://developer.android.com/reference/androidx/lifecycle/package-summary
+## https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-lifecycle = "2.10.0"
 
 # AndroidX recyclerview
+## https://developer.android.com/jetpack/androidx/releases/recyclerview
 recyclerview = "1.4.0"
 
 # AndroidX room
+## https://developer.android.com/jetpack/androidx/releases/room
 room = "2.8.4"
 
 # junit
+## https://mvnrepository.com/artifact/junit/junit/versions?repo=central
 junit = "4.13.2"
 
-# Kotlin
-kotlin = "2.3.0"
+# Kotlin (Stdlib)
+## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib/versions?repo=central
+kotlin = "2.3.20"
 
 # Kotlin coroutines
 ## https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-coroutines = "1.10.2"
 
 # KSP
-ksp = "2.3.3"
+## https://mvnrepository.com/artifact/com.google.devtools.ksp/com.google.devtools.ksp.gradle.plugin/versions?repo=central
+ksp = "2.3.6"
 
 # Mozilla GeckoView
 ## https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/
-geckoview = "147.0.20260126151322"
+geckoview = "149.0.20260330092855"
 
 # pinned-section-listview
 ## https://github.com/sergejsha/pinned-section-listview
@@ -42,7 +50,7 @@ pinnedsectionlistview = "1.0.0"
 
 # Robolectric
 ## https://github.com/robolectric/robolectric
-robolectric = "4.16"
+robolectric = "4.16.1"
 
 # segmented-button
 ## https://github.com/truefedex/segmented-button
@@ -60,7 +68,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 # AndroidX Lifecycle
-## https://developer.android.com/reference/androidx/lifecycle/package-summary
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 
 # AndroidX recyclerview
@@ -74,35 +81,22 @@ androidx-room-runtime = { group = "androidx.room", name = "room-ktx", version.re
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 # Kotlin coroutines
-## https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
-# Kotlin Gradle Plugin
-kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-
-# kotlin-stdlib
+# Kotlin Stdlib
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 
 # KSP
 ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 # Mozilla GeckoView
-## https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/
 geckoview = { group = "org.mozilla.geckoview", name = "geckoview-arm64-v8a", version.ref = "geckoview" }
 
 # pinned-section-listview
-## https://github.com/sergejsha/pinned-section-listview
 pinnedsectionlistview = { group = "de.halfbit", name = "pinned-section-listview", version.ref = "pinnedsectionlistview" }
 
 # Robolectric
-## https://github.com/robolectric/robolectric
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 # segmented-button
-## https://github.com/truefedex/segmented-button
 segmentedbutton = { group = "com.github.truefedex", name = "segmentedbutton", version.ref = "segmentedbutton" }
-
-[plugins]
-
-# Kotlin
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
