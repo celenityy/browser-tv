@@ -25,101 +25,62 @@
 
 set -euo pipefail
 
-echo_red_text() {
-	echo -e "\033[31m$1\033[0m"
-}
-
-echo_green_text() {
-	echo -e "\033[32m$1\033[0m"
-}
-
 # Set-up our environment
-bash -x $(dirname $0)/env.sh
+if [[ -z "${BROWSER_TV_SET_ENVS+x}" ]]; then
+    bash -x $(dirname $0)/env.sh
+fi
 source $(dirname $0)/env.sh
+
+# Include utilities
+source "${BROWSER_TV_UTILS}"
 
 # Include version info
 source "${BROWSER_TV_VERSIONS}"
 
-function localize_maven {
-    # Replace custom Maven repositories with mavenLocal()
-    find ./* -name '*.gradle' -type f -exec python3 "${BROWSER_TV_SCRIPTS}/localize_maven.py" {} \;
-    # Make gradlew scripts call our Gradle wrapper
+function localize_gradle() {
     find ./* -name gradlew -type f | while read -r gradlew; do
-        echo -e "#!/bin/sh\n${BROWSER_TV_GRADLE} \""'$@'"\"" >"${gradlew}"
+        echo -e "#!/bin/sh\n\""'${BROWSER_TV_GRADLE}'"\" \${BROWSER_TV_GRADLE_FLAGS} \""'$@'"\"" >"${gradlew}"
         chmod 755 "${gradlew}"
     done
+}
+
+function localize_maven() {
+    # Replace custom Maven repositories with mavenLocal()
+    find ./* -name '*.gradle' -type f -exec "${BROWSER_TV_PYTHON}" "${BROWSER_TV_SCRIPTS}/localize_maven.py" {} \;
 }
 
 # Applies the overlay files in the given directory
 # to the current directory
 function apply_overlay() {
-    source_dir="$1"
+    local readonly source_dir="$1"
     find "${source_dir}" -type f| while read -r src; do
-        target="${src#"${source_dir}"}"
+        local readonly target="${src#"${source_dir}"}"
         mkdir -vp "$(dirname "${target}")"
         cp -vrf "${src}" "${target}"
     done
 }
 
-if [ -z "${1+x}" ]; then
-    echo_red_text "Usage: $0 arm|arm64|x86_64|bundle" >&1
-    exit 1
-fi
-
-if [ ! -d "${BROWSER_TV_ANDROID_SDK}" ]; then
-    echo_red_text "\$BROWSER_TV_ANDROID_SDK($BROWSER_TV_ANDROID_SDK) does not exist."
-    exit 1
-fi
-
-if [ ! -d "${BROWSER_TV_ANDROID_NDK}" ]; then
-    echo_red_text "\$BROWSER_TV_ANDROID_NDK($BROWSER_TV_ANDROID_NDK) does not exist."
-    exit 1
-fi
-
-JAVA_VER=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}' | awk -F '.' '{sub("^$", "0", $2); print $1$2}')
-[ "${JAVA_VER}" -ge 15 ] || {
-    echo_red_text "Java 17 or newer must be set as default JDK"
-    exit 1
-}
-
-if [[ -z "${FIREFOX_VERSION}" ]]; then
-    echo_red_text "\$FIREFOX_VERSION is not set! Aborting..."
-    exit 1
-fi
-
-if [[ -z "${BROWSER_TV_VERSION}" ]]; then
-    echo_red_text "\$BROWSER_TV_VERSION is not set! Aborting..."
-    exit 1
-fi
-
-if [[ -z "${BROWSER_TV_SB_GAPI_KEY_FILE+x}" ]]; then
-    echo_red_text "BROWSER_TV_SB_GAPI_KEY_FILE environment variable has not been specified! Safe Browsing will not be supported in this build."
-    read -p "Do you want to continue [y/N] " -n 1 -r
-    echo ""
-    if ! [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo_red_text "Aborting..."
-        exit 1
-    fi
-fi
-
-echo_green_text "Preparing to build Browser TV ${BROWSER_TV_VERSION}: ${BROWSER_TV_CHANNEL_PRETTY}"
+echo_green_text "Preparing to build Browser TV ${BROWSER_TV_VERSION}"
 
 # Create build directories
-mkdir -vp "${BROWSER_TV_CARGO_HOME}"
-mkdir -vp "${BROWSER_TV_GRADLE_CACHE}"
-mkdir -vp "${BROWSER_TV_GRADLE_HOME}"
-mkdir -vp "${BROWSER_TV_MOZBUILD}"
-mkdir -vp "${BROWSER_TV_OUTPUTS_AAB}"
-mkdir -vp "${BROWSER_TV_OUTPUTS_AAR}"
-mkdir -vp "${BROWSER_TV_OUTPUTS_APK}"
-mkdir -vp "${BROWSER_TV_OUTPUTS_APKS}"
-mkdir -vp "${BROWSER_TV_OUTPUTS_LOGS}"
+mkdir -p "${BROWSER_TV_CARGO_HOME}"
+mkdir -p "${BROWSER_TV_GRADLE_CACHE}"
+mkdir -p "${BROWSER_TV_GRADLE_HOME}"
+mkdir -p "${BROWSER_TV_MOZBUILD}"
+mkdir -p "${BROWSER_TV_OUTPUTS_AAB}"
+mkdir -p "${BROWSER_TV_OUTPUTS_AAR}"
+mkdir -p "${BROWSER_TV_OUTPUTS_APK}"
+mkdir -p "${BROWSER_TV_OUTPUTS_APKS}"
+mkdir -p "${BROWSER_TVBUILD}/tmp/gecko/browser-tv"
+mkdir -p "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages"
 
 ## Copy machrc config
-cp -vf "${BROWSER_TV_PATCHES}/machrc" "${BROWSER_TV_MOZBUILD}/machrc"
+cp -f "${BROWSER_TV_PATCHES}/machrc" "${BROWSER_TV_MOZBUILD}/machrc"
 
-## Copy Rust (cargo) config
-cp -vf "${BROWSER_TV_PATCHES}/cargo/config.toml" "${BROWSER_TV_CARGO_HOME}/config.toml"
+## Symlink Rust (cargo) config
+if [[ ! -f "${BROWSER_TV_CARGO_HOME}/config.toml" ]]; then
+    cp -f "${BROWSER_TV_PATCHES}/cargo/config.toml" "${BROWSER_TV_CARGO_HOME}/config.toml"
+fi
 
 # Check patch files
 source "${BROWSER_TV_SCRIPTS}/patches.sh"
@@ -131,67 +92,14 @@ if ! check_patches; then
 fi
 popd
 
-# Set-up Rust
-curl ${BROWSER_TV_CURL_FLAGS} -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --no-update-default-toolchain --profile=minimal
-
-# Set-up cargo
-source "${BROWSER_TV_CARGO_ENV}"
-rustup set profile minimal
-rustup default "${RUST_VERSION}"
-rustup target add thumbv7neon-linux-androideabi
-rustup target add armv7-linux-androideabi
-rustup target add aarch64-linux-android
-rustup target add i686-linux-android
-rustup target add x86_64-linux-android
-cargo install --force --vers "${CBINDGEN_VERSION}" cbindgen
-
-# Set-up pip
-if [[ -d "${BROWSER_TV_PIP_DIR}" ]]; then
-    rm -rf "${BROWSER_TV_PIP_DIR}"
-fi
-python3.9 -m venv "${BROWSER_TV_PIP_DIR}"
-
-source "${BROWSER_TV_PIP_ENV}"
-pip install --upgrade pip
-pip install gyp-next
-
-# Set up target parameters
-case "$1" in
-arm64)
-    # APK for arm64-v8a
-    BROWSER_TV_TARGET_ARCH='arm64'
-    ;;
-arm)
-    # APK for armeabi-v7a
-    BROWSER_TV_TARGET_ARCH='arm'
-    ;;
-x86_64)
-    # APK for x86_64
-    BROWSER_TV_TARGET_ARCH='x86_64'
-    ;;
-bundle)
-    # AAB for arm64-v8a, armeabi-v7a, and x86_64
-    BROWSER_TV_TARGET_ARCH='bundle'
-    ;;
-*)
-    echo "Unknown build variant: '$1'" >&2
-    exit 1
-    ;;
-esac
-
-# Write env_target.sh
-echo "Writing ${BROWSER_TV_ENV_TARGET}..."
-cat > "${BROWSER_TV_ENV_TARGET}" << EOF
-export BROWSER_TV_TARGET_ARCH="${BROWSER_TV_TARGET_ARCH}"
-
-source "\${BROWSER_TV_ENV_TARGET_HELPERS}"
-EOF
-
 # Gecko
 pushd "${BROWSER_TV_GECKO}"
 
 # Apply patches
 apply_patches
+
+# Always use our Gradle wrapper with our Gradle flags/configuration
+localize_gradle
 
 # Let it be Browser TV (part 2...)
 "${BROWSER_TV_SED}" -i -e 's|"MOZ_APP_VENDOR", ".*"|"MOZ_APP_VENDOR", "celenity"|g' mobile/android/moz.configure
@@ -199,6 +107,10 @@ echo '' >>mobile/android/moz.configure
 echo 'include("../../browser-tv/browser-tv.configure")' >>mobile/android/moz.configure
 echo '' >>moz.build
 echo 'DIRS += ["browser-tv"]' >>moz.build
+
+# Replace instances of "Firefox" with "Browser TV" or "Browser TV Nightly"
+"${BROWSER_TV_SED}" -i -e 's/Firefox/{BROWSER_TV_NAME}/' "${BROWSER_TV_GECKO}/toolkit/content/neterror/supportpages/connection-not-secure.html"
+"${BROWSER_TV_SED}" -i -e 's/Firefox/{BROWSER_TV_NAME}/' "${BROWSER_TV_GECKO}/toolkit/content/neterror/supportpages/time-errors.html"
 
 # about: pages
 echo '' >>mobile/android/installer/package-manifest.in
@@ -231,11 +143,8 @@ cp -vf browser/locales/en-US/browser/aboutRobots.ftl browser-tv/locales/en-US/br
     -e "s/singleVariant('debug')/singleVariant('release')/" \
     mobile/android/geckoview/build.gradle
 
-# Hack the timeout for
-# geckoview:generateJNIWrappersForGeneratedWithGeckoBinariesDebug
-"${BROWSER_TV_SED}" -i \
-    -e 's/max_wait_seconds=600/max_wait_seconds=1800/' \
-    mobile/android/gradle.py
+# Fail on use of prebuilt nimbus-fml
+"${BROWSER_TV_SED}" -i 's|https://|hxxps://|' "${BROWSER_TV_GECKO}/mobile/android/gradle/plugins/nimbus-gradle-plugin/src/main/groovy/org/mozilla/appservices/tooling/nimbus/NimbusGradlePlugin.groovy"
 
 # Break the dependency on older Rust
 "${BROWSER_TV_SED}" -i -e "s|rust-version = .*|rust-version = \""${RUST_VERSION}\""|g" Cargo.toml
@@ -285,14 +194,28 @@ echo '    "url-classifier-skip-urls.json",' >>services/settings/dumps/main/moz.b
 echo '    "url-parser-default-unknown-schemes-interventions.json",' >>services/settings/dumps/main/moz.build
 echo ']' >>services/settings/dumps/main/moz.build
 
+# Remove unused about:glean assets
+rm -vf toolkit/content/aboutGlean.css toolkit/content/aboutGlean.js toolkit/content/aboutGlean.html
+
 # Remove unused about:telemetry assets
 rm -vf toolkit/content/aboutTelemetry.css toolkit/content/aboutTelemetry.js toolkit/content/aboutTelemetry.xhtml
+
+# Remove unused localizations
+"${BROWSER_TV_SED}" -i 's|locale/@AB_CD@/global/aboutStudies|# locale/@AB_CD@/global/aboutStudies|' "${BROWSER_TV_GECKO}/toolkit/locales/jar.mn"
+"${BROWSER_TV_SED}" -i 's|crashreporter|# crashreporter|' "${BROWSER_TV_GECKO}/toolkit/locales/jar.mn"
+"${BROWSER_TV_SED}" -i 's|locales-preview/aboutRestricted|# locales-preview/aboutRestricted|' "${BROWSER_TV_GECKO}/toolkit/locales/jar.mn"
+rm -vrf "${BROWSER_TV_GECKO}/toolkit/locales/en-US/crashreporter"
+rm -vf "${BROWSER_TV_GECKO}/toolkit/locales/en-US/toolkit/about/aboutGlean.ftl"
+rm -vf "${BROWSER_TV_GECKO}/toolkit/locales/en-US/toolkit/about/aboutTelemetry.ftl"
 
 # Prevent registration of the Glean add-on ping scheduler
 "${BROWSER_TV_SED}" -i 's|category update-timer amGleanDaily|# category update-timer amGleanDaily|' toolkit/mozapps/extensions/extensions.manifest
 
 # Remove the Clear Key CDM
 "${BROWSER_TV_SED}" -i 's|@BINPATH@/@DLL_PREFIX@clearkey|; @BINPATH@/@DLL_PREFIX@clearkey|' mobile/android/installer/package-manifest.in
+
+# Remove GMP sources
+rm -vrf "${BROWSER_TV_GECKO}/toolkit/content/gmp-sources"
 
 # No-op RemoteSettingsCrashPull
 "${BROWSER_TV_SED}" -i 's|crash-reports-ondemand||g' toolkit/components/crashes/RemoteSettingsCrashPull.sys.mjs
@@ -303,7 +226,6 @@ rm -vf toolkit/content/aboutTelemetry.css toolkit/content/aboutTelemetry.js tool
 "${BROWSER_TV_SED}" -i 's|normandy-recipes-capabilities||g' toolkit/components/normandy/lib/RecipeRunner.sys.mjs
 
 # No-op Nimbus (Experimentation)
-"${BROWSER_TV_SED}" -i 's|classpath "${ApplicationServicesConfig.groupId}:tooling-nimbus-gradle|// "${ApplicationServicesConfig.groupId}:tooling-nimbus-gradle|g' build.gradle
 "${BROWSER_TV_SED}" -i -e 's/COLLECTION_ID_FALLBACK = ".*"/COLLECTION_ID_FALLBACK = ""/' toolkit/components/nimbus/ExperimentAPI.sys.mjs
 "${BROWSER_TV_SED}" -i -e 's/COLLECTION_ID_FALLBACK = ".*"/COLLECTION_ID_FALLBACK = ""/' toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs
 "${BROWSER_TV_SED}" -i -e 's/EXPERIMENTS_COLLECTION = ".*"/EXPERIMENTS_COLLECTION = ""/' toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs
@@ -351,7 +273,7 @@ rm -vf services/settings/static-dumps/main/doh-config.json services/settings/sta
 "${BROWSER_TV_SED}" -i "s|project(':port_messaging_example'|// project(':port_messaging_example'|g" settings.gradle
 "${BROWSER_TV_SED}" -i -e 's#if (rootDir.toString().contains("android-components") || !project.key.startsWith("samples"))#if (!project.key.startsWith("samples"))#' mobile/android/shared-settings.gradle
 
-# Remove Android Components
+# Remove Android Components (for now)
 "${BROWSER_TV_SED}" -i "s|include ':android-components'|// include ':android-components'|g" settings.gradle
 "${BROWSER_TV_SED}" -i "s|project(':android-components'|// project(':android-components'|g" settings.gradle
 
@@ -363,8 +285,10 @@ rm -vf services/settings/static-dumps/main/doh-config.json services/settings/sta
 "${BROWSER_TV_SED}" -i 's|adjust|# adjust|g' gradle/libs.versions.toml
 "${BROWSER_TV_SED}" -i 's|firebase-messaging|# firebase-messaging|g' gradle/libs.versions.toml
 "${BROWSER_TV_SED}" -i 's|installreferrer|# installreferrer|g' gradle/libs.versions.toml
+"${BROWSER_TV_SED}" -i 's|kotlinx-coroutines-play-services|# kotlinx-coroutines-play-services|g' gradle/libs.versions.toml
+"${BROWSER_TV_SED}" -i 's|play-integrity|# play-integrity|g' gradle/libs.versions.toml
 "${BROWSER_TV_SED}" -i 's|play-review|# play-review|g' gradle/libs.versions.toml
-"${BROWSER_TV_SED}" -i 's|play-services|# play-services|g' gradle/libs.versions.toml
+"${BROWSER_TV_SED}" -i 's|play-services-|# play-services-|g' gradle/libs.versions.toml
 "${BROWSER_TV_SED}" -i 's|sentry|# sentry|g' gradle/libs.versions.toml
 
 # Replace Google Play FIDO with microG
@@ -483,6 +407,19 @@ echo '#include ../../../browser-tv/prefs/browser-tv.js' >>mobile/android/app/gec
 # Apply Gecko overlay
 apply_overlay "${BROWSER_TV_GECKO_OVERLAY}/"
 
+## The following are for the build script, so that it can update the environment variables if needed
+### (ex. if the user changes them)
+
+if [[ -f "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages/connection-not-secure.html" ]]; then
+    rm -f "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages/connection-not-secure.html"
+fi
+cp -f "${BROWSER_TV_GECKO}/toolkit/content/neterror/supportpages/connection-not-secure.html" "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages/connection-not-secure.html"
+
+if [[ -f "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages/time-errors.html" ]]; then
+    rm -f "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages/time-errors.html"
+fi
+cp -f "${BROWSER_TV_GECKO}/toolkit/content/neterror/supportpages/time-errors.html" "${BROWSER_TV_BUILD}/tmp/gecko/toolkit/content/neterror/supportpages/time-errors.html"
+
 popd
 
 #
@@ -491,8 +428,11 @@ popd
 
 pushd "${BROWSER_TV_GMSCORE}"
 
+# Always use our Gradle wrapper with our Gradle flags/configuration
+localize_gradle
+
 # Bump Android build tools
-"${BROWSER_TV_SED}" -i -e "s|ext.androidBuildVersionTools = .*|ext.androidBuildVersionTools = '${ANDROID_BUILDTOOLS_VERSION}'|g" build.gradle
+"${BROWSER_TV_SED}" -i -e "s|ext.androidBuildVersionTools = .*|ext.androidBuildVersionTools = '${ANDROID_SDK_BUILD_TOOLS_VERSION}'|g" build.gradle
 
 # Bump Android compile SDK
 "${BROWSER_TV_SED}" -i -e "s|ext.androidCompileSdk = .*|ext.androidCompileSdk = ${ANDROID_SDK_TARGET}|g" build.gradle
@@ -507,6 +447,19 @@ pushd "${BROWSER_TV_GMSCORE}"
 popd
 
 #
+# Phoenix
+#
+
+pushd "${BROWSER_TV_PHOENIX}"
+
+# Ensure we don't reset devtools.debugger.remote-enabled per-launch from Phoenix
+## We handle this ourselves with browser-tv.cfg instead, so that we can allow that value to persist on Nightly builds (but not for Release)
+## I don't love this - it's hacky, and I probably need to find a better way to deal with this in Phoenix upstream...
+"${BROWSER_TV_SED}" -i -e 's|pref("devtools.debugger.remote-enabled"|// pref("devtools.debugger.remote-enabled"|g' "${BROWSER_TV_PHOENIX}/build-resources/phoenix-user-pref.cfg"
+
+popd
+
+#
 # Prebuilds
 #
 
@@ -514,5 +467,21 @@ if [[ "${BROWSER_TV_NO_PREBUILDS}" == 1 ]]; then
     pushd "${BROWSER_TV_IRONFOX_PREBUILDS}"
     echo "Preparing the prebuild build repository..."
     bash -x "${BROWSER_TV_IRONFOX_PREBUILDS}/scripts/prebuild.sh"
+    popd
+fi
+
+#
+# Bundletool
+#
+
+if [[ "${BROWSER_TV_NO_PREBUILDS}" == 1 ]]; then
+    pushd "${BROWSER_TV_BUNDLETOOL_DIR}"
+    echo "Preparing the Bundletool repository..."
+
+    # Always use our Gradle wrapper with our Gradle flags/configuration
+    localize_gradle
+
+    # Replace undesired Maven repos (ex. Mozilla's) with mavenLocal
+    localize_maven
     popd
 fi

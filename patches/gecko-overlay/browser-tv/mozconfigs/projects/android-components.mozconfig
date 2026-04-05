@@ -1,0 +1,3 @@
+# Browser TV Android Components mozconfig
+
+# export GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS} -Dorg.gradle.java.home=${BROWSER_TV_JAVA_HOME} -Dorg.gradle.java.installations.paths=${BROWSER_TV_JAVA_HOME},${BROWSER_TV_JDK_17_HOME} -Pofficial"

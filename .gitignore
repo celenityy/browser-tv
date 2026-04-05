@@ -15,15 +15,10 @@ __pycache__/
 # External repositories
 /external/
 
-# Phoenix configurations - downloaded
-/patches/gecko-overlay/browser-tv/prefs/000-phoenix.js
-/patches/gecko-overlay/browser-tv/prefs/001-phoenix-extended.js
-
 # Environment variables for local builds
 /env_override.sh
 /scripts/env_build.sh
 /scripts/env_local.sh
-/scripts/env_target.sh
 /local.properties
 
 # WIP

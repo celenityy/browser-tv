@@ -1,3 +1,4 @@
+# Browser TV - Nightly (ARM) mozconfig
 
 . "$topsrcdir/browser-tv/mozconfigs/core.mozconfig"
 . "$topsrcdir/browser-tv/mozconfigs/branding/browser-tv-nightly.mozconfig"

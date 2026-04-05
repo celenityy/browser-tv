@@ -1,5 +1,5 @@
 # Browser TV mozconfig...
 
-. "$topsrcdir/browser-tv/mozconfigs/browser-tv-${BROWSER_TV_CHANNEL}-${BROWSER_TV_TARGET_ARCH_MOZ}.mozconfig"
+. "$topsrcdir/browser-tv/mozconfigs/browser-tv-${BROWSER_TV_CHANNEL}-${BROWSER_TV_TARGET_ARCH}.mozconfig"
 
 # Any desired overrides can be added below:

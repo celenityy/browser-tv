@@ -1,9 +1,23 @@
+# Browser TV - Release (Bundle) mozconfig
 
 . "$topsrcdir/browser-tv/mozconfigs/core.mozconfig"
 . "$topsrcdir/browser-tv/mozconfigs/branding/browser-tv.mozconfig"
-. "$topsrcdir/browser-tv/mozconfigs/targets/bundle.mozconfig"
 
-## Set the destination object (output) directory
-mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-bundle
-mk_add_options OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-bundle
-export MOZ_OBJDIR="$topsrcdir/obj/browser-tv-release-bundle"
+# To create a bundle, we first need to produce a GeckoView AAR for each architecture...
+
+# 1. ARM64
+if [ "${BROWSER_TV_MACH_TARGET_BUNDLE_ARM64}" == 1 ]; then
+    . "$topsrcdir/browser-tv/mozconfigs/browser-tv-release-arm64.mozconfig"
+# 2. ARM
+elif [ "${BROWSER_TV_MACH_TARGET_BUNDLE_ARM}" == 1 ]; then
+    . "$topsrcdir/browser-tv/mozconfigs/browser-tv-release-arm.mozconfig"
+# 3. x86_64
+elif [ "${BROWSER_TV_MACH_TARGET_BUNDLE_X86_64}" == 1 ]; then
+    . "$topsrcdir/browser-tv/mozconfigs/browser-tv-release-x86_64.mozconfig"
+else
+    . "$topsrcdir/browser-tv/mozconfigs/targets/bundle.mozconfig"
+    ## Set the destination object (output) directory
+    mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-bundle
+    mk_add_options OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-bundle
+    export MOZ_OBJDIR="$topsrcdir/obj/browser-tv-release-bundle"
+fi

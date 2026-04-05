@@ -12,6 +12,9 @@
 export TARGET_CFLAGS="${BROWSER_TV_COMPILER_FLAGS}"
 export TARGET_CXXFLAGS="${BROWSER_TV_COMPILER_FLAGS}"
 
+# Gradle flags
+export GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS}"
+
 # Rust flags
 export CARGO_BUILD_RUSTDOCFLAGS="${BROWSER_TV_RUST_FLAGS}"
 export RUSTDOCFLAGS="${BROWSER_TV_RUST_FLAGS}"
@@ -19,7 +22,6 @@ export RUSTDOCFLAGS="${BROWSER_TV_RUST_FLAGS}"
 # Android SDK
 export ANDROID_HOME="${BROWSER_TV_ANDROID_SDK}"
 export ANDROID_SDK_ROOT="${BROWSER_TV_ANDROID_SDK}"
-export PATH="${BROWSER_TV_ANDROID_SDK}/cmdline-tools/latest/bin:${PATH}"
 
 # Android NDK
 export ANDROID_NDK_HOME="${BROWSER_TV_ANDROID_NDK}"
@@ -33,7 +35,6 @@ export GRADLE_USER_HOME="${BROWSER_TV_GRADLE_HOME}"
 
 # Java home
 export JAVA_HOME="${BROWSER_TV_JAVA_HOME}"
-export PATH="${BROWSER_TV_JAVA_HOME}/bin:${PATH}"
 
 # llvm-profdata
 export LLVM_PROFDATA="${BROWSER_TV_LLVM_PROFDATA}"
@@ -57,9 +58,27 @@ export MOZBUILD_STATE_PATH="${BROWSER_TV_MOZBUILD}"
 export TASKCLUSTER_PROXY_URL='https://noop.invalid'
 export TASKCLUSTER_ROOT_URL='https://noop.invalid'
 
+# Phoenix
+export PHOENIX_ANDROID_ONLY=1
+export PHOENIX_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS}"
+export PHOENIX_CURL_FLAGS_OVERRIDE=1
+export PHOENIX_EXTENDED_ONLY=1
+export PHOENIX_EXTRA_CFG=1
+export PHOENIX_EXTRA_CFG_FILE="${BROWSER_TV_BUILD}/tmp/gecko/browser-tv-parsed.cfg"
+export PHOENIX_EXTRA_CFG_OUTPUT_DIR="${BROWSER_TV_GECKO}/browser-tv/prefs"
+export PHOENIX_EXTRA_EXTENDED_OUTPUT_FILENAME_ANDROID='browser-tv'
+export PHOENIX_EXTRA_POLICIES_ANDROID=1
+export PHOENIX_EXTRA_POLICIES_FILE_ANDROID="${BROWSER_TV_PATCHES}/build/gecko/policies.json"
+export PHOENIX_EXTRA_POLICIES_OUTPUT_DIR_ANDROID="${BROWSER_TV_GECKO}/browser-tv/prefs"
+export PHOENIX_PYENV_DIR="${BROWSER_TV_PYENV_DIR}"
+export PHOENIX_PYTHON="${BROWSER_TV_PYTHON}"
+export PHOENIX_SED="${BROWSER_TV_SED}"
+export PHOENIX_TAR="${BROWSER_TV_TAR}"
+export PHOENIX_SPECS=0
+
 # Python (rust-android-gradle)
 ## https://github.com/mozilla/rust-android-gradle?tab=readme-ov-file#specifying-paths-to-sub-commands-python-cargo-and-rustc
-export RUST_ANDROID_GRADLE_PYTHON_COMMAND="$(which python)"
+export RUST_ANDROID_GRADLE_PYTHON_COMMAND="${BROWSER_TV_PYTHON}"
 
 # Rust (cargo)
 export CARGO="${BROWSER_TV_CARGO}"
@@ -69,7 +88,6 @@ export RUST_ANDROID_GRADLE_CARGO_COMMAND="${BROWSER_TV_CARGO}"
 export RUST_ANDROID_GRADLE_RUSTC_COMMAND="${BROWSER_TV_RUSTC}"
 export RUSTC="${BROWSER_TV_RUSTC}"
 export RUSTDOC="${BROWSER_TV_RUSTDOC}"
-export PATH="${BROWSER_TV_CARGO_HOME}/bin:${PATH}"
 
 ## Always clean old files
 ### https://doc.rust-lang.org/cargo/reference/config.html#cacheauto-clean-frequency

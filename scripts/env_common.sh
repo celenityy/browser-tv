@@ -8,7 +8,7 @@
 
 # If variables are defined with a custom `env_override.sh` file (located at the root project directory), let's use those
 ## These need to be set first, to ensure that they don't interfere with certain variables
-BROWSER_TV_ENV_OVERRIDE="${IRONFOX_ROOT}/env_override.sh"
+readonly BROWSER_TV_ENV_OVERRIDE="${IRONFOX_ROOT}/env_override.sh"
 if [[ -f "${BROWSER_TV_ENV_OVERRIDE}" ]]; then
     source "${BROWSER_TV_ENV_OVERRIDE}"
 fi
@@ -16,397 +16,579 @@ fi
 # Browser TV
 
 # Scripts directory
-export BROWSER_TV_SCRIPTS="${BROWSER_TV_ROOT}/scripts"
+readonly BROWSER_TV_SCRIPTS="${BROWSER_TV_ROOT}/scripts"
+export BROWSER_TV_SCRIPTS
 
-# Environment configuration
-BROWSER_TV_ENV_DEFAULTS="${BROWSER_TV_SCRIPTS}/env_defaults.sh"
+## Browser TV utilities
+readonly BROWSER_TV_UTILS="${BROWSER_TV_SCRIPTS}/utilities.sh"
+export BROWSER_TV_UTILS
 
-## For build target configuration
-export BROWSER_TV_ENV_TARGET="${BROWSER_TV_SCRIPTS}/env_target.sh"
-export BROWSER_TV_ENV_TARGET_HELPERS="${BROWSER_TV_SCRIPTS}/env_target_helpers.sh"
-
-# For build environment configuration
-export BROWSER_TV_ENV_BUILD="${BROWSER_TV_SCRIPTS}/env_build.sh"
+# Build environment configuration
+readonly BROWSER_TV_ENV_BUILD="${BROWSER_TV_SCRIPTS}/env_build.sh"
+export BROWSER_TV_ENV_BUILD
 
 # Build directory
-export BROWSER_TV_BUILD="${BROWSER_TV_ROOT}/build"
+readonly BROWSER_TV_BUILD="${BROWSER_TV_ROOT}/build"
+export BROWSER_TV_BUILD
 
 # External sources directory
-export BROWSER_TV_EXTERNAL="${BROWSER_TV_ROOT}/external"
+readonly BROWSER_TV_EXTERNAL="${BROWSER_TV_ROOT}/external"
+export BROWSER_TV_EXTERNAL
 
 # External downloads/resources directory
-export BROWSER_TV_DOWNLOADS="${BROWSER_TV_EXTERNAL}/downloads"
+readonly BROWSER_TV_DOWNLOADS="${BROWSER_TV_EXTERNAL}/downloads"
+export BROWSER_TV_DOWNLOADS
 
 # Patches directory
-export BROWSER_TV_PATCHES="${BROWSER_TV_ROOT}/patches"
+readonly BROWSER_TV_PATCHES="${BROWSER_TV_ROOT}/patches"
+export BROWSER_TV_PATCHES
 
 # Get our current commit
 ## (This is ex. displayed at `about:buildconfig` in Gecko/Firefox)
-export BROWSER_TV_REVISION="$(git log -1 --format="%H" | tail -n 1)"
+readonly BROWSER_TV_REVISION="$(git log -1 --format="%H" | tail -n 1)"
+export BROWSER_TV_REVISION
 
 # Set our platform, OS, and architecture
-export BROWSER_TV_ENV_HELPERS="${IRONFOX_SCRIPTS}/env_helpers.sh"
+readonly BROWSER_TV_ENV_HELPERS="${IRONFOX_SCRIPTS}/env_helpers.sh"
+export BROWSER_TV_ENV_HELPERS
 source "${BROWSER_TV_ENV_HELPERS}"
 
 # Include version info
-export BROWSER_TV_VERSIONS="${IRONFOX_SCRIPTS}/versions.sh"
+readonly BROWSER_TV_VERSIONS="${IRONFOX_SCRIPTS}/versions.sh"
+export BROWSER_TV_VERSIONS
 source "${BROWSER_TV_VERSIONS}"
 
 # Browser TV outputs directory
-BROWSER_TV_OUTPUTS_DEFAULT="${BROWSER_TV_BUILD}/outputs"
+readonly BROWSER_TV_OUTPUTS_DEFAULT="${BROWSER_TV_BUILD}/outputs"
 if [[ -z "${BROWSER_TV_OUTPUTS+x}" ]]; then
-    export BROWSER_TV_OUTPUTS="${BROWSER_TV_OUTPUTS_DEFAULT}"
+    BROWSER_TV_OUTPUTS="${BROWSER_TV_OUTPUTS_DEFAULT}"
 fi
+readonly BROWSER_TV_OUTPUTS
+export BROWSER_TV_OUTPUTS
 
-export BROWSER_TV_OUTPUTS_AAB="${BROWSER_TV_OUTPUTS}/aab"
-export BROWSER_TV_OUTPUTS_AAR="${BROWSER_TV_OUTPUTS}/aar"
-export BROWSER_TV_OUTPUTS_APK="${BROWSER_TV_OUTPUTS}/apk"
-export BROWSER_TV_OUTPUTS_APKS="${BROWSER_TV_OUTPUTS}/apks"
-export BROWSER_TV_OUTPUTS_GV_AAR_ARM="${BROWSER_TV_OUTPUTS_AAR}/geckoview-armeabi-v7a.zip"
-export BROWSER_TV_OUTPUTS_GV_AAR_ARM64="${BROWSER_TV_OUTPUTS_AAR}/geckoview-arm64-v8a.zip"
-export BROWSER_TV_OUTPUTS_GV_AAR_X86_64="${BROWSER_TV_OUTPUTS_AAR}/geckoview-x86_64.zip"
-export BROWSER_TV_OUTPUTS_LOGS="${BROWSER_TV_OUTPUTS}/logs"
+readonly BROWSER_TV_OUTPUTS_AAB="${BROWSER_TV_OUTPUTS}/aab"
+readonly BROWSER_TV_OUTPUTS_AAR="${BROWSER_TV_OUTPUTS}/aar"
+readonly BROWSER_TV_OUTPUTS_APK="${BROWSER_TV_OUTPUTS}/apk"
+readonly BROWSER_TV_OUTPUTS_APKS="${BROWSER_TV_OUTPUTS}/apks"
+readonly BROWSER_TV_OUTPUTS_GV_AAR_ARM="${BROWSER_TV_OUTPUTS_AAR}/geckoview-armeabi-v7a.zip"
+readonly BROWSER_TV_OUTPUTS_GV_AAR_ARM64="${BROWSER_TV_OUTPUTS_AAR}/geckoview-arm64-v8a.zip"
+readonly BROWSER_TV_OUTPUTS_GV_AAR_X86_64="${BROWSER_TV_OUTPUTS_AAR}/geckoview-x86_64.zip"
+readonly BROWSER_TV_OUTPUTS_LOGS="${BROWSER_TV_OUTPUTS}/logs"
+export BROWSER_TV_OUTPUTS_AAB
+export BROWSER_TV_OUTPUTS_AAR
+export BROWSER_TV_OUTPUTS_APK
+export BROWSER_TV_OUTPUTS_APKS
+export BROWSER_TV_OUTPUTS_GV_AAR_ARM
+export BROWSER_TV_OUTPUTS_GV_AAR_ARM64
+export BROWSER_TV_OUTPUTS_GV_AAR_X86_64
+export BROWSER_TV_OUTPUTS_LOGS
 
 # Android SDK
-BROWSER_TV_ANDROID_SDK_DEFAULT="${BROWSER_TV_EXTERNAL}/android-sdk"
+readonly BROWSER_TV_ANDROID_SDK_DEFAULT="${BROWSER_TV_EXTERNAL}/android-sdk"
 if [[ -z "${BROWSER_TV_ANDROID_SDK+x}" ]]; then
-    export BROWSER_TV_ANDROID_SDK="${BROWSER_TV_ANDROID_SDK_DEFAULT}"
+    BROWSER_TV_ANDROID_SDK="${BROWSER_TV_ANDROID_SDK_DEFAULT}"
 fi
+readonly BROWSER_TV_ANDROID_SDK
+export BROWSER_TV_ANDROID_SDK
 
 # Android NDK
-BROWSER_TV_ANDROID_NDK_DEFAULT="${BROWSER_TV_ANDROID_SDK}/ndk/${ANDROID_NDK_REVISION}"
+readonly BROWSER_TV_ANDROID_NDK_DEFAULT="${BROWSER_TV_ANDROID_SDK}/ndk/${ANDROID_NDK_REVISION}"
 if [[ -z "${BROWSER_TV_ANDROID_NDK+x}" ]]; then
-    export BROWSER_TV_ANDROID_NDK="${BROWSER_TV_ANDROID_NDK_DEFAULT}"
+    BROWSER_TV_ANDROID_NDK="${BROWSER_TV_ANDROID_NDK_DEFAULT}"
 fi
+readonly BROWSER_TV_ANDROID_NDK
+export BROWSER_TV_ANDROID_NDK
+
+# Application Services
+readonly BROWSER_TV_AS_DEFAULT="${BROWSER_TV_EXTERNAL}/application-services"
+if [[ -z "${BROWSER_TV_AS+x}" ]]; then
+    BROWSER_TV_AS="${BROWSER_TV_AS_DEFAULT}"
+fi
+export BROWSER_TV_AS
+
+## Application Services overlay
+readonly BROWSER_TV_AS_OVERLAY="${BROWSER_TV_PATCHES}/a-s-overlay"
+export BROWSER_TV_AS_OVERLAY
 
 ## sdkmanager
-export BROWSER_TV_ANDROID_SDKMANAGER="${BROWSER_TV_ANDROID_SDK}/cmdline-tools/latest/bin/sdkmanager"
+readonly BROWSER_TV_ANDROID_SDKMANAGER="${BROWSER_TV_ANDROID_SDK}/cmdline-tools/latest/bin/sdkmanager"
+export BROWSER_TV_ANDROID_SDKMANAGER
 
 # Bundletool
-BROWSER_TV_BUNDLETOOL_DIR_DEFAULT="${BROWSER_TV_EXTERNAL}/bundletool"
+readonly BROWSER_TV_BUNDLETOOL_DIR_DEFAULT="${BROWSER_TV_EXTERNAL}/bundletool"
 if [[ -z "${BROWSER_TV_BUNDLETOOl_DIR+x}" ]]; then
-    export BROWSER_TV_BUNDLETOOL_DIR="${BROWSER_TV_BUNDLETOOL_DIR_DEFAULT}"
+    BROWSER_TV_BUNDLETOOL_DIR="${BROWSER_TV_BUNDLETOOL_DIR_DEFAULT}"
 fi
-export BROWSER_TV_BUNDLETOOL="${BROWSER_TV_BUNDLETOOL_DIR}/bundletool"
-export BROWSER_TV_BUNDLETOOL_JAR="${BROWSER_TV_BUNDLETOOL_DIR}/bundletool.jar"
+readonly BROWSER_TV_BUNDLETOOL_DIR
+readonly BROWSER_TV_BUNDLETOOL="${BROWSER_TV_SCRIPTS}/bundletool.sh"
+readonly BROWSER_TV_BUNDLETOOL_JAR="${BROWSER_TV_BUNDLETOOL_DIR}/bundletool.jar"
+export BROWSER_TV_BUNDLETOOL
+export BROWSER_TV_BUNDLETOOL_DIR
+export BROWSER_TV_BUNDLETOOL_JAR
 
 # Firefox (mozilla-central)
-BROWSER_TV_GECKO_DEFAULT="${BROWSER_TV_EXTERNAL}/gecko"
+readonly BROWSER_TV_GECKO_DEFAULT="${BROWSER_TV_EXTERNAL}/gecko"
 if [[ -z "${BROWSER_TV_GECKO+x}" ]]; then
-    export BROWSER_TV_GECKO="${BROWSER_TV_GECKO_DEFAULT}"
+    BROWSER_TV_GECKO="${BROWSER_TV_GECKO_DEFAULT}"
 fi
+readonly BROWSER_TV_GECKO
+export BROWSER_TV_GECKO
 
 ## mach
-export BROWSER_TV_MACH="${BROWSER_TV_GECKO}/mach"
+readonly BROWSER_TV_MACH="${BROWSER_TV_GECKO}/mach"
+export BROWSER_TV_MACH
 
 ## Gecko overlay
-export BROWSER_TV_GECKO_OVERLAY="${BROWSER_TV_PATCHES}/gecko-overlay"
+readonly BROWSER_TV_GECKO_OVERLAY="${BROWSER_TV_PATCHES}/gecko-overlay"
+export BROWSER_TV_GECKO_OVERLAY
 
 ## Android Components
-export BROWSER_TV_AC="${BROWSER_TV_GECKO}/mobile/android/android-components"
+readonly BROWSER_TV_AC="${BROWSER_TV_GECKO}/mobile/android/android-components"
+export BROWSER_TV_AC
 
 ### Android Components overlay
-export BROWSER_TV_AC_OVERLAY="${BROWSER_TV_PATCHES}/a-c-overlay"
+readonly BROWSER_TV_AC_OVERLAY="${BROWSER_TV_PATCHES}/a-c-overlay"
+export BROWSER_TV_AC_OVERLAY
 
 ## Gecko locales
-BROWSER_TV_GECKO_LOCALES_DEFAULT=$(<"${BROWSER_TV_PATCHES}/locales")
+readonly BROWSER_TV_GECKO_LOCALES_DEFAULT=$(<"${BROWSER_TV_PATCHES}/locales")
 if [[ -z "${BROWSER_TV_GECKO_LOCALES+x}" ]]; then
-    export BROWSER_TV_GECKO_LOCALES="${BROWSER_TV_GECKO_LOCALES_DEFAULT}"
+    BROWSER_TV_GECKO_LOCALES="${BROWSER_TV_GECKO_LOCALES_DEFAULT}"
 fi
+readonly BROWSER_TV_GECKO_LOCALES
+export BROWSER_TV_GECKO_LOCALES
 
 ## Gecko l10n
-BROWSER_TV_L10N_CENTRAL_DEFAULT="${BROWSER_TV_EXTERNAL}/l10n-central"
+readonly BROWSER_TV_L10N_CENTRAL_DEFAULT="${BROWSER_TV_EXTERNAL}/l10n-central"
 if [[ -z "${BROWSER_TV_L10N_CENTRAL+x}" ]]; then
-    export BROWSER_TV_L10N_CENTRAL="${BROWSER_TV_L10N_CENTRAL_DEFAULT}"
+    BROWSER_TV_L10N_CENTRAL="${BROWSER_TV_L10N_CENTRAL_DEFAULT}"
 fi
+readonly BROWSER_TV_L10N_CENTRAL
+export BROWSER_TV_L10N_CENTRAL
 
 ## .mozbuild
-BROWSER_TV_MOZBUILD_DEFAULT="${IRONFOX_BUILD}/.mozbuild"
+readonly BROWSER_TV_MOZBUILD_DEFAULT="${IRONFOX_BUILD}/.mozbuild"
 if [[ -z "${BROWSER_TV_MOZBUILD+x}" ]]; then
-    export BROWSER_TV_MOZBUILD="${BROWSER_TV_MOZBUILD_DEFAULT}"
+    BROWSER_TV_MOZBUILD="${BROWSER_TV_MOZBUILD_DEFAULT}"
 fi
+readonly BROWSER_TV_MOZBUILD
+export BROWSER_TV_MOZBUILD
 
 # GNU date
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_DATE_DEFAULT='gdate'
+    readonly BROWSER_TV_DATE_DEFAULT='gdate'
 else
-    BROWSER_TV_DATE_DEFAULT='date'
+    readonly BROWSER_TV_DATE_DEFAULT='date'
 fi
 if [[ -z "${BROWSER_TV_DATE+x}" ]]; then
-    export BROWSER_TV_DATE="${BROWSER_TV_DATE_DEFAULT}"
+    BROWSER_TV_DATE="${BROWSER_TV_DATE_DEFAULT}"
 fi
+readonly BROWSER_TV_DATE
+export BROWSER_TV_DATE
 
 # GNU make
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_MAKE_DEFAULT='gmake'
+    readonly BROWSER_TV_MAKE_DEFAULT='gmake'
 else
-    BROWSER_TV_MAKE_DEFAULT='make'
+    readonly BROWSER_TV_MAKE_DEFAULT='make'
 fi
 if [[ -z "${BROWSER_TV_MAKE+x}" ]]; then
-    export BROWSER_TV_MAKE="${BROWSER_TV_MAKE_DEFAULT}"
+    BROWSER_TV_MAKE="${BROWSER_TV_MAKE_DEFAULT}"
 fi
+readonly BROWSER_TV_MAKE
+export BROWSER_TV_MAKE
 
 # GNU sed
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_SED_DEFAULT='gsed'
+    readonly BROWSER_TV_SED_DEFAULT='gsed'
 else
-    BROWSER_TV_SED_DEFAULT='sed'
+    readonly BROWSER_TV_SED_DEFAULT='sed'
 fi
 if [[ -z "${BROWSER_TV_SED+x}" ]]; then
-    export BROWSER_TV_SED="${BROWSER_TV_SED_DEFAULT}"
+    BROWSER_TV_SED="${BROWSER_TV_SED_DEFAULT}"
 fi
+readonly BROWSER_TV_SED
+export BROWSER_TV_SED
 
 # GNU tar
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_TAR_DEFAULT='gtar'
+    readonly BROWSER_TV_TAR_DEFAULT='gtar'
 else
-    BROWSER_TV_TAR_DEFAULT='tar'
+    readonly BROWSER_TV_TAR_DEFAULT='tar'
 fi
 if [[ -z "${BROWSER_TV_TAR+x}" ]]; then
-    export BROWSER_TV_TAR="${BROWSER_TV_TAR_DEFAULT}"
+    BROWSER_TV_TAR="${BROWSER_TV_TAR_DEFAULT}"
 fi
+readonly BROWSER_TV_TAR
+export BROWSER_TV_TAR
 
 # Gradle
-BROWSER_TV_GRADLE_DIR_DEFAULT="${BROWSER_TV_EXTERNAL}/gradle"
+readonly BROWSER_TV_GRADLE_DIR_DEFAULT="${BROWSER_TV_EXTERNAL}/gradle"
 if [[ -z "${BROWSER_TV_GRADLE_DIR+x}" ]]; then
-    export BROWSER_TV_GRADLE_DIR="${BROWSER_TV_GRADLE_DIR_DEFAULT}"
+    BROWSER_TV_GRADLE_DIR="${BROWSER_TV_GRADLE_DIR_DEFAULT}"
 fi
-export BROWSER_TV_GRADLE="${BROWSER_TV_GRADLE_DIR}/gradle"
+readonly BROWSER_TV_GRADLE_DIR
+readonly BROWSER_TV_GRADLE="${BROWSER_TV_SCRIPTS}/gradle.sh"
+readonly BROWSER_TV_GRADLE_PY="${BROWSER_TV_GRADLE_DIR}/gradlew.py"
+export BROWSER_TV_GRADLE
+export BROWSER_TV_GRADLE_DIR
+export BROWSER_TV_GRADLE_PY
 
 ## Gradle cache
-BROWSER_TV_GRADLE_CACHE_DEFAULT="${BROWSER_TV_BUILD}/gradle/cache"
+readonly BROWSER_TV_GRADLE_CACHE_DEFAULT="${BROWSER_TV_BUILD}/gradle/cache"
 if [[ -z "${BROWSER_TV_GRADLE_CACHE+x}" ]]; then
-    export BROWSER_TV_GRADLE_CACHE="${BROWSER_TV_GRADLE_CACHE_DEFAULT}"
+    BROWSER_TV_GRADLE_CACHE="${BROWSER_TV_GRADLE_CACHE_DEFAULT}"
 fi
+readonly BROWSER_TV_GRADLE_CACHE
+export BROWSER_TV_GRADLE_CACHE
 
 ## Gradle home
-BROWSER_TV_GRADLE_HOME_DEFAULT="${IRONFOX_BUILD}/.gradle"
+readonly BROWSER_TV_GRADLE_HOME_DEFAULT="${IRONFOX_BUILD}/.gradle"
 if [[ -z "${BROWSER_TV_GRADLE_HOME+x}" ]]; then
-    export BROWSER_TV_GRADLE_HOME="${BROWSER_TV_GRADLE_HOME_DEFAULT}"
+    BROWSER_TV_GRADLE_HOME="${BROWSER_TV_GRADLE_HOME_DEFAULT}"
 fi
+readonly BROWSER_TV_GRADLE_HOME
+export BROWSER_TV_GRADLE_HOME
 
-# Home
-## (ex. used by our mozconfigs for setting the local Maven repo)
-if [[ -z "${BROWSER_TV_HOME+x}" ]]; then
-    export BROWSER_TV_HOME="${HOME}"
+# Gradle local Maven repository
+readonly BROWSER_TV_MAVEN_LOCAL_DEFAULT="${BROWSER_TV_BUILD}/.m2/repository"
+if [[ -z "${BROWSER_TV_MAVEN_LOCAL+x}" ]]; then
+    BROWSER_TV_MAVEN_LOCAL="${BROWSER_TV_MAVEN_LOCAL_DEFAULT}"
 fi
+readonly BROWSER_TV_MAVEN_LOCAL
+export BROWSER_TV_MAVEN_LOCAL
 
 # Java home
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_JAVA_HOME_DEFAULT='/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home'
+    readonly BROWSER_TV_JAVA_HOME_DEFAULT='/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home'
 else
-    BROWSER_TV_JAVA_HOME_DEFAULT='/usr/lib/jvm/temurin-17-jdk'
+    readonly BROWSER_TV_JAVA_HOME_DEFAULT='/usr/lib/jvm/temurin-17-jdk'
 fi
 if [[ -z "${BROWSER_TV_JAVA_HOME+x}" ]]; then
-    export BROWSER_TV_JAVA_HOME="${BROWSER_TV_JAVA_HOME_DEFAULT}"
+   BROWSER_TV_JAVA_HOME="${BROWSER_TV_JAVA_HOME_DEFAULT}"
 fi
+readonly BROWSER_TV_JAVA_HOME
+readonly BROWSER_TV_JAVA="${IBROWSER_TV_JAVA_HOME}/bin/java"
+export BROWSER_TV_JAVA
+export BROWSER_TV_JAVA_HOME
 
 # libclang
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_LIBCLANG_DEFAULT="${BROWSER_TV_ANDROID_NDK}/toolchains/llvm/prebuilt/${BROWSER_TV_PLATFORM}-x86_64/lib"
+    readonly BROWSER_TV_LIBCLANG_DEFAULT="${BROWSER_TV_ANDROID_NDK}/toolchains/llvm/prebuilt/${BROWSER_TV_PLATFORM}-x86_64/lib"
 else
-    BROWSER_TV_LIBCLANG_DEFAULT="${BROWSER_TV_ANDROID_NDK}/toolchains/llvm/prebuilt/${BROWSER_TV_PLATFORM}-x86_64/musl/lib"
+    readonly BROWSER_TV_LIBCLANG_DEFAULT="${BROWSER_TV_ANDROID_NDK}/toolchains/llvm/prebuilt/${BROWSER_TV_PLATFORM}-x86_64/musl/lib"
 fi
 if [[ -z "${BROWSER_TV_LIBCLANG+x}" ]]; then
-    export BROWSER_TV_LIBCLANG="${BROWSER_TV_LIBCLANG_DEFAULT}"
+    BROWSER_TV_LIBCLANG="${BROWSER_TV_LIBCLANG_DEFAULT}"
 fi
+readonly BROWSER_TV_LIBCLANG
+export BROWSER_TV_LIBCLANG
 
 # llvm-profdata
-BROWSER_TV_LLVM_PROFDATA_DEFAULT="${BROWSER_TV_ANDROID_NDK}/toolchains/llvm/prebuilt/${BROWSER_TV_PLATFORM}-x86_64/bin/llvm-profdata"
+readonly BROWSER_TV_LLVM_PROFDATA_DEFAULT="${BROWSER_TV_ANDROID_NDK}/toolchains/llvm/prebuilt/${BROWSER_TV_PLATFORM}-x86_64/bin/llvm-profdata"
 if [[ -z "${BROWSER_TV_LLVM_PROFDATA+x}" ]]; then
-    export BROWSER_TV_LLVM_PROFDATA="${BROWSER_TV_LLVM_PROFDATA_DEFAULT}"
+    BROWSER_TV_LLVM_PROFDATA="${BROWSER_TV_LLVM_PROFDATA_DEFAULT}"
 fi
+readonly BROWSER_TV_LLVM_PROFDATA
+export BROWSER_TV_LLVM_PROFDATA
 
 # microG
-BROWSER_TV_GMSCORE_DEFAULT="${IRONFOX_EXTERNAL}/gmscore"
+readonly BROWSER_TV_GMSCORE_DEFAULT="${IRONFOX_EXTERNAL}/gmscore"
 if [[ -z "${BROWSER_TV_GMSCORE+x}" ]]; then
-    export BROWSER_TV_GMSCORE="${BROWSER_TV_GMSCORE_DEFAULT}"
+    BROWSER_TV_GMSCORE="${BROWSER_TV_GMSCORE_DEFAULT}"
 fi
+readonly BROWSER_TV_GMSCORE
+export BROWSER_TV_GMSCORE
 
 # nproc
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_NPROC_DEFAULT='sysctl -n hw.logicalcpu'
+    readonly BROWSER_TV_NPROC_DEFAULT='sysctl -n hw.logicalcpu'
 else
-    BROWSER_TV_NPROC_DEFAULT='nproc'
+    readonly BROWSER_TV_NPROC_DEFAULT='nproc'
 fi
 if [[ -z "${BROWSER_TV_NPROC+x}" ]]; then
-    export BROWSER_TV_NPROC="${BROWSER_TV_NPROC_DEFAULT}"
+    BROWSER_TV_NPROC="${BROWSER_TV_NPROC_DEFAULT}"
 fi
+readonly BROWSER_TV_NPROC
+export BROWSER_TV_NPROC
 
 # IronFox prebuilds
-BROWSER_TV_IRONFOX_PREBUILDS_DEFAULT="${BROWSER_TV_EXTERNAL}/prebuilds"
+readonly BROWSER_TV_IRONFOX_PREBUILDS_DEFAULT="${BROWSER_TV_EXTERNAL}/prebuilds"
 if [[ -z "${BROWSER_TV_IRONFOX_PREBUILDS+x}" ]]; then
-    export BROWSER_TV_IRONFOX_PREBUILDS="${BROWSER_TV_IRONFOX_PREBUILDS_DEFAULT}"
+    BROWSER_TV_IRONFOX_PREBUILDS="${BROWSER_TV_IRONFOX_PREBUILDS_DEFAULT}"
 fi
+readonly BROWSER_TV_IRONFOX_PREBUILDS
+export BROWSER_TV_IRONFOX_PREBUILDS
 
-# Python (pip)
-BROWSER_TV_PIP_DIR_DEFAULT="${BROWSER_TV_BUILD}/pyenv"
-if [[ -z "${BROWSER_TV_PIP_DIR+x}" ]]; then
-    export BROWSER_TV_PIP_DIR="${BROWSER_TV_PIP_DIR_DEFAULT}"
+# Phoenix
+readonly BROWSER_TV_PHOENIX_DEFAULT="${BROWSER_TV_EXTERNAL}/phoenix"
+if [[ -z "${BROWSER_TV_PHOENIX+x}" ]]; then
+    BROWSER_TV_PHOENIX="${BROWSER_TV_PHOENIX_DEFAULT}"
 fi
-export BROWSER_TV_PIP_ENV="${BROWSER_TV_PIP_DIR}/bin/activate"
+readonly BROWSER_TV_PHOENIX
+export BROWSER_TV_PHOENIX
 
-## For macOS, ensure that Python 3.9 is in PATH
-if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    export PATH="${PATH}:$(brew --prefix)/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin"
+# Python environment
+readonly BROWSER_TV_PYENV_DIR_DEFAULT="${BROWSER_TV_BUILD}/pyenv"
+if [[ -z "${BROWSER_TV_PYENV_DIR+x}" ]]; then
+    BROWSER_TV_PYENV_DIR="${BROWSER_TV_PYENV_DIR_DEFAULT}"
 fi
+readonly BROWSER_TV_PYENV_DIR
+readonly BROWSER_TV_PIP="${BROWSER_TV_PYENV_DIR}/bin/pip"
+readonly BROWSER_TV_PYENV="${BROWSER_TV_PYENV_DIR}/bin/activate"
+readonly BROWSER_TV_PYTHON="${BROWSER_TV_PYENV_DIR}/bin/python"
+export BROWSER_TV_PIP
+export BROWSER_TV_PYENV_DIR
+export BROWSER_TV_PYENV
+export BROWSER_TV_PYTHON
 
 # Rust (cargo)
-BROWSER_TV_CARGO_HOME_DEFAULT="${BROWSER_TV_BUILD}/.cargo"
+readonly BROWSER_TV_CARGO_HOME_DEFAULT="${BROWSER_TV_BUILD}/.cargo"
 if [[ -z "${BROWSER_TV_CARGO_HOME+x}" ]]; then
-    export BROWSER_TV_CARGO_HOME="${BROWSER_TV_CARGO_HOME_DEFAULT}"
+    BROWSER_TV_CARGO_HOME="${BROWSER_TV_CARGO_HOME_DEFAULT}"
 fi
-export BROWSER_TV_CARGO="${BROWSER_TV_CARGO_HOME}/bin/cargo"
-export BROWSER_TV_CARGO_ENV="${BROWSER_TV_CARGO_HOME}/env"
-export BROWSER_TV_RUSTC="${BROWSER_TV_CARGO_HOME}/bin/rustc"
-export BROWSER_TV_RUSTDOC="${BROWSER_TV_CARGO_HOME}/bin/rustdoc"
+readonly BROWSER_TV_CARGO_HOME
+readonly BROWSER_TV_CARGO="${BROWSER_TV_CARGO_HOME}/bin/cargo"
+readonly BROWSER_TV_CARGO_ENV="${BROWSER_TV_CARGO_HOME}/env"
+readonly BROWSER_TV_RUSTC="${BROWSER_TV_CARGO_HOME}/bin/rustc"
+readonly BROWSER_TV_RUSTDOC="${BROWSER_TV_CARGO_HOME}/bin/rustdoc"
+export BROWSER_TV_CARGO
+export BROWSER_TV_CARGO_ENV
+export BROWSER_TV_CARGO_HOME
+export BROWSER_TV_RUSTC
+export BROWSER_TV_RUSTDOC
 
 ## Display progress bars
-BROWSER_TV_CARGO_PROGRESS_BAR_DEFAULT='always'
+readonly BROWSER_TV_CARGO_PROGRESS_BAR_DEFAULT='always'
 if [[ -z "${BROWSER_TV_CARGO_PROGRESS_BAR+x}" ]]; then
-    export BROWSER_TV_CARGO_PROGRESS_BAR="${BROWSER_TV_CARGO_PROGRESS_BAR_DEFAULT}"
+    BROWSER_TV_CARGO_PROGRESS_BAR="${BROWSER_TV_CARGO_PROGRESS_BAR_DEFAULT}"
 fi
+readonly BROWSER_TV_CARGO_PROGRESS_BAR
+export BROWSER_TV_CARGO_PROGRESS_BAR
 
 ## Enable colored output
-BROWSER_TV_CARGO_COLORED_OUTPUT_DEFAULT='always'
+readonly BROWSER_TV_CARGO_COLORED_OUTPUT_DEFAULT='always'
 if [[ -z "${BROWSER_TV_CARGO_COLORED_OUTPUT+x}" ]]; then
-    export BROWSER_TV_CARGO_COLORED_OUTPUT="${BROWSER_TV_CARGO_COLORED_OUTPUT_DEFAULT}"
+    BROWSER_TV_CARGO_COLORED_OUTPUT="${BROWSER_TV_CARGO_COLORED_OUTPUT_DEFAULT}"
 fi
+readonly BROWSER_TV_CARGO_COLORED_OUTPUT
+export BROWSER_TV_CARGO_COLORED_OUTPUT
 
 # rustup
-BROWSER_TV_RUSTUP_HOME_DEFAULT="${BROWSER_TV_BUILD}/.rustup"
+readonly BROWSER_TV_RUSTUP_HOME_DEFAULT="${BROWSER_TV_BUILD}/.rustup"
 if [[ -z "${BROWSER_TV_RUSTUP_HOME+x}" ]]; then
-    export BROWSER_TV_RUSTUP_HOME="${BROWSER_TV_RUSTUP_HOME_DEFAULT}"
+    BROWSER_TV_RUSTUP_HOME="${BROWSER_TV_RUSTUP_HOME_DEFAULT}"
 fi
+readonly BROWSER_TV_RUSTUP_HOME
+export BROWSER_TV_RUSTUP_HOME
 
 ## Display progress bars
-BROWSER_TV_RUSTUP_PROGRESS_BAR_DEFAULT='always'
+readonly BROWSER_TV_RUSTUP_PROGRESS_BAR_DEFAULT='always'
 if [[ -z "${BROWSER_TV_RUSTUP_PROGRESS_BAR+x}" ]]; then
-    export BROWSER_TV_RUSTUP_PROGRESS_BAR="${BROWSER_TV_RUSTUP_PROGRESS_BAR_DEFAULT}"
+    BROWSER_TV_RUSTUP_PROGRESS_BAR="${BROWSER_TV_RUSTUP_PROGRESS_BAR_DEFAULT}"
 fi
+readonly BROWSER_TV_RUSTUP_PROGRESS_BAR
+export BROWSER_TV_RUSTUP_PROGRESS_BAR
 
 ## Enable colored output
-BROWSER_TV_RUSTUP_COLORED_OUTPUT_DEFAULT='always'
+readonly BROWSER_TV_RUSTUP_COLORED_OUTPUT_DEFAULT='always'
 if [[ -z "${BROWSER_TV_RUSTUP_COLORED_OUTPUT+x}" ]]; then
-    export BROWSER_TV_RUSTUP_COLORED_OUTPUT="${BROWSER_TV_RUSTUP_COLORED_OUTPUT_DEFAULT}"
+    BROWSER_TV_RUSTUP_COLORED_OUTPUT="${BROWSER_TV_RUSTUP_COLORED_OUTPUT_DEFAULT}"
 fi
+readonly BROWSER_TV_RUSTUP_COLORED_OUTPUT
+export BROWSER_TV_RUSTUP_COLORED_OUTPUT
 
 # WASI SDK
-BROWSER_TV_WASI_DEFAULT="${BROWSER_TV_EXTERNAL}/wasi-sdk"
+readonly BROWSER_TV_WASI_DEFAULT="${BROWSER_TV_EXTERNAL}/wasi-sdk"
 if [[ -z "${BROWSER_TV_WASI+x}" ]]; then
-    export BROWSER_TV_WASI="${BROWSER_TV_WASI_DEFAULT}"
+    BROWSER_TV_WASI="${BROWSER_TV_WASI_DEFAULT}"
 fi
+readonly BROWSER_TV_WASI
+export BROWSER_TV_WASI
 
 # If compiler flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
-BROWSER_TV_COMPILER_FLAGS_OVERRIDE_DEFAULT=0
+readonly BROWSER_TV_COMPILER_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${BROWSER_TV_COMPILER_FLAGS_OVERRIDE+x}" ]]; then
-    export BROWSER_TV_COMPILER_FLAGS_OVERRIDE="${BROWSER_TV_COMPILER_FLAGS_OVERRIDE_DEFAULT}"
+    BROWSER_TV_COMPILER_FLAGS_OVERRIDE="${BROWSER_TV_COMPILER_FLAGS_OVERRIDE_DEFAULT}"
 fi
+readonly BROWSER_TV_COMPILER_FLAGS_OVERRIDE
+export BROWSER_TV_COMPILER_FLAGS_OVERRIDE
 
 # Compiler flags
-BROWSER_TV_COMPILER_FLAGS_DEFAULT='-DNDEBUG -O3 -fstack-clash-protection -fstack-protector-strong -ftrivial-auto-var-init=zero -fwrapv'
+readonly BROWSER_TV_COMPILER_FLAGS_DEFAULT='-DNDEBUG -O3 -fstack-clash-protection -fstack-protector-strong -ftrivial-auto-var-init=zero -fwrapv'
 if [[ -z "${BROWSER_TV_COMPILER_FLAGS+x}" ]]; then
-    export BROWSER_TV_COMPILER_FLAGS="${BROWSER_TV_COMPILER_FLAGS_DEFAULT}"
+    readonly BROWSER_TV_COMPILER_FLAGS="${BROWSER_TV_COMPILER_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_COMPILER_FLAGS_OVERRIDE}" == 1 ]]; then
-    export BROWSER_TV_COMPILER_FLAGS="${BROWSER_TV_COMPILER_FLAGS}"
+    readonly BROWSER_TV_COMPILER_FLAGS="${BROWSER_TV_COMPILER_FLAGS}"
 else
-    export BROWSER_TV_COMPILER_FLAGS="${BROWSER_TV_COMPILER_FLAGS_DEFAULT} ${BROWSER_TV_COMPILER_FLAGS}"
+    readonly BROWSER_TV_COMPILER_FLAGS="${BROWSER_TV_COMPILER_FLAGS_DEFAULT} ${BROWSER_TV_COMPILER_FLAGS}"
 fi
+export BROWSER_TV_COMPILER_FLAGS
 
 # If curl flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
-BROWSER_TV_CURL_FLAGS_OVERRIDE_DEFAULT=0
+readonly BROWSER_TV_CURL_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${BROWSER_TV_CURL_FLAGS_OVERRIDE+x}" ]]; then
-    export BROWSER_TV_CURL_FLAGS_OVERRIDE="${BROWSER_TV_CURL_FLAGS_OVERRIDE_DEFAULT}"
+    BROWSER_TV_CURL_FLAGS_OVERRIDE="${BROWSER_TV_CURL_FLAGS_OVERRIDE_DEFAULT}"
 fi
+readonly BROWSER_TV_CURL_FLAGS_OVERRIDE
+export BROWSER_TV_CURL_FLAGS_OVERRIDE
 
 # curl flags
-BROWSER_TV_CURL_FLAGS_DEFAULT='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
+readonly BROWSER_TV_CURL_FLAGS_DEFAULT='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
 if [[ -z "${BROWSER_TV_CURL_FLAGS+x}" ]]; then
-    export BROWSER_TV_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS_DEFAULT}"
+    readonly BROWSER_TV_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_CURL_FLAGS_OVERRIDE}" == 1 ]]; then
-    export BROWSER_TV_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS}"
+    readonly BROWSER_TV_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS}"
 else
-    export BROWSER_TV_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS_DEFAULT} ${BROWSER_TV_CURL_FLAGS}"
+    readonly BROWSER_TV_CURL_FLAGS="${BROWSER_TV_CURL_FLAGS_DEFAULT} ${BROWSER_TV_CURL_FLAGS}"
 fi
+export BROWSER_TV_CURL_FLAGS
 
 # If Gradle flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
-BROWSER_TV_GRADLE_FLAGS_OVERRIDE_DEFAULT=0
+readonly BROWSER_TV_GRADLE_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${BROWSER_TV_GRADLE_FLAGS_OVERRIDE+x}" ]]; then
-    export BROWSER_TV_GRADLE_FLAGS_OVERRIDE="${BROWSER_TV_GRADLE_FLAGS_OVERRIDE_DEFAULT}"
+    BROWSER_TV_GRADLE_FLAGS_OVERRIDE="${BROWSER_TV_GRADLE_FLAGS_OVERRIDE_DEFAULT}"
 fi
+readonly BROWSER_TV_GRADLE_FLAGS_OVERRIDE
+export BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 
 # Gradle flags
-BROWSER_TV_GRADLE_FLAGS_DEFAULT='-Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false --no-build-cache --no-configuration-cache --no-daemon'
+readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false --no-build-cache --no-configuration-cache --no-daemon"
 if [[ -z "${BROWSER_TV_GRADLE_FLAGS+x}" ]]; then
-    export BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT}"
+    readonly BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_GRADLE_FLAGS_OVERRIDE}" == 1 ]]; then
-    export BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS}"
+    readonly BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS}"
 else
-    export BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT} ${BROWSER_TV_GRADLE_FLAGS}"
+    readonly BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT} ${BROWSER_TV_GRADLE_FLAGS}"
 fi
+export BROWSER_TV_GRADLE_FLAGS
 
 # If Rust flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
-BROWSER_TV_RUST_FLAGS_OVERRIDE_DEFAULT=0
+readonly BROWSER_TV_RUST_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${BROWSER_TV_RUST_FLAGS_OVERRIDE+x}" ]]; then
-    export BROWSER_TV_RUST_FLAGS_OVERRIDE="${BROWSER_TV_RUST_FLAGS_OVERRIDE_DEFAULT}"
+    BROWSER_TV_RUST_FLAGS_OVERRIDE="${BROWSER_TV_RUST_FLAGS_OVERRIDE_DEFAULT}"
 fi
+readonly BROWSER_TV_RUST_FLAGS_OVERRIDE
+export BROWSER_TV_RUST_FLAGS_OVERRIDE
 
 # Rust flags
-BROWSER_TV_RUST_FLAGS_DEFAULT='-Ccontrol-flow-guard=true -Cdebug-assertions=false -Cdebuginfo=0 -Cincremental=false -Clink-dead-code=false -Copt-level=3 -Coverflow-checks=true -Csave-temps=false -Cstrip=debuginfo -O'
+readonly BROWSER_TV_RUST_FLAGS_DEFAULT='-Ccontrol-flow-guard=true -Cdebug-assertions=false -Cdebuginfo=0 -Cincremental=false -Clink-dead-code=false -Copt-level=3 -Coverflow-checks=true -Csave-temps=false -Cstrip=debuginfo -O'
 if [[ -z "${BROWSER_TV_RUST_FLAGS+x}" ]]; then
-    export BROWSER_TV_RUST_FLAGS="${BROWSER_TV_RUST_FLAGS_DEFAULT}"
+    readonly BROWSER_TV_RUST_FLAGS="${BROWSER_TV_RUST_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_RUST_FLAGS_OVERRIDE}" == 1 ]]; then
-    export BROWSER_TV_RUST_FLAGS="${BROWSER_TV_RUST_FLAGS}"
+    readonly BROWSER_TV_RUST_FLAGS="${BROWSER_TV_RUST_FLAGS}"
 else
-    export BROWSER_TV_RUST_FLAGS="${BROWSER_TV_RUST_FLAGS_DEFAULT} ${BROWSER_TV_RUST_FLAGS}"
+    readonly BROWSER_TV_RUST_FLAGS="${BROWSER_TV_RUST_FLAGS_DEFAULT} ${BROWSER_TV_RUST_FLAGS}"
 fi
+export BROWSER_TV_RUST_FLAGS
 
 # Whether we're building Browser TV for release or Nightly/CI (Default)
-BROWSER_TV_RELEASE_DEFAULT=0
+readonly BROWSER_TV_RELEASE_DEFAULT=0
 if [[ -z "${BROWSER_TV_RELEASE+x}" ]]; then
-    export BROWSER_TV_RELEASE="${BROWSER_TV_RELEASE_DEFAULT}"
+    BROWSER_TV_RELEASE="${BROWSER_TV_RELEASE_DEFAULT}"
 fi
+readonly BROWSER_TV_RELEASE
+export BROWSER_TV_RELEASE
 
 # Set release channel
 if [[ "${BROWSER_TV_RELEASE}" == 1 ]]; then
-    export BROWSER_TV_CHANNEL='release'
-    export BROWSER_TV_CHANNEL_PRETTY='Release'
+    readonly BROWSER_TV_CHANNEL='release'
+    readonly BROWSER_TV_CHANNEL_PRETTY='Release'
 else
-    export BROWSER_TV_CHANNEL='nightly'
-    export BROWSER_TV_CHANNEL_PRETTY='Nightly'
+    readonly BROWSER_TV_CHANNEL='nightly'
+    readonly BROWSER_TV_CHANNEL_PRETTY='Nightly'
 fi
+export BROWSER_TV_CHANNEL
+export BROWSER_TV_CHANNEL_PRETTY
 
 # Whether we should use our prebuilt libraries (Default)
 ## (This is currently WASI SDK for us)
-BROWSER_TV_NO_PREBUILDS_DEFAULT=0
+readonly BROWSER_TV_NO_PREBUILDS_DEFAULT=0
 if [[ -z "${BROWSER_TV_NO_PREBUILDS+x}" ]]; then
-    export BROWSER_TV_NO_PREBUILDS="${BROWSER_TV_NO_PREBUILDS_DEFAULT}"
+    BROWSER_TV_NO_PREBUILDS="${BROWSER_TV_NO_PREBUILDS_DEFAULT}"
+fi
+readonly BROWSER_TV_NO_PREBUILDS
+export BROWSER_TV_NO_PREBUILDS
+
+# Location to the Google Safe Browsing API keyfile (if Safe Browsing is desired)
+readonly BROWSER_TV_SB_GAPI_KEY_FILE_DEFAULT='null'
+if [[ -z "${BROWSER_TV_SB_GAPI_KEY_FILE+x}" ]]; then
+    BROWSER_TV_SB_GAPI_KEY_FILE="${BROWSER_TV_SB_GAPI_KEY_FILE_DEFAULT}"
+fi
+readonly BROWSER_TV_SB_GAPI_KEY_FILE
+export BROWSER_TV_SB_GAPI_KEY_FILE
+
+# Do we want Mach to actually build *something*? (Default)
+## This will generally always be true, but we want to disable it for ex. packaging
+readonly BROWSER_TV_MACH_BUILD_DEFAULT=1
+if [[ -z "${BROWSER_TV_MACH_BUILD+x}" ]]; then
+    export BROWSER_TV_MACH_BUILD="${BROWSER_TV_MACH_BUILD_DEFAULT}"
+fi
+
+# Should Mach target Android Components?
+readonly BROWSER_TV_MACH_TARGET_AC_DEFAULT=0
+if [[ -z "${BROWSER_TV_MACH_TARGET_AC+x}" ]]; then
+    export BROWSER_TV_MACH_TARGET_AC="${BROWSER_TV_MACH_TARGET_AC_DEFAULT}"
+fi
+
+# Should Mach target Gecko(View)?
+readonly BROWSER_TV_MACH_TARGET_GECKO_DEFAULT=0
+if [[ -z "${BROWSER_TV_MACH_TARGET_GECKO+x}" ]]; then
+    export BROWSER_TV_MACH_TARGET_GECKO="${BROWSER_TV_MACH_TARGET_GECKO_DEFAULT}"
+fi
+
+# Should Mach target ARM64 (GeckoView AAR) if we're creating a bundle?
+readonly BROWSER_TV_MACH_TARGET_BUNDLE_ARM64_DEFAULT=0
+if [[ -z "${BROWSER_TV_MACH_TARGET_BUNDLE_ARM64+x}" ]]; then
+    export BROWSER_TV_MACH_TARGET_BUNDLE_ARM64="${BROWSER_TV_MACH_TARGET_BUNDLE_ARM64_DEFAULT}"
+fi
+
+# Should Mach target ARM (GeckoView AAR) if we're creating a bundle?
+readonly BROWSER_TV_MACH_TARGET_BUNDLE_ARM_DEFAULT=0
+if [[ -z "${BROWSER_TV_MACH_TARGET_BUNDLE_ARM+x}" ]]; then
+    export BROWSER_TV_MACH_TARGET_BUNDLE_ARM="${BROWSER_TV_MACH_TARGET_BUNDLE_ARM_DEFAULT}"
+fi
+
+# Should Mach target x86_64 (GeckoView AAR) if we're creating a bundle?
+readonly BROWSER_TV_MACH_TARGET_BUNDLE_X86_64_DEFAULT=0
+if [[ -z "${BROWSER_TV_MACH_TARGET_BUNDLE_X86_64+x}" ]]; then
+    export BROWSER_TV_MACH_TARGET_BUNDLE_X86_64="${BROWSER_TV_MACH_TARGET_BUNDLE_X86_64_DEFAULT}"
 fi
 
 # Set locations for our GeckoView AAR archives
 
 ## Where our GeckoView ARM AAR archive is located within mozilla-central
-BROWSER_TV_GV_AAR_ARM_DEFAULT="${BROWSER_TV_GECKO}/obj/browser-tv-${BROWSER_TV_CHANNEL}-arm/gradle/target.maven.zip"
+readonly BROWSER_TV_GV_AAR_ARM_DEFAULT="${BROWSER_TV_GECKO}/obj/browser-tv-${BROWSER_TV_CHANNEL}-arm/gradle/target.maven.zip"
 if [[ -z "${BROWSER_TV_GV_AAR_ARM+x}" ]]; then
-    export BROWSER_TV_GV_AAR_ARM="${BROWSER_TV_GV_AAR_ARM_DEFAULT}"
+    BROWSER_TV_GV_AAR_ARM="${BROWSER_TV_GV_AAR_ARM_DEFAULT}"
 fi
+readonly BROWSER_TV_GV_AAR_ARM
+export BROWSER_TV_GV_AAR_ARM
 
 ## Where our GeckoView ARM64 AAR archive is located within mozilla-central
-BROWSER_TV_GV_AAR_ARM64_DEFAULT="${BROWSER_TV_GECKO}/obj/browser-tv-${BROWSER_TV_CHANNEL}-arm64/gradle/target.maven.zip"
+readonly BROWSER_TV_GV_AAR_ARM64_DEFAULT="${BROWSER_TV_GECKO}/obj/browser-tv-${BROWSER_TV_CHANNEL}-arm64/gradle/target.maven.zip"
 if [[ -z "${BROWSER_TV_GV_AAR_ARM64+x}" ]]; then
-    export BROWSER_TV_GV_AAR_ARM64="${BROWSER_TV_GV_AAR_ARM64_DEFAULT}"
+    BROWSER_TV_GV_AAR_ARM64="${BROWSER_TV_GV_AAR_ARM64_DEFAULT}"
 fi
+readonly BROWSER_TV_GV_AAR_ARM64
+export BROWSER_TV_GV_AAR_ARM64
 
 ## Where our GeckoView x86_64 AAR archive is located within mozilla-central
-BROWSER_TV_GV_AAR_X86_64_DEFAULT="${BROWSER_TV_GECKO}/obj/browser-tv-${BROWSER_TV_CHANNEL}-x86_64/gradle/target.maven.zip"
+readonly BROWSER_TV_GV_AAR_X86_64_DEFAULT="${BROWSER_TV_GECKO}/obj/browser-tv-${BROWSER_TV_CHANNEL}-x86_64/gradle/target.maven.zip"
 if [[ -z "${BROWSER_TV_GV_AAR_X86_64+x}" ]]; then
-    export BROWSER_TV_GV_AAR_X86_64="${BROWSER_TV_GV_AAR_X86_64_DEFAULT}"
+    BROWSER_TV_GV_AAR_X86_64="${BROWSER_TV_GV_AAR_X86_64_DEFAULT}"
 fi
+readonly BROWSER_TV_GV_AAR_X86_64
+export BROWSER_TV_GV_AAR_X86_64
 
 # Set our external environment variables
-BROWSER_TV_ENV_EXTERNAL="${BROWSER_TV_SCRIPTS}/env_external.sh"
+readonly BROWSER_TV_ENV_EXTERNAL="${BROWSER_TV_SCRIPTS}/env_external.sh"
 source "${BROWSER_TV_ENV_EXTERNAL}"
+
+# We've now set our environment variables...
+readonly BROWSER_TV_SET_ENVS=1
+export BROWSER_TV_SET_ENVS

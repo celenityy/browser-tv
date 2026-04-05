@@ -1,0 +1,15 @@
+# Browser TV "common" mozconfig
+
+# Do we want Mach to actually build *something*?
+if [ "${BROWSER_TV_MACH_BUILD}" != 1 ]; then
+    . "$topsrcdir/browser-tv/mozconfigs/no-build.mozconfig"
+else
+    . "$topsrcdir/browser-tv/mozconfigs/build.mozconfig"
+fi
+
+# Set project-specific options
+if [ "${BROWSER_TV_MACH_TARGET_AC}" == 1 ]; then
+    . "$topsrcdir/browser-tv/mozconfigs/projects/android-components.mozconfig"
+elif [ "${BROWSER_TV_MACH_TARGET_GECKO}" == 1 ]; then
+    . "$topsrcdir/browser-tv/mozconfigs/projects/gecko.mozconfig"
+fi

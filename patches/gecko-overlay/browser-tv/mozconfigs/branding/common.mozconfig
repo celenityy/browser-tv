@@ -1,5 +1,5 @@
 
-# Make it IronFox...
+# Make it Browser TV...
 ac_add_options --with-distribution-id='dev.celenity'
 export MOZ_APP_VENDOR='celenity'
 export MOZ_SOURCE_REPO='https://github.com/celenityy/browser-tv/'

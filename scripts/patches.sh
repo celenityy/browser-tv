@@ -3,22 +3,24 @@
 set -euo pipefail
 
 # Set-up our environment
-bash -x $(dirname $0)/env.sh
+if [[ -z "${BROWSER_TV_SET_ENVS+x}" ]]; then
+    bash -x $(dirname $0)/env.sh
+fi
 source $(dirname $0)/env.sh
 
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-NC="\033[0m"
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly NC="\033[0m"
 
 declare -a PATCH_CMD
-PATCH_CMD=(patch -p1 -f --fuzz=3 --no-backup-if-mismatch)
+readonly PATCH_CMD=(patch -p1 -f --fuzz=3 --no-backup-if-mismatch)
 
 declare -a PATCH_FILES
 
-PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/patches.yaml))
+readonly PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/patches.yaml))
 
-check_patch() {
-    patch="${BROWSER_TV_PATCHES}/$1"
+function check_patch() {
+    local readonly patch="${BROWSER_TV_PATCHES}/$1"
     if ! [[ -f "${patch}" ]]; then
         printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "${patch}")"
         echo "'${patch}' does not exist or is not a file"
@@ -32,7 +34,7 @@ check_patch() {
     fi
 }
 
-check_patches() {
+function check_patches() {
     for patch in "${PATCH_FILES[@]}"; do
         if ! check_patch "${patch}"; then
             return 1
@@ -40,7 +42,7 @@ check_patches() {
     done
 }
 
-test_patches() {
+function test_patches() {
     for patch in "${PATCH_FILES[@]}"; do
         if ! check_patch "${patch}" >/dev/null 2>&1; then
             printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "${patch}")"
@@ -50,15 +52,15 @@ test_patches() {
     done
 }
 
-apply_patch() {
-    name="$1"
+function apply_patch() {
+    local readonly name="$1"
     echo "Applying patch: ${name}"
     check_patch "${name}" || return 1
     "${PATCH_CMD[@]}" <"${BROWSER_TV_PATCHES}/${name}"
     return $?
 }
 
-apply_patches() {
+function apply_patches() {
     for patch in "${PATCH_FILES[@]}"; do
         if ! apply_patch "${patch}"; then
             printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "${patch}")"
@@ -68,14 +70,14 @@ apply_patches() {
     done
 }
 
-list_patches() {
+function list_patches() {
     for patch in "${PATCH_FILES[@]}"; do
         echo "${patch}"
     done
 }
 
-slugify() {
-    local input="$1"
+function slugify() {
+    local readonly input="$1"
     echo "${input}" |                  \
         tr '[:upper:]' '[:lower:]' | \
         "${BROWSER_TV_SED}" -E 's/[^a-z0-9]+/-/g' |  \
@@ -84,10 +86,10 @@ slugify() {
 
 # Function to rebase a single patch file atomically
 # Usage: rebase_patch <compatible_tag> <target_tag> <patch_file_path>
-rebase_patch() {
-    local compatible_tag="$1"
-    local target_tag="$2"
-    local patch_file="$3"
+function rebase_patch() {
+    local readonly compatible_tag="$1"
+    local readonly target_tag="$2"
+    local readonly patch_file="$3"
 
     # Validate inputs
     if [[ -z "${compatible_tag}" || -z "${target_tag}" || -z "${patch_file}" ]]; then
@@ -104,18 +106,13 @@ rebase_patch() {
     fi
 
     # Store original state for rollback
-    local original_branch
-    original_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    local readonly original_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    local readonly original_stash_count=$(git stash list | wc -l)
 
-    local original_stash_count
-    original_stash_count=$(git stash list | wc -l)
+    local readonly patch_name=$(basename "${patch_file}" .patch)
+    local readonly branch_name="rebase-${patch_name}"
 
-    local patch_name
-    patch_name=$(basename "${patch_file}" .patch)
-
-    local branch_name="rebase-${patch_name}"
-
-    cleanup_and_rollback() {
+    function cleanup_and_rollback() {
         echo "Error occurred, rolling back changes..." >&2
 
         # Check if we're in the middle of a rebase and abort it
@@ -135,8 +132,7 @@ rebase_patch() {
         git branch -D "${branch_name}" 2>/dev/null
 
         # Restore stashed changes if any were created
-        local current_stash_count
-        current_stash_count=$(git stash list | wc -l)
+        local readonly current_stash_count=$(git stash list | wc -l)
         if [[ "${current_stash_count}" -gt "${original_stash_count}" ]]; then
             git stash pop 2>/dev/null
         fi
@@ -205,8 +201,7 @@ rebase_patch() {
     fi
 
     # Commit the changes
-    local commit_message
-    commit_message="Apply patch $(basename "${patch_file}") - rebased to ${target_tag}"
+    local readonly commit_message="Apply patch $(basename "${patch_file}") - rebased to ${target_tag}"
     echo "Committing changes..."
     if ! git commit -m "${commit_message}"; then
         printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "${patch}")"
@@ -226,8 +221,7 @@ rebase_patch() {
 
     # Update the patch file using git format-patch
     echo "Updating patch file..."
-    local temp_patch
-    temp_patch=$(mktemp)
+    local readonly temp_patch=$(mktemp)
     if ! git format-patch -1 --stdout >"${temp_patch}"; then
         printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "${patc}h")"
         echo "Failed to generate new patch" >&2
@@ -255,8 +249,7 @@ rebase_patch() {
     git branch -D "${branch_name}"
 
     # Restore stashed changes if any
-    local current_stash_count
-    current_stash_count=$(git stash list | wc -l)
+    local readonly current_stash_count=$(git stash list | wc -l)
     if [[ "${current_stash_count}" -gt "${original_stash_count}" ]]; then
         echo "Restoring stashed changes..."
         git stash pop
@@ -269,9 +262,9 @@ rebase_patch() {
 
 # Function to rebase multiple patch files
 # Usage: rebase_patches <compatible_tag> <target_tag> <patch_file1> [patch_file2] [...]
-rebase_patches() {
-    local compatible_tag="$1"
-    local target_tag="$2"
+function rebase_patches() {
+    local readonly compatible_tag="$1"
+    local readonly target_tag="$2"
 
     # Validate inputs
     if [[ -z "${compatible_tag}" || -z "${target_tag}" ]]; then
