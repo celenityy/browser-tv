@@ -15,6 +15,12 @@ else
     readonly target=$(echo "${1}" | "${BROWSER_TV_AWK}" '{print tolower($0)}')
 fi
 
+if [[ -z "${2+x}" ]]; then
+    readonly mode='download'
+else
+    readonly mode=$(echo "${2}" | "${BROWSER_TV_AWK}" '{print tolower($0)}')
+fi
+
 # Get sources
 readonly BROWSER_TV_FROM_SOURCES=1
 export BROWSER_TV_FROM_SOURCES
@@ -29,7 +35,7 @@ if [ "${BROWSER_TV_LOG_SOURCES}" == 1 ]; then
     # Ensure our log directory exists
     mkdir -vp "${BROWSER_TV_LOG_DIR}"
 
-    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" "${target}" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
+    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" "${target}" "${mode}" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
 else
-    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" "${target}"
+    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" "${target}" "${mode}"
 fi
