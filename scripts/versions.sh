@@ -22,8 +22,8 @@ readonly GMSCORE_VERSION='v0.3.13.250932'
 
 ## Phoenix
 ### https://gitlab.com/celenityy/Phoenix
-readonly PHOENIX_COMMIT='964d320422c481ef5ff31c1a1ae0301e4e1c36e2'
-readonly PHOENIX_VERSION='2026.01.21.1'
+readonly PHOENIX_COMMIT='9a7e49256837ce1928265734be1ea110c76b8aa4'
+readonly PHOENIX_VERSION='2026.03.31.1'
 
 ## WASI SDK
 ### https://github.com/WebAssembly/wasi-sdk
