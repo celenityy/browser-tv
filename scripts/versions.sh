@@ -99,6 +99,21 @@ readonly JDK_17_SHA512SUM_OSX_ARM64='91b1d64b9865fa62466e52f9fd3a2bdb0ddf62d3a67
 readonly JDK_17_SHA512SUM_OSX_X86_64='f214734251b6662737e08fd8bdb3a351466ff10eb776a2f338e3ccea93d7f01d2578acd1f716aa9a08d152b3c0cd4d2487ae35acee395ade4ab3507cfadbe018'
 readonly JDK_17_VERSION='17.0.18'
 
+## Node.js
+### (Used by nvm)
+readonly NODE_VERSION='25.8.1'
+
+## npm
+### https://github.com/npm/cli
+readonly NPM_SHA512SUM='cdca14b85d647b3192028d02aadbe82d75f79a446aceea9874be98e6d768f20ebd3555770a48d0e9906106007877bbc690f715e9372f2e2dc644a3c3157fb14c'
+readonly NPM_VERSION='11.12.1'
+
+## nvm
+### Version: v0.40.4
+### https://github.com/nvm-sh/nvm
+readonly NVM_COMMIT='62387b8f92aa012d48202747fd75c40850e5e261'
+readonly NVM_SHA512SUM='7b88477aa7400050cea6dda3cd197dad7d030fd951cd9aca945c04159fdb98ea3bbdda8a2b1c0761d1cd5d3893c669370b493727298f3b8440f97452fd229abc'
+
 ## Python
 ### https://github.com/astral-sh/python-build-standalone
 readonly PYTHON_GIT_RELEASE='20260325'

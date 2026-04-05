@@ -403,6 +403,24 @@ fi
 readonly BROWSER_TV_IRONFOX_PREBUILDS
 export BROWSER_TV_IRONFOX_PREBUILDS
 
+# npm cache
+readonly BROWSER_TV_NPM_CACHE_DEFAULT="${BROWSER_TV_BUILD}/.npm"
+if [[ -z "${BROWSER_TV_NPM_CACHE+x}" ]]; then
+    BROWSER_TV_NPM_CACHE="${BROWSER_TV_NPM_CACHE_DEFAULT}"
+fi
+readonly BROWSER_TV_NPM_CACHE
+export BROWSER_TV_NPM_CACHE
+
+# nvm
+readonly BROWSER_TV_NVM_DEFAULT="${BROWSER_TV_EXTERNAL}/nvm"
+if [[ -z "${BROWSER_TV_NVM+x}" ]]; then
+    BROWSER_TV_NVM="${BROWSER_TV_NVM_DEFAULT}"
+fi
+readonly BROWSER_TV_NVM
+readonly BROWSER_TV_NVM_ENV="${BROWSER_TV_NVM}/nvm.sh"
+export BROWSER_TV_NVM
+export BROWSER_TV_NVM_ENV
+
 # Phoenix
 readonly BROWSER_TV_PHOENIX_DEFAULT="${BROWSER_TV_EXTERNAL}/phoenix"
 if [[ -z "${BROWSER_TV_PHOENIX+x}" ]]; then
@@ -597,6 +615,27 @@ else
 fi
 export BROWSER_TV_GRADLE_FLAGS
 
+# If Node.js options are added, this determines whether they should be appended to our default flags (default),
+## or if they should override them entirely
+readonly BROWSER_TV_NODE_OPTIONS_OVERRIDE_DEFAULT=0
+if [[ -z "${BROWSER_TV_NODE_OPTIONS_OVERRIDE+x}" ]]; then
+    BROWSER_TV_NODE_OPTIONS_OVERRIDE="${BROWSER_TV_NODE_OPTIONS_OVERRIDE_DEFAULT}"
+fi
+readonly BROWSER_TV_NODE_OPTIONS_OVERRIDE
+export BROWSER_TV_NODE_OPTIONS_OVERRIDE
+
+# Node.js options
+### https://nodejs.org/api/cli.html#node-optionsoptions
+readonly BROWSER_TV_NODE_OPTIONS_DEFAULT='--jitless --tls-min-v1.2 --use-bundled-ca'
+if [[ -z "${BROWSER_TV_NODE_OPTIONS+x}" ]]; then
+    readonly BROWSER_TV_NODE_OPTIONS="${BROWSER_TV_NODE_OPTIONS_DEFAULT}"
+elif [[ "${BROWSER_TV_NODE_OPTIONS_OVERRIDE}" == 1 ]]; then
+    readonly BROWSER_TV_NODE_OPTIONS="${BROWSER_TV_NODE_OPTIONS}"
+else
+    readonly BROWSER_TV_NODE_OPTIONS="${BROWSER_TV_NODE_OPTIONS_DEFAULT} ${BROWSER_TV_NODE_OPTIONS}"
+fi
+export BROWSER_TV_NODE_OPTIONS
+
 # If Rust flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
 readonly BROWSER_TV_RUST_FLAGS_OVERRIDE_DEFAULT=0
@@ -719,6 +758,24 @@ export BROWSER_TV_GV_AAR_X86_64
 # Set our external environment variables
 readonly BROWSER_TV_ENV_EXTERNAL="${BROWSER_TV_SCRIPTS}/env_external.sh"
 source "${BROWSER_TV_ENV_EXTERNAL}"
+
+source "${BROWSER_TV_VERSIONS}"
+
+# Node.js
+readonly BROWSER_TV_NODEJS_DEFAULT="${BROWSER_TV_NVM}/versions/node/v${NODE_VERSION}/bin/node"
+if [[ -z "${BROWSER_TV_NODEJS+x}" ]]; then
+    BROWSER_TV_NODEJS="${IRONFOX_NODEJS_DEFAULT}"
+fi
+readonly BROWSER_TV_NODEJS
+export BROWSER_TV_NODEJS
+
+# npm
+readonly BROWSER_TV_NPM_DEFAULT="${BROWSER_TV_NVM}/versions/node/v${NODE_VERSION}/bin/npm"
+if [[ -z "${BROWSER_TV_NPM+x}" ]]; then
+    BROWSER_TV_NPM="${BROWSER_TV_NPM_DEFAULT}"
+fi
+readonly BROWSER_TV_NPM
+export BROWSER_TV_NPM
 
 # We've now set our environment variables...
 readonly BROWSER_TV_SET_ENVS=1

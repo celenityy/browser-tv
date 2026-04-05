@@ -29,6 +29,8 @@ BROWSER_TV_GET_SOURCE_GRADLE=0
 BROWSER_TV_GET_SOURCE_GYP=0
 BROWSER_TV_GET_SOURCE_JDK_17=0
 BROWSER_TV_GET_SOURCE_MICROG=0
+BROWSER_TV_GET_SOURCE_NODE=0
+BROWSER_TV_GET_SOURCE_NPM=0
 BROWSER_TV_GET_SOURCE_PHOENIX=0
 BROWSER_TV_GET_SOURCE_PREBUILDS=0
 BROWSER_TV_GET_SOURCE_PYTHON=0
@@ -71,6 +73,12 @@ elif [ "${target}" == 'jdk-17' ]; then
 elif [ "${target}" == 'microg' ]; then
     # Get microG
     BROWSER_TV_GET_SOURCE_MICROG=1
+elif [ "${target}" == 'node' ]; then
+    # Get + set-up Node.js
+    BROWSER_TV_GET_SOURCE_NODE=1
+elif [ "${target}" == 'npm' ]; then
+    # Get + set-up npm
+    BROWSER_TV_GET_SOURCE_NPM=1
 elif [ "${target}" == 'phoenix' ]; then
     # Get Phoenix
     BROWSER_TV_GET_SOURCE_PHOENIX=1
@@ -100,6 +108,8 @@ elif [ "${target}" == 'all' ]; then
     BROWSER_TV_GET_SOURCE_GYP=1
     BROWSER_TV_GET_SOURCE_JDK_17=1
     BROWSER_TV_GET_SOURCE_MICROG=1
+    BROWSER_TV_GET_SOURCE_NODE=1
+    BROWSER_TV_GET_SOURCE_NPM=1
     BROWSER_TV_GET_SOURCE_PHOENIX=1
     BROWSER_TV_GET_SOURCE_PREBUILDS=1
     BROWSER_TV_GET_SOURCE_PYTHON=1
@@ -120,6 +130,8 @@ else
     echo 'GYP: gyp'
     echo 'JDK (17): jdk-17'
     echo 'microG: microg'
+    echo 'Node.js: node'
+    echo 'npm: npm'
     echo 'Phoenix: phoenix'
     echo 'Prebuilds: prebuilds'
     echo 'Python: python'
@@ -139,6 +151,8 @@ readonly BROWSER_TV_GET_SOURCE_GRADLE
 readonly BROWSER_TV_GET_SOURCE_GYP
 readonly BROWSER_TV_GET_SOURCE_JDK_17
 readonly BROWSER_TV_GET_SOURCE_MICROG
+readonly BROWSER_TV_GET_SOURCE_NODE
+readonly BROWSER_TV_GET_SOURCE_NPM
 readonly BROWSER_TV_GET_SOURCE_PHOENIX
 readonly BROWSER_TV_GET_SOURCE_PIP
 readonly BROWSER_TV_GET_SOURCE_PREBUILDS
@@ -238,6 +252,14 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for firefox-l10n...'
         "${BROWSER_TV_SED}" -i -e "s|L10N_SHA512SUM='.*'|L10N_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for firefox-l10n'
+    elif [ "${old_sha512sum}" == "${NPM_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for npm...'
+        "${BROWSER_TV_SED}" -i -e "s|NPM_SHA512SUM='.*'|NPM_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for npm'
+    elif [ "${old_sha512sum}" == "${NVM_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for nvm...'
+        "${BROWSER_TV_SED}" -i -e "s|NVM_SHA512SUM='.*'|NVM_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for nvm'
     elif [ "${old_sha512sum}" == "${PHOENIX_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for Phoenix...'
         "${BROWSER_TV_SED}" -i -e "s|PHOENIX_SHA512SUM='.*'|PHOENIX_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
@@ -700,6 +722,47 @@ function get_microg() {
     echo_green_text "SUCCESS: Set-up microG at ${BROWSER_TV_GMSCORE}"
 }
 
+# Get + set-up Node.js
+function get_node() {
+    if [[ -d "${BROWSER_TV_NVM}" ]]; then
+        echo_red_text "The Node.js environment is already set-up at ${BROWSER_TV_NVM}"
+        read -p "Do you want to re-create it? [y/N] " -n 1 -r
+        echo
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            rm -rf "${BROWSER_TV_NPM_CACHE}" "${BROWSER_TV_NVM}" "${BROWSER_TV_ROOT}/node_modules"
+        fi
+    fi
+
+    download_and_extract 'nvm' "https://github.com/nvm-sh/nvm/archive/${NVM_COMMIT}.tar.gz" "${BROWSER_TV_NVM}" "${NVM_SHA512SUM}"
+
+    echo_red_text 'Installing Node.js...'
+    source "${BROWSER_TV_NVM_ENV}"
+    nvm install "${NODE_VERSION}"
+    nvm alias default "${NODE_VERSION}"
+    nvm use "${NODE_VERSION}"
+
+    echo_green_text "SUCCESS: Set-up Node.js environment at ${BROWSER_TV_NVM}"
+}
+
+# Get npm
+function get_npm() {
+    if  [ ! -d "${BROWSER_TV_NVM}" ]; then
+        echo_red_text "ERROR: You tried to download npm, but you don't have a Node.js environment set-up yet."
+        exit 1
+    fi
+
+    echo_red_text 'Downloading npm...'
+    download "https://registry.npmjs.org/npm/-/npm-${NPM_VERSION}.tgz" "${BROWSER_TV_DOWNLOADS}/npm.tgz"
+
+    # Validate SHA512sum
+    validate_sha512sum "${NPM_SHA512SUM}" "${BROWSER_TV_DOWNLOADS}/npm.tgz"
+
+    echo_red_text 'Installing npm...'
+    source "${BROWSER_TV_NVM_ENV}"
+    "${BROWSER_TV_NPM}" install -g npm@file:"${BROWSER_TV_DOWNLOADS}/npm.tgz"
+    echo_green_text "SUCCESS: Set-up npm at ${BROWSER_TV_NPM}"
+}
+
 # Get Phoenix
 function get_phoenix() {
     echo_red_text 'Downloading Phoenix...'
@@ -920,6 +983,14 @@ fi
 
 if [ "${BROWSER_TV_GET_SOURCE_MICROG}" == 1 ]; then
     get_microg
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_NODE}" == 1 ]; then
+    get_node
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_NPM}" == 1 ]; then
+    get_npm
 fi
 
 if [ "${BROWSER_TV_GET_SOURCE_PHOENIX}" == 1 ]; then

@@ -104,6 +104,7 @@ if [[ -z "${BROWSER_TV_SB_GAPI_KEY_FILE+x}" ]]; then
 fi
 
 source "${BROWSER_TV_CARGO_ENV}"
+source "${BROWSER_TV_NVM_ENV}"
 source "${BROWSER_TV_PYENV}"
 
 # Include version info
@@ -122,6 +123,8 @@ fi
 # Set timezone to UTC for consistency
 unset TZ
 export TZ="UTC"
+
+# Functions
 
 function set_build_env() {
     echo_red_text 'Setting build environment variables...'

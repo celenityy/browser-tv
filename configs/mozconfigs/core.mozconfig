@@ -161,6 +161,9 @@ ac_add_options --with-java-bin-path="${BROWSER_TV_JAVA_HOME}/bin"
 ac_add_options --with-l10n-base="${BROWSER_TV_L10N_CENTRAL}"
 export L10NBASEDIR="${BROWSER_TV_L10N_CENTRAL}"
 
+# Set Node.js path
+export NODEJS="${BROWSER_TV_NODEJS}"
+
 # Set Rust path
 export CARGO="${BROWSER_TV_CARGO}"
 export RUSTC="${BROWSER_TV_RUSTC}"

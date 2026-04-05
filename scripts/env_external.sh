@@ -78,6 +78,84 @@ readonly TASKCLUSTER_ROOT_URL='https://noop.invalid'
 export TASKCLUSTER_PROXY_URL
 export TASKCLUSTER_ROOT_URL
 
+# Node.js
+## https://nodejs.org/api/cli.html#environment-variables-1
+
+## Disable compile cache
+### https://nodejs.org/api/cli.html#node-disable-compile-cache1
+readonly NODE_DISABLE_COMPILE_CACHE=1
+export NODE_DISABLE_COMPILE_CACHE
+
+## Disable the system CA root store
+### https://nodejs.org/api/cli.html#node-use-system-ca1
+readonly NODE_USE_SYSTEM_CA=0
+export NODE_USE_SYSTEM_CA
+
+## Do not attempt to use a system proxy
+### https://nodejs.org/api/cli.html#node-use-env-proxy1
+readonly NODE_USE_ENV_PROXY=0
+export NODE_USE_ENV_PROXY
+
+## Enforce certificate validation
+### https://nodejs.org/api/cli.html#node-tls-reject-unauthorizedvalue
+readonly NODE_TLS_REJECT_UNAUTHORIZED=1
+export NODE_TLS_REJECT_UNAUTHORIZED
+
+## Ensure npm always installs production/release modules
+readonly NODE_ENV='production'
+export NODE_ENV
+
+## Node options
+readonly NODE_OPTIONS="${BROWSER_TV_NODE_OPTIONS}"
+readonly npm_config_node_options="${BROWSER_TV_NODE_OPTIONS}"
+export NODE_OPTIONS
+export npm_config_node_options
+
+# npm
+
+## Always use our npm config file
+## https://docs.npmjs.com/cli/v11/using-npm/config#npmrc-files
+readonly NPM_CONFIG_GLOBALCONFIG="${BROWSER_TV_CONFIGS}/npm/.npmrc"
+readonly npm_config_globalconfig="${BROWSER_TV_CONFIGS}/npm/.npmrc"
+export NPM_CONFIG_GLOBALCONFIG
+export npm_config_globalconfig
+
+### Always install dependencies properly
+readonly npm_config_install_links='true'
+export npm_config_install_links
+
+### Disable "funding" nags
+readonly npm_config_fund='false'
+export npm_config_fund
+
+### Disable submission of audit reports
+readonly npm_config_audit='false'
+export npm_config_audit
+
+### Enable verbose logging
+readonly npm_config_loglevel='verbose'
+export npm_config_loglevel
+
+### Enforce SSL key validation
+readonly npm_config_strict_ssl='true'
+export npm_config_strict_ssl
+
+### Write exact versions to package.json/package_lock.json
+readonly npm_config_save_exact='true'
+export npm_config_save_exact
+
+### Set cache directory
+readonly npm_config_cache="${BROWSER_TV_NPM_CACHE}"
+export npm_config_cache
+
+# nvm
+readonly NVM_DIR="${BROWSER_TV_NVM}"
+export NVM_DIR
+
+## This is necessary to prevent nvm from automatically trying to modify the system PATH
+readonly PROFILE='/dev/null'
+export PROFILE
+
 # Phoenix
 readonly PHOENIX_ANDROID_ONLY=1
 readonly PHOENIX_AWK="${BROWSER_TV_AWK}"
@@ -316,12 +394,16 @@ readonly UV_TOOL_DIR="${BROWSER_TV_UV_LOCAL}/tools"
 export UV_TOOL_BIN_DIR
 export UV_TOOL_DIR
 
-# Include version info
-source "${BROWSER_TV_VERSIONS}"
-
 ## Pin Python version
 readonly UV_PYTHON_CPYTHON_BUILD="${PYTHON_GIT_RELEASE}"
 export UV_PYTHON_CPYTHON_BUILD
+
+## Set Node.js bin path
+readonly NVM_BIN="${BROWSER_TV_NVM}/versions/node/v${NODE_VERSION}/bin"
+export NVM_BIN
+
+## Set Node.js version
+export NODE_VERSION
 
 ## Set Rust version
 readonly RUSTUP_TOOLCHAIN="${RUST_VERSION}"
