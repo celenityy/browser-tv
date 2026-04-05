@@ -632,7 +632,7 @@ readonly BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 export BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 
 # Gradle flags
-readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false -Dorg.gradle.java.installations.auto-detect=false -Dorg.gradle.java.installations.auto-download=false --no-build-cache --no-configuration-cache --no-daemon"
+readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dhttps.protocols=TLSv1.3,TLSv1.2 -Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.configureondemand=true -Dorg.gradle.console=verbose -Dorg.gradle.daemon=false -Dorg.gradle.debug=false -Dorg.gradle.java.installations.auto-detect=false -Dorg.gradle.java.installations.auto-download=false --no-build-cache --no-configuration-cache --no-daemon"
 if [[ -z "${BROWSER_TV_GRADLE_FLAGS+x}" ]]; then
     readonly BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_GRADLE_FLAGS_OVERRIDE}" == 1 ]]; then
