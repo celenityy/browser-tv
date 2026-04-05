@@ -53,6 +53,7 @@ readonly ANDROID_SDK_TARGET='36'
 
 ## Bundletool
 ### https://github.com/google/bundletool
+readonly BUNDLETOOL_REPO_COMMIT='586a43a450712a1067f3d92cf7574dee68226302'
 readonly BUNDLETOOL_VERSION='1.18.3'
 
 ## cbindgen
