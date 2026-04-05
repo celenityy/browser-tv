@@ -79,6 +79,17 @@ readonly CBINDGEN_VERSION='0.29.2'
 readonly GRADLE_COMMIT='996b7829f40f33317d33c1b6ddcffcf976bd6181'
 readonly GRADLE_SHA512SUM='0498fff4a729aa2458f2627635507c6e9a9bd3d1e914ac375e10b3b3061654e7f7544461c91a8db0882bfc1d09090d135eada40ee72f37ff9975e0f1116c3d9d'
 
+## JDK 17 (Temurin)
+### https://github.com/adoptium/temurin17-binaries
+### (This commit corresponds to https://github.com/adoptium/temurin17-binaries/releases/tag/jdk-17.0.18%2B8)
+### (Required by GeckoView)
+readonly JDK_17_REVISION='8'
+readonly JDK_17_SHA512SUM_LINUX_ARM64='ce632aab5965d60cde210bcfd6bb3a41f956e51eb87f4ca28a523c5614fcf9a18a8fe89fb1ee2424a40d7bf39afb3a3c69aaec60a0871f81c66622d5355febfa'
+readonly JDK_17_SHA512SUM_LINUX_X86_64='fb40a864b5bc43f037f0209729c2319ef15f58a3830970ceff44f4e1cfe6fc4dcac0628d6afe6713acecffd1bc357325b6026185f3efeb9dcc767c2437c61dbc'
+readonly JDK_17_SHA512SUM_OSX_ARM64='91b1d64b9865fa62466e52f9fd3a2bdb0ddf62d3a678f4fa4f471ba621aea17c51a35f29e86091deaddcc3afa0a14b658487b4f919b64a259bde0df8563a8aae'
+readonly JDK_17_SHA512SUM_OSX_X86_64='f214734251b6662737e08fd8bdb3a351466ff10eb776a2f338e3ccea93d7f01d2578acd1f716aa9a08d152b3c0cd4d2487ae35acee395ade4ab3507cfadbe018'
+readonly JDK_17_VERSION='17.0.18'
+
 ## Rust
 ### https://releases.rs/
 # readonly RUST_MAJOR_VERSION='1.94'

@@ -315,17 +315,21 @@ fi
 readonly BROWSER_TV_MAVEN_LOCAL
 export BROWSER_TV_MAVEN_LOCAL
 
-# Java home
-if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    readonly BROWSER_TV_JAVA_HOME_DEFAULT='/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home'
-else
-    readonly BROWSER_TV_JAVA_HOME_DEFAULT='/usr/lib/jvm/temurin-17-jdk'
+# JDK (17)
+## (Required by GeckoView)
+readonly BROWSER_TV_JDK_17_DEFAULT="${BROWSER_TV_EXTERNAL}/jdk-17"
+if [[ -z "${BROWSER_TV_JDK_17+x}" ]]; then
+    BROWSER_TV_JDK_17="${BROWSER_TV_JDK_17_DEFAULT}"
 fi
-if [[ -z "${BROWSER_TV_JAVA_HOME+x}" ]]; then
-   BROWSER_TV_JAVA_HOME="${BROWSER_TV_JAVA_HOME_DEFAULT}"
+readonly BROWSER_TV_JDK_17
+export BROWSER_TV_JDK_17
+if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
+    BROWSER_TV_JAVA_HOME="${BROWSER_TV_JDK_17}/Contents/Home"
+else
+    BROWSER_TV_JAVA_HOME="${BROWSER_TV_JDK_17}"
 fi
 readonly BROWSER_TV_JAVA_HOME
-readonly BROWSER_TV_JAVA="${IBROWSER_TV_JAVA_HOME}/bin/java"
+readonly BROWSER_TV_JAVA="${BROWSER_TV_JAVA_HOME}/bin/java"
 export BROWSER_TV_JAVA
 export BROWSER_TV_JAVA_HOME
 
@@ -513,7 +517,7 @@ readonly BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 export BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 
 # Gradle flags
-readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false --no-build-cache --no-configuration-cache --no-daemon"
+readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false -Dorg.gradle.java.home=${BROWSER_TV_JAVA_HOME} -Dorg.gradle.java.installations.auto-detect=false -Dorg.gradle.java.installations.auto-download=false --no-build-cache --no-configuration-cache --no-daemon"
 if [[ -z "${BROWSER_TV_GRADLE_FLAGS+x}" ]]; then
     readonly BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_GRADLE_FLAGS_OVERRIDE}" == 1 ]]; then
