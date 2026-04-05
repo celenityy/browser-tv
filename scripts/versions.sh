@@ -61,7 +61,7 @@ readonly CBINDGEN_VERSION='0.29.2'
 
 ## Gradle (F-Droid)
 ### https://gitlab.com/fdroid/gradlew-fdroid
-readonly GRADLE_COMMIT='e55f371891e02a45ee65d18cabc81aaf665c96d0'
+readonly GRADLE_COMMIT='996b7829f40f33317d33c1b6ddcffcf976bd6181'
 
 ## Rust
 ### https://releases.rs/
