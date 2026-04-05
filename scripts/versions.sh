@@ -13,7 +13,7 @@ readonly BROWSER_TV_VERSION="${FIREFOX_VERSION}"
 ### https://github.com/mozilla-l10n/firefox-l10n
 ### NOTE: This repo is updated several times a day...
 ### so I think best approach here will be for us to just update it alongside new releases
-readonly L10N_COMMIT='a3620ad68847cff83ebedaed974a7597ed79f1a4'
+readonly L10N_COMMIT='440d24a5ca656bbc55795fdca79e64497f2f07f2'
 
 ## microG
 ### https://github.com/microg/GmsCore
