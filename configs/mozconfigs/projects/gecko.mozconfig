@@ -1,3 +1,4 @@
 # Browser TV Gecko(View) mozconfig
 
-# Currently empty :(
+## Use JDK 17 and prevent running the verifyGleanVersion Gradle task
+export GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS} -Dorg.gradle.java.home=${BROWSER_TV_JDK_17_HOME} -Dorg.gradle.java.installations.paths=${BROWSER_TV_JAVA_HOME} -Pofficial -x verifyGleanVersion"

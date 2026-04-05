@@ -346,14 +346,41 @@ fi
 readonly BROWSER_TV_JDK_17
 export BROWSER_TV_JDK_17
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
-    BROWSER_TV_JAVA_HOME="${BROWSER_TV_JDK_17}/Contents/Home"
+    readonly BROWSER_TV_JDK_17_HOME="${BROWSER_TV_JDK_17}/Contents/Home"
 else
-    BROWSER_TV_JAVA_HOME="${BROWSER_TV_JDK_17}"
+    readonly BROWSER_TV_JDK_17_HOME="${BROWSER_TV_JDK_17}"
 fi
-readonly BROWSER_TV_JAVA_HOME
+export BROWSER_TV_JDK_17_HOME
+
+# JDK (21)
+readonly BROWSER_TV_JDK_21_DEFAULT="${BROWSER_TV_EXTERNAL}/jdk-21"
+if [[ -z "${BROWSER_TV_JDK_21+x}" ]]; then
+    BROWSER_TV_JDK_21="${BROWSER_TV_JDK_21_DEFAULT}"
+fi
+readonly BROWSER_TV_JDK_21
+export BROWSER_TV_JDK_21
+if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
+    readonly BROWSER_TV_JDK_21_HOME="${BROWSER_TV_JDK_21}/Contents/Home"
+else
+    readonly BROWSER_TV_JDK_21_HOME="${BROWSER_TV_JDK_21}"
+fi
+export BROWSER_TV_JDK_21_HOME
+
+# JDK (25)
+readonly BROWSER_TV_JDK_25_DEFAULT="${BROWSER_TV_EXTERNAL}/jdk-25"
+if [[ -z "${BROWSER_TV_JDK_25+x}" ]]; then
+    BROWSER_TV_JDK_25="${BROWSER_TV_JDK_25_DEFAULT}"
+fi
+readonly BROWSER_TV_JDK_25
+export BROWSER_TV_JDK_25
+if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
+    readonly BROWSER_TV_JAVA_HOME="${BROWSER_TV_JDK_25}/Contents/Home"
+else
+    readonly BROWSER_TV_JAVA_HOME="${BROWSER_TV_JDK_25}"
+fi
+export BROWSER_TV_JAVA_HOME
 readonly BROWSER_TV_JAVA="${BROWSER_TV_JAVA_HOME}/bin/java"
 export BROWSER_TV_JAVA
-export BROWSER_TV_JAVA_HOME
 
 # libclang
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
@@ -605,7 +632,7 @@ readonly BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 export BROWSER_TV_GRADLE_FLAGS_OVERRIDE
 
 # Gradle flags
-readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false -Dorg.gradle.java.home=${BROWSER_TV_JAVA_HOME} -Dorg.gradle.java.installations.auto-detect=false -Dorg.gradle.java.installations.auto-download=false --no-build-cache --no-configuration-cache --no-daemon"
+readonly BROWSER_TV_GRADLE_FLAGS_DEFAULT="-Dmaven.repo.local=${BROWSER_TV_MAVEN_LOCAL} -Dorg.gradle.caching=false -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon=false -Dorg.gradle.debug=false -Dorg.gradle.java.installations.auto-detect=false -Dorg.gradle.java.installations.auto-download=false --no-build-cache --no-configuration-cache --no-daemon"
 if [[ -z "${BROWSER_TV_GRADLE_FLAGS+x}" ]]; then
     readonly BROWSER_TV_GRADLE_FLAGS="${BROWSER_TV_GRADLE_FLAGS_DEFAULT}"
 elif [[ "${BROWSER_TV_GRADLE_FLAGS_OVERRIDE}" == 1 ]]; then

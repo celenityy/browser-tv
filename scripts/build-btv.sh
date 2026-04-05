@@ -331,9 +331,9 @@ function build_microg() {
     echo_red_text 'Building microG...'
 
     pushd "${BROWSER_TV_GMSCORE}"
-    clean_gradle
+    "${BROWSER_TV_GRADLE}" ${BROWSER_TV_GRADLE_FLAGS} -Dorg.gradle.java.home=${BROWSER_TV_JDK_21_HOME} -Dorg.gradle.java.installations.paths=${BROWSER_TV_JAVA_HOME} clean
 
-    "${BROWSER_TV_GRADLE}" ${BROWSER_TV_GRADLE_FLAGS} -Dhttps.protocols=TLSv1.3 -x javaDocReleaseGeneration \
+    "${BROWSER_TV_GRADLE}" ${BROWSER_TV_GRADLE_FLAGS} -Dorg.gradle.java.home=${BROWSER_TV_JDK_21_HOME} -Dorg.gradle.java.installations.paths=${BROWSER_TV_JAVA_HOME} -x javaDocReleaseGeneration \
         :play-services-base:publishToMavenLocal \
         :play-services-basement:publishToMavenLocal \
         :play-services-fido:publishToMavenLocal \
@@ -616,17 +616,21 @@ function build_as() {
     echo_red_text 'Building Application Services...'
 
     pushd "${BROWSER_TV_AS}"
-    clean_gradle
+    "${BROWSER_TV_GRADLE}" ${BROWSER_TV_GRADLE_FLAGS} -Dorg.gradle.java.home=${BROWSER_TV_JDK_17_HOME} -Dorg.gradle.java.installations.paths=${BROWSER_TV_JAVA_HOME},${BROWSER_TV_JDK_17_HOME} clean
 
     # When 'CI' environment variable is set to a non-zero value, the 'libs/verify-ci-android-environment.sh' script
     # skips building the libraries as they are expected to be already downloaded in a CI environment
     # However, we want build those libraries always, so we unset CI before invoking the script
     unset CI
 
+    unset JAVA_HOME
+    export JAVA_HOME="${BROWSER_TV_JDK_17_HOME}"
     bash -x "${BROWSER_TV_AS}/libs/verify-android-environment.sh"
+    unset JAVA_HOME
+    export JAVA_HOME="${BROWSER_TV_JDK_17_HOME}"
 
     # Build Application Services
-    "${BROWSER_TV_GRADLE}" ${BROWSER_TV_GRADLE_FLAGS} publish -Plocal=${BTV_LOCAL_AS_VERSION_GRADLE}
+    "${BROWSER_TV_GRADLE}" ${BROWSER_TV_GRADLE_FLAGS} -Dorg.gradle.java.home=${BROWSER_TV_JDK_17_HOME} -Dorg.gradle.java.installations.paths=${BROWSER_TV_JAVA_HOME},${BROWSER_TV_JDK_17_HOME} -Plocal=${BTV_LOCAL_AS_VERSION_GRADLE} publish
 
     popd
 
@@ -663,7 +667,7 @@ function build_browser_tv() {
 
     "${BROWSER_TV_GRADLE}" "${BROWSER_TV_GRADLE_FLAGS}" :app:assembleRelease
     if [[ "${BROWSER_TV_TARGET_ARCH}" == "bundle" ]]; then
-        "${BROWSER_TV_GRADLE}" "${BROWSER_TV_GRADLE_FLAGS}" :app:bundleRelease -Paab
+        "${BROWSER_TV_GRADLE}" "${BROWSER_TV_GRADLE_FLAGS}" -Paab :app:bundleRelease
     fi
     popd
 
