@@ -65,10 +65,10 @@ readonly GRADLE_COMMIT='996b7829f40f33317d33c1b6ddcffcf976bd6181'
 
 ## Rust
 ### https://releases.rs/
-readonly RUST_MAJOR_VERSION='1.93'
-readonly RUST_VERSION="${RUST_MAJOR_VERSION}.0"
-#readonly RUST_MAJOR_VERSION='1.91.1'
-#readonly RUST_VERSION="${RUST_MAJOR_VERSION}"
+# readonly RUST_MAJOR_VERSION='1.94'
+# readonly RUST_VERSION="${RUST_MAJOR_VERSION}.0"
+readonly RUST_MAJOR_VERSION='1.94.1'
+readonly RUST_VERSION="${RUST_MAJOR_VERSION}"
 
 # For prebuilds
 ## https://gitlab.com/ironfox-oss/prebuilds
