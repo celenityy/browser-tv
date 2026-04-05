@@ -78,6 +78,9 @@ readonly BUNDLETOOL_VERSION='1.18.3'
 
 ## cbindgen
 ### https://docs.rs/crate/cbindgen/latest
+### (This commit corresponds to https://github.com/mozilla/cbindgen/releases/tag/v0.29.2)
+readonly CBINDGEN_COMMIT='76f41c090c0587d940a0ef81a41c8b995f074926'
+readonly CBINDGEN_SHA512SUM='8363f69fc103343acc2b2545d833df6da876c8591f664b0f7ce6ebac28ce516e72cc615df4d2c07b93c646ed122b8a48c4a34b03c363d2d795c3013321c3fc5c'
 readonly CBINDGEN_VERSION='0.29.2'
 
 ## Gradle (F-Droid)

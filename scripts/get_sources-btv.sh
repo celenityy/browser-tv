@@ -198,6 +198,10 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for Bundletool (repository)...'
         "${BROWSER_TV_SED}" -i -e "s|BUNDLETOOL_REPO_SHA512SUM='.*'|BUNDLETOOL_REPO_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Bundletool (repository)'
+    elif [ "${old_sha512sum}" == "${CBINDGEN_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for cbindgen...'
+        "${BROWSER_TV_SED}" -i -e "s|CBINDGEN_SHA512SUM='.*'|CBINDGEN_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for cbindgen'
     elif [ "${old_sha512sum}" == "${FIREFOX_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for Firefox...'
         "${BROWSER_TV_SED}" -i -e "s|FIREFOX_SHA512SUM='.*'|FIREFOX_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
@@ -585,9 +589,12 @@ function get_cbindgen() {
         fi
     fi
 
+    echo_red_text "Downloading cbindgen..."
+    download_and_extract 'cbindgen' "https://github.com/mozilla/cbindgen/archive/${CBINDGEN_COMMIT}.tar.gz" "${BROWSER_TV_CBINDGEN}" "${CBINDGEN_SHA512SUM}"
+
     source "${BROWSER_TV_CARGO_ENV}"
     echo_red_text 'Installing cbindgen...'
-    cargo +"${RUST_VERSION}" install --locked --force --vers "${CBINDGEN_VERSION}" cbindgen
+    cargo +"${RUST_VERSION}" install --locked --force --vers "${CBINDGEN_VERSION}" --path "${BROWSER_TV_CBINDGEN}" cbindgen
     echo_green_text "SUCCESS: Set-up cbindgen at ${BROWSER_TV_CARGO_HOME}/bin/cbindgen"
 }
 
