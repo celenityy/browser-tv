@@ -204,6 +204,18 @@ fi
 readonly BROWSER_TV_MOZBUILD
 export BROWSER_TV_MOZBUILD
 
+# GNU awk
+if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
+    readonly BROWSER_TV_AWK_DEFAULT='gawk'
+else
+    readonly BROWSER_TV_AWK_DEFAULT='awk'
+fi
+if [[ -z "${BROWSER_TV_AWK+x}" ]]; then
+    BROWSER_TV_AWK="${IRONFOX_AWK_DEFAULT}"
+fi
+readonly BROWSER_TV_AWK
+export BROWSER_TV_AWK
+
 # GNU date
 if [[ "${BROWSER_TV_OS}" == 'osx' ]]; then
     readonly BROWSER_TV_DATE_DEFAULT='gdate'

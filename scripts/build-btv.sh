@@ -87,7 +87,7 @@ if [ ! -d "${BROWSER_TV_ANDROID_NDK}" ]; then
     exit 1
 fi
 
-readonly JAVA_VER=$("${BROWSER_TV_JAVA}" -version 2>&1 | awk -F '"' '/version/ {print $2}' | awk -F '.' '{sub("^$", "0", $2); print $1$2}')
+readonly JAVA_VER=$("${BROWSER_TV_JAVA}" -version 2>&1 | "${BROWSER_TV_AWK}" -F '"' '/version/ {print $2}' | "${BROWSER_TV_AWK}" -F '.' '{sub("^$", "0", $2); print $1$2}')
 [ "${JAVA_VER}" -ge 15 ] || {
     echo_red_text "Java 17 or newer must be set as default JDK"
     exit 1
