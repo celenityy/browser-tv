@@ -153,7 +153,15 @@ function update_sha512sum() {
     local readonly new_sha512sum="$2"
     local readonly file="$3"
 
-    if [ "${old_sha512sum}" == "${ANDROID_SDK_SHA512SUM_LINUX}" ]; then
+    if [ "${old_sha512sum}" == "${ANDROID_NDK_SHA512SUM_LINUX}" ]; then
+        echo_red_text 'Updating SHA512sum for Android NDK (Linux)...'
+        "${BROWSER_TV_SED}" -i -e "s|ANDROID_NDK_SHA512SUM_LINUX='.*'|ANDROID_NDK_SHA512SUM_LINUX='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Android NDK (Linux)'
+    elif [ "${old_sha512sum}" == "${ANDROID_NDK_SHA512SUM_OSX}" ]; then
+        echo_red_text 'Updating SHA512sum for Android NDK (OS X)...'
+        "${BROWSER_TV_SED}" -i -e "s|ANDROID_NDK_SHA512SUM_OSX='.*'|ANDROID_NDK_SHA512SUM_OSX='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Android NDK (OS X)'
+    elif [ "${old_sha512sum}" == "${ANDROID_SDK_SHA512SUM_LINUX}" ]; then
         echo_red_text 'Updating SHA512sum for Android SDK (Linux)...'
         "${BROWSER_TV_SED}" -i -e "s|ANDROID_SDK_SHA512SUM_LINUX='.*'|ANDROID_SDK_SHA512SUM_LINUX='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Android SDK (Linux)'
@@ -161,6 +169,14 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for Android SDK (OS X)...'
         "${BROWSER_TV_SED}" -i -e "s|ANDROID_SDK_SHA512SUM_OSX='.*'|ANDROID_SDK_SHA512SUM_OSX='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Android SDK (OS X)'
+    elif [ "${old_sha512sum}" == "${ANDROID_SDK_BUILD_TOOLS_SHA512SUM_LINUX}" ]; then
+        echo_red_text 'Updating SHA512sum for Android SDK Build Tools (Linux)...'
+        "${BROWSER_TV_SED}" -i -e "s|ANDROID_SDK_BUILD_TOOLS_SHA512SUM_LINUX='.*'|ANDROID_SDK_BUILD_TOOLS_SHA512SUM_LINUX='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Android SDK Build Tools (Linux)'
+    elif [ "${old_sha512sum}" == "${ANDROID_SDK_BUILD_TOOLS_SHA512SUM_OSX}" ]; then
+        echo_red_text 'Updating SHA512sum for Android SDK Build Tools (OS X)...'
+        "${BROWSER_TV_SED}" -i -e "s|ANDROID_SDK_BUILD_TOOLS_SHA512SUM_OSX='.*'|ANDROID_SDK_BUILD_TOOLS_SHA512SUM_OSX='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Android SDK Build Tools (OS X)'
     elif [ "${old_sha512sum}" == "${BUNDLETOOL_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for Bundletool...'
         "${BROWSER_TV_SED}" -i -e "s|BUNDLETOOL_SHA512SUM='.*'|BUNDLETOOL_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
