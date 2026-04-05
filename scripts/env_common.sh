@@ -73,7 +73,6 @@ readonly BROWSER_TV_OUTPUTS_APKS="${BROWSER_TV_OUTPUTS}/apks"
 readonly BROWSER_TV_OUTPUTS_GV_AAR_ARM="${BROWSER_TV_OUTPUTS_AAR}/geckoview-armeabi-v7a.zip"
 readonly BROWSER_TV_OUTPUTS_GV_AAR_ARM64="${BROWSER_TV_OUTPUTS_AAR}/geckoview-arm64-v8a.zip"
 readonly BROWSER_TV_OUTPUTS_GV_AAR_X86_64="${BROWSER_TV_OUTPUTS_AAR}/geckoview-x86_64.zip"
-readonly BROWSER_TV_OUTPUTS_LOGS="${BROWSER_TV_OUTPUTS}/logs"
 export BROWSER_TV_OUTPUTS_AAB
 export BROWSER_TV_OUTPUTS_AAR
 export BROWSER_TV_OUTPUTS_APK
@@ -81,7 +80,38 @@ export BROWSER_TV_OUTPUTS_APKS
 export BROWSER_TV_OUTPUTS_GV_AAR_ARM
 export BROWSER_TV_OUTPUTS_GV_AAR_ARM64
 export BROWSER_TV_OUTPUTS_GV_AAR_X86_64
-export BROWSER_TV_OUTPUTS_LOGS
+
+# Should we create a log file for build.sh? (Default)
+readonly BROWSER_TV_LOG_BUILD_DEFAULT=1
+if [[ -z "${BROWSER_TV_LOG_BUILD+x}" ]]; then
+    BROWSER_TV_LOG_BUILD="${BROWSER_TV_LOG_BUILD_DEFAULT}"
+fi
+readonly BROWSER_TV_LOG_BUILD
+export BROWSER_TV_LOG_BUILD
+
+# Should we create a log file for prebuild.sh? (Default)
+readonly BROWSER_TV_LOG_PREBUILD_DEFAULT=1
+if [[ -z "${BROWSER_TV_LOG_PREBUILD+x}" ]]; then
+    BROWSER_TV_LOG_PREBUILD="${BROWSER_TV_LOG_PREBUILD_DEFAULT}"
+fi
+readonly BROWSER_TV_LOG_PREBUILD
+export BROWSER_TV_LOG_PREBUILD
+
+# Should we create a log file for get_sources.sh? (Default)
+readonly BROWSER_TV_LOG_SOURCES_DEFAULT=1
+if [[ -z "${BROWSER_TV_LOG_SOURCES+x}" ]]; then
+    BROWSER_TV_LOG_SOURCES="${BROWSER_TV_LOG_SOURCES_DEFAULT}"
+fi
+readonly BROWSER_TV_LOG_SOURCES
+export BROWSER_TV_LOG_SOURCES
+
+# Directory where we should store log files (if logging is desired)
+readonly BROWSER_TV_LOG_DIR_DEFAULT="${BROWSER_TV_BUILD}/logs"
+if [[ -z "${BROWSER_TV_LOG_DIR+x}" ]]; then
+    BROWSER_TV_LOG_DIR="${BROWSER_TV_LOG_DIR_DEFAULT}"
+fi
+readonly BROWSER_TV_LOG_DIR
+export BROWSER_TV_LOG_DIR
 
 # Android SDK
 readonly BROWSER_TV_ANDROID_SDK_DEFAULT="${BROWSER_TV_EXTERNAL}/android-sdk"
