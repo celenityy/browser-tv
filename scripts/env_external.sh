@@ -149,3 +149,12 @@ export RUSTUP_TERM_PROGRESS_WHEN="${BROWSER_TV_RUSTUP_PROGRESS_BAR}"
 
 ## Enable colored output
 export RUSTUP_TERM_COLOR="${BROWSER_TV_RUSTUP_COLORED_OUTPUT}"
+
+# Include version info
+source "${BROWSER_TV_VERSIONS}"
+
+## Set Rust version
+export RUSTUP_TOOLCHAIN="${RUST_VERSION}"
+
+## Set Rustup version
+export RUSTUP_VERSION

@@ -209,6 +209,10 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for IronFox prebuilds...'
         "${BROWSER_TV_SED}" -i -e "s|PREBUILDS_SHA512SUM='.*'|PREBUILDS_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for IronFox prebuilds'
+    elif [ "${old_sha512sum}" == "${RUSTUP_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for rustup...'
+        "${BROWSER_TV_SED}" -i -e "s|RUSTUP_SHA512SUM='.*'|RUSTUP_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for rustup'
     elif [ "${old_sha512sum}" == "${WASI_LINUX_IRONFOX_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for WASI SDK (Linux)...'
         "${BROWSER_TV_SED}" -i -e "s|WASI_LINUX_IRONFOX_SHA512SUM='.*'|WASI_LINUX_IRONFOX_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
@@ -641,7 +645,13 @@ function get_rust() {
         fi
     fi
 
-    curl ${BROWSER_TV_CURL_FLAGS} -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --no-update-default-toolchain --profile=minimal
+    echo_red_text 'Downloading Rust...'
+    download "https://raw.githubusercontent.com/rust-lang/rustup/${RUSTUP_COMMIT}/rustup-init.sh" "${BROWSER_TV_DOWNLOADS}/rustup-init.sh"
+
+    # Validate SHA512sum
+    validate_sha512sum "${RUSTUP_SHA512SUM}" "${BROWSER_TV_DOWNLOADS}/rustup-init.sh"
+
+    bash -x "${BROWSER_TV_DOWNLOADS}/rustup-init.sh" -y --no-modify-path --no-update-default-toolchain --profile=minimal
 
     echo_red_text 'Creating Rust environment...'
     source "${BROWSER_TV_CARGO_ENV}"

@@ -86,6 +86,12 @@ readonly GRADLE_SHA512SUM='0498fff4a729aa2458f2627635507c6e9a9bd3d1e914ac375e10b
 readonly RUST_MAJOR_VERSION='1.94.1'
 readonly RUST_VERSION="${RUST_MAJOR_VERSION}"
 
+## rustup
+### https://github.com/rust-lang/rustup/tags
+readonly RUSTUP_COMMIT='28d1352dbcb436d3111c3594b9e1588e94950464'
+readonly RUSTUP_SHA512SUM='cd9fd64eabc989f19a6a16e9cd2caabe935082e2715b9308150f86d3839c99eb9a7e42a7ef6730c6d956d870638ee89a04dd9e7e14fe243cc165967b7f2918da'
+readonly RUSTUP_VERSION='1.29.0'
+
 # For prebuilds
 ## https://gitlab.com/ironfox-oss/prebuilds
 readonly IRONFOX_PREBUILDS_COMMIT='241af63561e4b4c9cf14d67d585f498a53bbf501'
