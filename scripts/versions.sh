@@ -4,8 +4,8 @@
 ## Firefox
 ### https://github.com/mozilla-firefox/firefox
 ### (This commit corresponds to https://github.com/mozilla-firefox/firefox/releases/tag/FIREFOX-ANDROID_147_0_2_RELEASE)
-readonly FIREFOX_COMMIT='9fc08b8a32cec38350ce7aed268edd4dea28e6d1'
-readonly FIREFOX_VERSION='147.0.2'
+readonly FIREFOX_COMMIT='a395b8ce89f74c9a50acf7493052282e26477e38'
+readonly FIREFOX_VERSION='149.0.1'
 
 readonly BROWSER_TV_VERSION="${FIREFOX_VERSION}"
 
