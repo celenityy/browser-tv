@@ -315,6 +315,14 @@ fi
 readonly BROWSER_TV_MAVEN_LOCAL
 export BROWSER_TV_MAVEN_LOCAL
 
+# GYP
+readonly BROWSER_TV_GYP_DEFAULT="${BROWSER_TV_EXTERNAL}/gyp-next"
+if [[ -z "${BROWSER_TV_GYP+x}" ]]; then
+    BROWSER_TV_GYP="${BROWSER_TV_GYP_DEFAULT}"
+fi
+readonly BROWSER_TV_GYP
+export BROWSER_TV_GYP
+
 # JDK (17)
 ## (Required by GeckoView)
 readonly BROWSER_TV_JDK_17_DEFAULT="${BROWSER_TV_EXTERNAL}/jdk-17"

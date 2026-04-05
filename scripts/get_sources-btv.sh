@@ -210,6 +210,10 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for F-Droid Gradle script...'
         "${BROWSER_TV_SED}" -i -e "s|GRADLE_SHA512SUM='.*'|GRADLE_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for F-Droid Gradle script'
+    elif [ "${old_sha512sum}" == "${GYP_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for GYP...'
+        "${BROWSER_TV_SED}" -i -e "s|GYP_SHA512SUM='.*'|GYP_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for GYP'
     elif [ "${old_sha512sum}" == "${JDK_17_SHA512SUM_LINUX_ARM64}" ]; then
         echo_red_text 'Updating SHA512sum for JDK (17) (Linux - ARM64)...'
         "${BROWSER_TV_SED}" -i -e "s|JDK_17_SHA512SUM_LINUX_ARM64='.*'|JDK_17_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
@@ -636,9 +640,12 @@ function get_gyp() {
         fi
     fi
 
+    echo_red_text "Downloading GYP..."
+    download_and_extract 'gyp-next' "https://github.com/nodejs/gyp-next/archive/${GYP_COMMIT}.tar.gz" "${BROWSER_TV_GYP}" "${GYP_SHA512SUM}"
+
     source "${BROWSER_TV_PYENV}"
     echo_red_text 'Installing GYP...'
-    "${BROWSER_TV_UV}" pip install --strict gyp-next
+    "${BROWSER_TV_UV}" pip install --strict "${BROWSER_TV_GYP}"
     echo_green_text "SUCCESS: Set-up GYP at ${BROWSER_TV_PYENV_DIR}/bin/gyp"
 }
 

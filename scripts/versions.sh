@@ -17,6 +17,12 @@ readonly BROWSER_TV_VERSION="${FIREFOX_VERSION}"
 readonly L10N_COMMIT='440d24a5ca656bbc55795fdca79e64497f2f07f2'
 readonly L10N_SHA512SUM='3a2361292e05b87c5bef166fa7cd09f5634c79da6eb2a6ca1a7c9c283f82208455bf4bc61f3fb5732a17f03f28181a9d1ac2146b340627a578c5a97efe394d95'
 
+## GYP
+### Version: v0.21.1
+### https://github.com/nodejs/gyp-next
+readonly GYP_COMMIT='eae394d0b489fa62235dfb82cc549d3422372542'
+readonly GYP_SHA512SUM='f8aca737b54e19e0007d15fbf686c56d522d2eaf88de76208f91b894251c86ca0da59271ce948b77faaa60b3bde52c8af3aaa0a79df8b5d32ab484842698e0f5'
+
 ## microG
 ### Version: v0.3.13.250932
 ### https://github.com/microg/GmsCore
