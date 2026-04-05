@@ -19,6 +19,12 @@ fi
 readonly BROWSER_TV_SCRIPTS="${BROWSER_TV_ROOT}/scripts"
 export BROWSER_TV_SCRIPTS
 
+# Configuration files
+readonly BROWSER_TV_CONFIGS="${BROWSER_TV_ROOT}/configs"
+readonly BROWSER_TV_MOZCONFIGS="${BROWSER_TV_CONFIGS}/mozconfigs"
+export BROWSER_TV_CONFIGS
+export BROWSER_TV_MOZCONFIGS
+
 ## Browser TV utilities
 readonly BROWSER_TV_UTILS="${BROWSER_TV_SCRIPTS}/utilities.sh"
 export BROWSER_TV_UTILS
@@ -204,7 +210,7 @@ readonly BROWSER_TV_AC_OVERLAY="${BROWSER_TV_PATCHES}/a-c-overlay"
 export BROWSER_TV_AC_OVERLAY
 
 ## Gecko locales
-readonly BROWSER_TV_GECKO_LOCALES_DEFAULT=$(<"${BROWSER_TV_PATCHES}/locales")
+readonly BROWSER_TV_GECKO_LOCALES_DEFAULT=$(<"${BROWSER_TV_CONFIGS}/locales")
 if [[ -z "${BROWSER_TV_GECKO_LOCALES+x}" ]]; then
     BROWSER_TV_GECKO_LOCALES="${BROWSER_TV_GECKO_LOCALES_DEFAULT}"
 fi

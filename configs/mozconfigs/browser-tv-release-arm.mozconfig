@@ -1,0 +1,10 @@
+# Browser TV - Release (ARM) mozconfig
+
+. "${BROWSER_TV_MOZCONFIGS}/core.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/branding/browser-tv.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/targets/arm.mozconfig"
+
+## Set the destination object (output) directory
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-arm
+mk_add_options OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-arm
+export MOZ_OBJDIR="${BROWSER_TV_GECKO}/obj/browser-tv-release-arm"

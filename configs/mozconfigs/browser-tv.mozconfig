@@ -1,0 +1,10 @@
+# Browser TV mozconfig...
+
+. "${BROWSER_TV_MOZCONFIGS}/browser-tv-${BROWSER_TV_CHANNEL}-${BROWSER_TV_TARGET_ARCH}.mozconfig"
+
+# Any desired overrides can be added below:
+
+# If there is an `overrides.mozconfig` file (located at the root project directory), let's use it
+if [[ -f "${BROWSER_TV_ROOT}/overrides.mozconfig" ]]; then
+    . "${BROWSER_TV_ROOT}/overrides.mozconfig"
+fi

@@ -1,0 +1,10 @@
+# Browser TV - Release (x86_64) mozconfig
+
+. "${BROWSER_TV_MOZCONFIGS}/core.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/branding/browser-tv.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/targets/x86_64.mozconfig"
+
+## Set the destination object (output) directory
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-x86_64
+mk_add_options OBJDIR=@TOPSRCDIR@/obj/browser-tv-release-x86_64
+export MOZ_OBJDIR="${BROWSER_TV_GECKO}/obj/browser-tv-release-x86_64"

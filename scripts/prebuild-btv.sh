@@ -81,7 +81,7 @@ cp -f "${BROWSER_TV_PATCHES}/machrc" "${BROWSER_TV_MOZBUILD}/machrc"
 
 ## Symlink Rust (cargo) config
 if [[ ! -f "${BROWSER_TV_CARGO_HOME}/config.toml" ]]; then
-    cp -f "${BROWSER_TV_PATCHES}/cargo/config.toml" "${BROWSER_TV_CARGO_HOME}/config.toml"
+    cp -f "${BROWSER_TV_CONFIGS}/cargo/config.toml" "${BROWSER_TV_CARGO_HOME}/config.toml"
 fi
 
 # Check patch files

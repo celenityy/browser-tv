@@ -1,4 +1,4 @@
-. "$topsrcdir/browser-tv/mozconfigs/targets/common.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/targets/common.mozconfig"
 
 ac_add_options --disable-android-bundle
 ac_add_options --target='aarch64-linux-android'

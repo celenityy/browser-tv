@@ -205,6 +205,7 @@ function prep_gecko() {
     fi
     cp -f "${BROWSER_TV_PATCHES}/build/gecko/local.properties" "${BROWSER_TV_GECKO}/local.properties"
     "${BROWSER_TV_SED}" -i "s|{BROWSER_TV_GECKO}|${BROWSER_TV_GECKO}|" "${BROWSER_TV_GECKO}/local.properties"
+    "${BROWSER_TV_SED}" -i "s|{BROWSER_TV_MOZCONFIGS}|${BROWSER_TV_MOZCONFIGS}|" "${BROWSER_TV_GECKO}/local.properties"
 
     # Substitute our local versions of Android Components and Application Services
     "${BROWSER_TV_SED}" -i -e "s|val VERSION = .*|val VERSION = \""${BTV_LOCAL_AS_VERSION}\""|g" "${BROWSER_TV_AC}/plugins/dependencies/src/main/java/ApplicationServices.kt"

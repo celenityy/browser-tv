@@ -1,5 +1,5 @@
 
-. "$topsrcdir/browser-tv/mozconfigs/branding/common.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/branding/common.mozconfig"
 
 ac_add_options --disable-browser-tv-release
 ac_add_options --with-app-basename='Browser TV Nightly'

@@ -4,4 +4,4 @@ ac_add_options --with-distribution-id='dev.celenity'
 export MOZ_APP_VENDOR='celenity'
 export MOZ_SOURCE_REPO='https://github.com/celenityy/browser-tv/'
 
-. "$topsrcdir/browser-tv/mozconfigs/branding/env.mozconfig"
+. "${BROWSER_TV_MOZCONFIGS}/branding/env.mozconfig"

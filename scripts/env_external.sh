@@ -57,8 +57,8 @@ export LLVM_PROFDATA
 ## https://searchfox.org/mozilla-central/rev/f008b9aa/python/mach/mach/telemetry.py#95
 ## https://searchfox.org/mozilla-central/rev/f008b9aa/python/mach/mach/telemetry.py#284
 readonly DISABLE_TELEMETRY=1
-readonly MACHRC="${BROWSER_TV_PATCHES}/machrc"
-readonly MOZCONFIG="${BROWSER_TV_GECKO}/mozconfig"
+readonly MACHRC="${BROWSER_TV_CONFIGS}/mach/machrc"
+readonly MOZCONFIG="${BROWSER_TV_MOZCONFIGS}/browser-tv.mozconfig"
 export DISABLE_TELEMETRY
 export MACHRC
 export MOZCONFIG
