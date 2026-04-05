@@ -17,8 +17,8 @@ readonly L10N_COMMIT='440d24a5ca656bbc55795fdca79e64497f2f07f2'
 
 ## microG
 ### https://github.com/microg/GmsCore
-readonly GMSCORE_COMMIT='cbb8dcfbe8e6155ef6e2276636a94f902041485f'
-readonly GMSCORE_VERSION='v0.3.12.250932'
+readonly GMSCORE_COMMIT='3ba21336181c846630242124176737c05b3e8b6f'
+readonly GMSCORE_VERSION='v0.3.13.250932'
 
 ## Phoenix
 ### https://gitlab.com/celenityy/Phoenix
