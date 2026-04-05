@@ -112,6 +112,23 @@ export PHOENIX_SED
 export PHOENIX_SPECS
 export PHOENIX_TAR
 
+# Python
+## https://docs.python.org/3/using/cmdline.html#environment-variables
+
+## Disable JIT
+readonly PYTHON_JIT=0
+readonly PYTHON_PERF_JIT_SUPPORT=0
+export PYTHON_JIT
+export PYTHON_PERF_JIT_SUPPORT
+
+## Disable remote debugging
+readonly PYTHON_DISABLE_REMOTE_DEBUG=1
+export PYTHON_DISABLE_REMOTE_DEBUG
+
+## Enable performance optimizations
+readonly PYTHONOPTIMIZE=1
+export PYTHONOPTIMIZE
+
 # Python (rust-android-gradle)
 ## https://github.com/mozilla/rust-android-gradle?tab=readme-ov-file#specifying-paths-to-sub-commands-python-cargo-and-rustc
 readonly RUST_ANDROID_GRADLE_PYTHON_COMMAND="${BROWSER_TV_PYTHON}"
@@ -208,8 +225,89 @@ export RUSTUP_TERM_PROGRESS_WHEN
 readonly RUSTUP_TERM_COLOR="${BROWSER_TV_RUSTUP_COLORED_OUTPUT}"
 export RUSTUP_TERM_COLOR
 
+# UV
+## https://docs.astral.sh/uv/reference/environment/
+
+## Cache directory
+readonly UV_CACHE_DIR="${BROWSER_TV_UV_LOCAL}/cache"
+export UV_CACHE_DIR
+
+## Disable cache
+readonly UV_NO_CACHE=1
+export UV_NO_CACHE
+
+## Disable the system CA root store
+readonly UV_SYSTEM_CERTS='false'
+export UV_SYSTEM_CERTS
+
+## Exclude development dependencies
+readonly UV_NO_DEV=1
+export UV_NO_DEV
+
+## Executables directory
+readonly UV_PYTHON_BIN_DIR="${BROWSER_TV_UV_LOCAL}/bin"
+readonly UV_PYTHON_INSTALL_BIN=1
+export UV_PYTHON_BIN_DIR
+export UV_PYTHON_INSTALL_BIN
+
+## Ignore configuration files
+readonly UV_NO_CONFIG=1
+export UV_NO_CONFIG
+
+## Ignore env files
+readonly UV_NO_ENV_FILE=1
+export UV_NO_ENV_FILE
+
+## Location
+readonly UV_INSTALL_DIR="${BROWSER_TV_UV_DIR}"
+export UV_INSTALL_DIR
+
+## Prevent automatic downloads/updates
+readonly UV_DISABLE_UPDATE=1
+readonly UV_PYTHON_DOWNLOADS='manual'
+export UV_DISABLE_UPDATE
+export UV_PYTHON_DOWNLOADS
+
+## Prevent modifying the system PATH
+readonly INSTALLER_NO_MODIFY_PATH=1
+readonly UV_NO_MODIFY_PATH=1
+readonly UV_UNMANAGED_INSTALL="${BROWSER_TV_UV_DIR}"
+export INSTALLER_NO_MODIFY_PATH
+export UV_NO_MODIFY_PATH
+export UV_UNMANAGED_INSTALL
+
+## Prevent using the system Python
+readonly UV_MANAGED_PYTHON=1
+readonly UV_SYSTEM_PYTHON='false'
+export UV_MANAGED_PYTHON
+export UV_SYSTEM_PYTHON
+
+## Python
+readonly UV_PYTHON_CACHE_DIR="${BROWSER_TV_UV_LOCAL}/python-cache"
+readonly UV_PYTHON_INSTALL_MIRROR="file://${BROWSER_TV_PYTHON_DIR}"
+readonly UV_PYTHON_INSTALL_DIR="${BROWSER_TV_UV_LOCAL}/python"
+export UV_PYTHON_CACHE_DIR
+export UV_PYTHON_INSTALL_MIRROR
+export UV_PYTHON_INSTALL_DIR
+
+## Python environment
+readonly UV_PROJECT_ENVIRONMENT="${BROWSER_TV_PYENV_DIR}"
+readonly VIRTUAL_ENV="${BROWSER_TV_PYENV_DIR}"
+export UV_PROJECT_ENVIRONMENT
+export VIRTUAL_ENV
+
+## Tools directory
+readonly UV_TOOL_BIN_DIR="${BROWSER_TV_UV_LOCAL}/tools/bin"
+readonly UV_TOOL_DIR="${BROWSER_TV_UV_LOCAL}/tools"
+export UV_TOOL_BIN_DIR
+export UV_TOOL_DIR
+
 # Include version info
 source "${BROWSER_TV_VERSIONS}"
+
+## Pin Python version
+readonly UV_PYTHON_CPYTHON_BUILD="${PYTHON_GIT_RELEASE}"
+export UV_PYTHON_CPYTHON_BUILD
 
 ## Set Rust version
 readonly RUSTUP_TOOLCHAIN="${RUST_VERSION}"

@@ -30,9 +30,10 @@ BROWSER_TV_GET_SOURCE_GYP=0
 BROWSER_TV_GET_SOURCE_JDK_17=0
 BROWSER_TV_GET_SOURCE_MICROG=0
 BROWSER_TV_GET_SOURCE_PHOENIX=0
-BROWSER_TV_GET_SOURCE_PIP=0
 BROWSER_TV_GET_SOURCE_PREBUILDS=0
+BROWSER_TV_GET_SOURCE_PYTHON=0
 BROWSER_TV_GET_SOURCE_RUST=0
+BROWSER_TV_GET_SOURCE_UV=0
 
 if [ "${target}" == 'android-ndk' ]; then
     # Get Android NDK
@@ -76,12 +77,15 @@ elif [ "${target}" == 'phoenix' ]; then
 elif [ "${target}" == 'prebuilds' ]; then
     # Get IronFox prebuilds
     BROWSER_TV_GET_SOURCE_PREBUILDS=1
-elif [ "${target}" == 'pip' ]; then
-    # Get + set-up pip
-    BROWSER_TV_GET_SOURCE_PIP=1
+elif [ "${target}" == 'python' ]; then
+    # Get Python
+    BROWSER_TV_GET_SOURCE_PYTHON=1
 elif [ "${target}" == 'rust' ]; then
     # Get + set-up rust/cargo
     BROWSER_TV_GET_SOURCE_RUST=1
+elif [ "${target}" == 'uv' ]; then
+    # Get + set-up uv
+    BROWSER_TV_GET_SOURCE_UV=1
 elif [ "${target}" == 'all' ]; then
     # If no argument is specified (or argument is set to "all"), just get everything
     BROWSER_TV_GET_SOURCE_ANDROID_NDK=1
@@ -97,9 +101,10 @@ elif [ "${target}" == 'all' ]; then
     BROWSER_TV_GET_SOURCE_JDK_17=1
     BROWSER_TV_GET_SOURCE_MICROG=1
     BROWSER_TV_GET_SOURCE_PHOENIX=1
-    BROWSER_TV_GET_SOURCE_PIP=1
     BROWSER_TV_GET_SOURCE_PREBUILDS=1
+    BROWSER_TV_GET_SOURCE_PYTHON=1
     BROWSER_TV_GET_SOURCE_RUST=1
+    BROWSER_TV_GET_SOURCE_UV=1
 else
     echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
     echo 'All: all (Default)'
@@ -116,9 +121,10 @@ else
     echo 'JDK (17): jdk-17'
     echo 'microG: microg'
     echo 'Phoenix: phoenix'
-    echo 'pip: pip'
     echo 'Prebuilds: prebuilds'
+    echo 'Python: python'
     echo 'Rust: rust'
+    echo 'uv: uv'
     exit 1
 fi
 readonly BROWSER_TV_GET_SOURCE_ANDROID_NDK
@@ -228,14 +234,46 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for Phoenix...'
         "${BROWSER_TV_SED}" -i -e "s|PHOENIX_SHA512SUM='.*'|PHOENIX_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Phoenix'
-    elif [ "${old_sha512sum}" == "${PREBUILDS_SHA512SUM}" ]; then
-        echo_red_text 'Updating SHA512sum for IronFox prebuilds...'
-        "${BROWSER_TV_SED}" -i -e "s|PREBUILDS_SHA512SUM='.*'|PREBUILDS_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
-        echo_green_text 'SUCCESS: Updated SHA512sum for IronFox prebuilds'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (Linux - ARM64)...'
+        "${BROWSER_TV_SED}" -i -e "s|PYTHON_SHA512SUM_LINUX_ARM64='.*'|PYTHON_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (Linux - ARM64)'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (Linux - x86_64)...'
+        "${BROWSER_TV_SED}" -i -e "s|PYTHON_SHA512SUM_LINUX_X86_64='.*'|PYTHON_SHA512SUM_LINUX_X86_64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (Linux - x86_64)'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (OS X - ARM64)...'
+        "${BROWSER_TV_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_ARM64='.*'|PYTHON_SHA512SUM_OSX_ARM64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - ARM64)'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (OS X - x86_64)...'
+        "${BROWSER_TV_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_X86_64='.*'|PYTHON_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - x86_64)'
     elif [ "${old_sha512sum}" == "${RUSTUP_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for rustup...'
         "${BROWSER_TV_SED}" -i -e "s|RUSTUP_SHA512SUM='.*'|RUSTUP_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for rustup'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (Linux - ARM64)...'
+        "${BROWSER_TV_SED}" -i -e "s|UV_SHA512SUM_LINUX_ARM64='.*'|UV_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (Linux - ARM64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (Linux - x86_64)...'
+        "${BROWSER_TV_SED}" -i -e "s|UV_SHA512SUM_LINUX_X86_64='.*'|UV_SHA512SUM_LINUX_X86_64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (Linux - x86_64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (OS X - ARM64)...'
+        "${BROWSER_TV_SED}" -i -e "s|UV_SHA512SUM_OSX_ARM64='.*'|UV_SHA512SUM_OSX_ARM64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (OS X - ARM64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (OS X - x86_64)...'
+        "${BROWSER_TV_SED}" -i -e "s|UV_SHA512SUM_OSX_X86_64='.*'|UV_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (OS X - x86_64)'
+    elif [ "${old_sha512sum}" == "${PREBUILDS_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for IronFox prebuilds...'
+        "${BROWSER_TV_SED}" -i -e "s|PREBUILDS_SHA512SUM='.*'|PREBUILDS_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for IronFox prebuilds'
     elif [ "${old_sha512sum}" == "${WASI_LINUX_IRONFOX_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for WASI SDK (Linux)...'
         "${BROWSER_TV_SED}" -i -e "s|WASI_LINUX_IRONFOX_SHA512SUM='.*'|WASI_LINUX_IRONFOX_SHA512SUM='"${new_sha512sum}"'|g" "${BROWSER_TV_VERSIONS}"
@@ -581,8 +619,8 @@ function get_gradle() {
 
 # Get GYP
 function get_gyp() {
-    if  [ ! -f "${BROWSER_TV_PYENV}" ]; then
-        echo_red_text "ERROR: You tried to download GYP, but you don't have a Python environment set-up yet."
+    if  [ ! -d "${BROWSER_TV_UV_DIR}" ] || [ ! -f "${BROWSER_TV_PYENV}" ]; then
+        echo_red_text "ERROR: You tried to download GYP, but you don't have a uv environment set-up yet."
         exit 1
     fi
 
@@ -594,13 +632,13 @@ function get_gyp() {
             return 0
         else
             source "${BROWSER_TV_PYENV}"
-            "${BROWSER_TV_PIP}" uninstall gyp-next
+            "${BROWSER_TV_UV}" pip uninstall gyp-next
         fi
     fi
 
     source "${BROWSER_TV_PYENV}"
     echo_red_text 'Installing GYP...'
-    "${BROWSER_TV_PIP}" install gyp-next
+    "${BROWSER_TV_UV}" pip install --strict gyp-next
     echo_green_text "SUCCESS: Set-up GYP at ${BROWSER_TV_PYENV_DIR}/bin/gyp"
 }
 
@@ -655,21 +693,6 @@ function get_phoenix() {
     echo_green_text "SUCCESS: Set-up Phoenix at ${BROWSER_TV_PHOENIX}"
 }
 
-# Get + set-up pip
-function get_pip() {
-    # Set-up Python environment
-    if [[ -d "${BROWSER_TV_PYENV_DIR}" ]]; then
-        rm -rf "${BROWSER_TV_PYENV_DIR}"
-    fi
-    python -m venv "${BROWSER_TV_PYENV_DIR}"
-    source "${BROWSER_TV_PYENV}"
-
-    # Update pip
-    echo_red_text 'Updating pip...'
-    "${BROWSER_TV_PIP}" install --upgrade pip
-    echo_green_text "SUCCESS: Set-up pip"
-}
-
 # Get IronFox prebuilds
 function get_prebuilds() {
     if [[ "${BROWSER_TV_NO_PREBUILDS}" == "1" ]]; then
@@ -692,6 +715,46 @@ function get_prebuilds() {
         fi
         echo_green_text "SUCCESS: Set-up the prebuilt wasi-sdk at ${BROWSER_TV_WASI}"
     fi
+}
+
+# Get Python
+function get_python() {
+    # Set our platform
+    if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+        local readonly PYTHON_PLATFORM='apple-darwin'
+    else
+        local readonly PYTHON_PLATFORM='unknown-linux-gnu'
+    fi
+
+    # Set our platform architecture
+    if [ "${BROWSER_TV_PLATFORM_ARCH}" == 'arm64' ]; then
+        local readonly PYTHON_ARCH='aarch64'
+    else
+        local readonly PYTHON_ARCH='x86_64'
+    fi
+
+    # Set our checksum to verify
+    if [ "${BROWSER_TV_PLATFORM_ARCH}" == 'arm64' ]; then
+        if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_OSX_ARM64}"
+        else
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_LINUX_ARM64}"
+        fi
+    else
+        if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_OSX_X86_64}"
+        else
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_LINUX_X86_64}"
+        fi
+    fi
+
+    echo_red_text 'Downloading Python...'
+    download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz" "${BROWSER_TV_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+
+    # Validate SHA512sum
+    validate_sha512sum "${PYTHON_SHA512SUM}" "${BROWSER_TV_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+
+    echo_green_text "SUCCESS: Downloaded Python to ${BROWSER_TV_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
 }
 
 # Get + set-up rust/cargo
@@ -724,6 +787,62 @@ function get_rust() {
     rustup target add x86_64-linux-android
 
     echo_green_text "SUCCESS: Set-up Rust environment at ${BROWSER_TV_CARGO_HOME}"
+}
+
+# Get + set-up uv
+function get_uv() {
+    if  [ ! -d "${BROWSER_TV_PYTHON_DIR}" ]; then
+        echo_red_text "ERROR: You tried to download uv, but you don't have Python downloaded yet."
+        exit 1
+    fi
+
+    if [[ -d "${BROWSER_TV_PYENV_DIR}" ]]; then
+        echo_red_text "The uv environment is already set-up at ${BROWSER_TV_PYENV_DIR}"
+        read -p "Do you want to re-create it? [y/N] " -n 1 -r
+        echo
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            rm -rf "${BROWSER_TV_PYENV_DIR}" "${BROWSER_TV_UV_DIR}" "${BROWSER_TV_UV_LOCAL}"
+        fi
+    fi
+
+    # Set our platform
+    if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+        local readonly UV_PLATFORM='apple-darwin'
+    else
+        local readonly UV_PLATFORM='unknown-linux-gnu'
+    fi
+
+    # Set our platform architecture
+    if [ "${BROWSER_TV_PLATFORM_ARCH}" == 'arm64' ]; then
+        local readonly UV_ARCH='aarch64'
+    else
+        local readonly UV_ARCH='x86_64'
+    fi
+
+    # Set our checksum to verify
+    if [ "${BROWSER_TV_PLATFORM_ARCH}" == 'arm64' ]; then
+        if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_OSX_ARM64}"
+        else
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_LINUX_ARM64}"
+        fi
+    else
+        if [ "${BROWSER_TV_PLATFORM}" == 'darwin' ]; then
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_OSX_X86_64}"
+        else
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_LINUX_X86_64}"
+        fi
+    fi
+
+    echo_red_text 'Downloading uv...'
+    download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${UV_ARCH}-${UV_PLATFORM}.tar.gz" "${BROWSER_TV_UV_DIR}" "${UV_SHA512SUM}"
+
+    echo_red_text 'Installing Python...'
+    "${BROWSER_TV_UV}" python install "${PYTHON_VERSION}"
+
+    echo_red_text 'Creating uv environment...'
+    "${BROWSER_TV_UV}" venv "${BROWSER_TV_PYENV_DIR}"
+    echo_green_text "SUCCESS: Set-up uv environment at ${BROWSER_TV_PYENV_DIR}"
 }
 
 if [ "${BROWSER_TV_GET_SOURCE_ANDROID_NDK}" == 1 ]; then
@@ -772,9 +891,13 @@ if [ "${BROWSER_TV_GET_SOURCE_GRADLE}" == 1 ]; then
     get_gradle
 fi
 
-# This needs to be run before we get gyp
-if [ "${BROWSER_TV_GET_SOURCE_PIP}" == 1 ]; then
-    get_pip
+# These need to run before we get gyp
+if [ "${BROWSER_TV_GET_SOURCE_PYTHON}" == 1 ]; then
+    get_python
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_UV}" == 1 ]; then
+    get_uv
 fi
 
 if [ "${BROWSER_TV_GET_SOURCE_GYP}" == 1 ]; then
