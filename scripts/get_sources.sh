@@ -8,6 +8,13 @@ if [[ -z "${BROWSER_TV_SET_ENVS+x}" ]]; then
 fi
 source $(dirname $0)/env.sh
 
+# Set up target parameters
+if [[ -z "${1+x}" ]]; then
+    readonly target='all'
+else
+    readonly target=$(echo "${1}" | "${BROWSER_TV_AWK}" '{print tolower($0)}')
+fi
+
 # Get sources
 readonly BROWSER_TV_FROM_SOURCES=1
 export BROWSER_TV_FROM_SOURCES
@@ -22,7 +29,7 @@ if [ "${BROWSER_TV_LOG_SOURCES}" == 1 ]; then
     # Ensure our log directory exists
     mkdir -vp "${BROWSER_TV_LOG_DIR}"
 
-    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
+    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" "${target}" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
 else
-    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh"
+    bash -x "${BROWSER_TV_SCRIPTS}/get_sources-btv.sh" "${target}"
 fi

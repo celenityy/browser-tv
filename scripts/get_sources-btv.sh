@@ -13,6 +13,124 @@ if [[ -z "${BROWSER_TV_FROM_SOURCES+x}" ]]; then
     exit 1
 fi
 
+readonly target="$1"
+readonly mode="$2"
+
+# Set-up target parameters
+BROWSER_TV_GET_SOURCE_ANDROID_NDK=0
+BROWSER_TV_GET_SOURCE_ANDROID_SDK=0
+BROWSER_TV_GET_SOURCE_ANDROID_SDK_BUILD_TOOLS=0
+BROWSER_TV_GET_SOURCE_ANDROID_SDK_PLATFORM=0
+BROWSER_TV_GET_SOURCE_BUNDLETOOL=0
+BROWSER_TV_GET_SOURCE_CBINDGEN=0
+BROWSER_TV_GET_SOURCE_GECKO=0
+BROWSER_TV_GET_SOURCE_GECKO_L10N=0
+BROWSER_TV_GET_SOURCE_GRADLE=0
+BROWSER_TV_GET_SOURCE_GYP=0
+BROWSER_TV_GET_SOURCE_MICROG=0
+BROWSER_TV_GET_SOURCE_PHOENIX=0
+BROWSER_TV_GET_SOURCE_PIP=0
+BROWSER_TV_GET_SOURCE_PREBUILDS=0
+BROWSER_TV_GET_SOURCE_RUST=0
+
+if [ "${target}" == 'android-ndk' ]; then
+    # Get Android NDK
+    BROWSER_TV_GET_SOURCE_ANDROID_NDK=1
+elif [ "${target}" == 'android-sdk' ]; then
+    # Get Android SDK
+    BROWSER_TV_GET_SOURCE_ANDROID_SDK=1
+elif [ "${target}" == 'android-sdk-build-tools' ]; then
+    # Get Android SDK Build Tools
+    BROWSER_TV_GET_SOURCE_ANDROID_SDK_BUILD_TOOLS=1
+elif [ "${target}" == 'android-sdk-platform' ]; then
+    # Get Android SDK Platform
+    BROWSER_TV_GET_SOURCE_ANDROID_SDK_PLATFORM=1
+elif [ "${target}" == 'bundletool' ]; then
+    # Get + set-up Bundletool
+    BROWSER_TV_GET_SOURCE_BUNDLETOOL=1
+elif [ "${target}" == 'cbindgen' ]; then
+    # Get cbindgen
+    BROWSER_TV_GET_SOURCE_CBINDGEN=1
+elif [ "${target}" == 'firefox' ]; then
+    # Get Firefox (Gecko/mozilla-central)
+    BROWSER_TV_GET_SOURCE_GECKO=1
+elif [ "${target}" == 'firefox-l10n' ]; then
+    # Get firefox-l10n
+    BROWSER_TV_GET_SOURCE_GECKO_L10N=1
+elif [ "${target}" == 'gradle' ]; then
+    # Get + set-up Gradle
+    BROWSER_TV_GET_SOURCE_GRADLE=1
+elif [ "${target}" == 'gyp' ]; then
+    # Get gyp-next
+    BROWSER_TV_GET_SOURCE_GYP=1
+elif [ "${target}" == 'microg' ]; then
+    # Get microG
+    BROWSER_TV_GET_SOURCE_MICROG=1
+elif [ "${target}" == 'phoenix' ]; then
+    # Get Phoenix
+    BROWSER_TV_GET_SOURCE_PHOENIX=1
+elif [ "${target}" == 'prebuilds' ]; then
+    # Get IronFox prebuilds
+    BROWSER_TV_GET_SOURCE_PREBUILDS=1
+elif [ "${target}" == 'pip' ]; then
+    # Get + set-up pip
+    BROWSER_TV_GET_SOURCE_PIP=1
+elif [ "${target}" == 'rust' ]; then
+    # Get + set-up rust/cargo
+    BROWSER_TV_GET_SOURCE_RUST=1
+elif [ "${target}" == 'all' ]; then
+    # If no argument is specified (or argument is set to "all"), just get everything
+    BROWSER_TV_GET_SOURCE_ANDROID_NDK=1
+    BROWSER_TV_GET_SOURCE_ANDROID_SDK=1
+    BROWSER_TV_GET_SOURCE_ANDROID_SDK_BUILD_TOOLS=1
+    BROWSER_TV_GET_SOURCE_ANDROID_SDK_PLATFORM=1
+    BROWSER_TV_GET_SOURCE_BUNDLETOOL=1
+    BROWSER_TV_GET_SOURCE_CBINDGEN=1
+    BROWSER_TV_GET_SOURCE_GECKO=1
+    BROWSER_TV_GET_SOURCE_GECKO_L10N=1
+    BROWSER_TV_GET_SOURCE_GRADLE=1
+    BROWSER_TV_GET_SOURCE_GYP=1
+    BROWSER_TV_GET_SOURCE_MICROG=1
+    BROWSER_TV_GET_SOURCE_PHOENIX=1
+    BROWSER_TV_GET_SOURCE_PIP=1
+    BROWSER_TV_GET_SOURCE_PREBUILDS=1
+    BROWSER_TV_GET_SOURCE_RUST=1
+else
+    echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
+    echo 'All: all (Default)'
+    echo 'Android NDK: android-ndk'
+    echo 'Android SDK: android-sdk'
+    echo 'Android SDK Build Tools: android-sdk-build-tools'
+    echo 'Android SDK Platform: android-sdk-platform'
+    echo 'Bundletool: bundletool'
+    echo 'cbindgen: cbindgen'
+    echo 'Firefox (Gecko/mozilla-central): firefox'
+    echo 'firefox-l10n (l10n-central): firefox-l10n'
+    echo 'Gradle: gradle'
+    echo 'GYP: gyp'
+    echo 'microG: microg'
+    echo 'Phoenix: phoenix'
+    echo 'pip: pip'
+    echo 'Prebuilds: prebuilds'
+    echo 'Rust: rust'
+    exit 1
+fi
+readonly BROWSER_TV_GET_SOURCE_ANDROID_NDK
+readonly BROWSER_TV_GET_SOURCE_ANDROID_SDK
+readonly BROWSER_TV_GET_SOURCE_ANDROID_SDK_BUILD_TOOLS
+readonly BROWSER_TV_GET_SOURCE_ANDROID_SDK_PLATFORM
+readonly BROWSER_TV_GET_SOURCE_BUNDLETOOL
+readonly BROWSER_TV_GET_SOURCE_CBINDGEN
+readonly BROWSER_TV_GET_SOURCE_GECKO
+readonly BROWSER_TV_GET_SOURCE_GECKO_L10N
+readonly BROWSER_TV_GET_SOURCE_GRADLE
+readonly BROWSER_TV_GET_SOURCE_GYP
+readonly BROWSER_TV_GET_SOURCE_MICROG
+readonly BROWSER_TV_GET_SOURCE_PHOENIX
+readonly BROWSER_TV_GET_SOURCE_PIP
+readonly BROWSER_TV_GET_SOURCE_PREBUILDS
+readonly BROWSER_TV_GET_SOURCE_RUST
+
 # Include version info
 source "${BROWSER_TV_VERSIONS}"
 
@@ -381,26 +499,65 @@ function get_rust() {
     echo_green_text "SUCCESS: Set-up Rust environment at ${BROWSER_TV_CARGO_HOME}"
 }
 
-get_android_sdk
-get_android_ndk
-get_android_sdk_build_tools
-get_android_sdk_platform
-get_bundletool
+# This needs to run before we get Android NDK
+if [ "${BROWSER_TV_GET_SOURCE_ANDROID_SDK}" == 1 ]; then
+    get_android_sdk
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_ANDROID_NDK}" == 1 ]; then
+    get_android_ndk
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_ANDROID_SDK_BUILD_TOOLS}" == 1 ]; then
+    get_android_sdk_build_tools
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_ANDROID_SDK_PLATFORM}" == 1 ]; then
+    get_android_sdk_platform
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_BUNDLETOOL}" == 1 ]; then
+    get_bundletool
+fi
 
 # This needs to run before we get cbindgen
-get_rust
+if [ "${BROWSER_TV_GET_SOURCE_RUST}" == 1 ]; then
+    get_rust
+fi
 
-get_cbindgen
+if [ "${BROWSER_TV_GET_SOURCE_CBINDGEN}" == 1 ]; then
+    get_cbindgen
+fi
 
-get_firefox
-get_firefox_l10n
-get_gradle
+if [ "${BROWSER_TV_GET_SOURCE_GECKO}" == 1 ]; then
+    get_firefox
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_GECKO_L10N}" == 1 ]; then
+    get_firefox_l10n
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_GRADLE}" == 1 ]; then
+    get_gradle
+fi
 
 # This needs to be run before we get gyp
-get_pip
+if [ "${BROWSER_TV_GET_SOURCE_PIP}" == 1 ]; then
+    get_pip
+fi
 
-get_gyp
+if [ "${BROWSER_TV_GET_SOURCE_GYP}" == 1 ]; then
+    get_gyp
+fi
 
-get_microg
-get_phoenix
-get_prebuilds
+if [ "${BROWSER_TV_GET_SOURCE_MICROG}" == 1 ]; then
+    get_microg
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_PHOENIX}" == 1 ]; then
+    get_phoenix
+fi
+
+if [ "${BROWSER_TV_GET_SOURCE_PREBUILDS}" == 1 ]; then
+    get_prebuilds
+fi
